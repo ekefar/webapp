@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <import resource="data.xml"/>
+
+    <security:http  auto-config="true">
+        <security:intercept-url pattern="/Welcome*" access="ROLE_ADMIN, ROLE_USER"/>
+        <security:intercept-url pattern="/EditUsers*" access="ROLE_ADMIN"/>
+
+        <security:form-login login-page="/Login" default-target-url="/Welcome"
+                    authentication-failure-url="/Loginfailed"/>
+        <security:logout logout-success-url="/Logout"/>
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider>
+
+            <security:jdbc-user-service data-source-ref="dataSource"
+
+                               users-by-username-query="
+		      select login, password, enabled
+		      from users where login=?"
+
+                               authorities-by-username-query="
+		      select u.login, r.NAME from users u, roles r
+		      where u.role_ID = r.ID and u.login =?  "
+
+                    />
+        </security:authentication-provider>
+    </security:authentication-manager>
+</beans>
