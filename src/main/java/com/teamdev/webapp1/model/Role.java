@@ -26,8 +26,11 @@ public class Role {
     private String name;
 
     public Role(int id, String name) {
-        this.id = 1;
+        this.id = id;
         this.name = name;
+    }
+
+    public Role() {
     }
 
     public int getId() {

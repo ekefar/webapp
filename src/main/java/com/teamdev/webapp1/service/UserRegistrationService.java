@@ -18,4 +18,8 @@ public interface UserRegistrationService {
     public List<User> listUsers();
 
     public void removeUser(Integer id);
+    
+    public void activateUser(String activationKey);
+    
+    public void requestActivation(User user);
 }

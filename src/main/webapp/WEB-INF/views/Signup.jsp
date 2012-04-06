@@ -13,28 +13,27 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-      /*  $(document).ready(function () {
+        $(document).ready(function () {
             $('#getBtn').click(function () {
-                $.post("register", $('#myForm').serialize(), 'json');
+                $.post("/Register", $('#myForm').serialize(), 'json');
             });
-        });*/
+        });
 
     </script>
     <title></title>
 </head>
 <body>
 
-<form id="myForm" action="Register" method="post">
+<form id="myForm"  enctype="application/x-www-form-urlencoded" method="post">
     Login <input type="text" name="login"/> <br/>
     Password <input type="password" name="password"/>   <br/>
     E-mail <input type="text" name="email"/> <br/>
 
-    <input id="myBtn" type="submit" value="Register"/>
 </form>
 <br/>
 
 <div id="dataDiv">
-    
+ <button id ="getBtn" name="regButton" >Sign up</button>
 </div>
 
 

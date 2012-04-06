@@ -15,7 +15,13 @@ public interface UserDAO {
 
     public void addUser(User contact);
 
-    public List<User> listUsers();
+    public User getUser(int id);
 
-    public void removeUser(Integer id);
+    public void updateUser(User user);
+
+    public List<User> listUsers();
+    
+    User findUser(User user);
+
+    public void removeUser(int id);
 }

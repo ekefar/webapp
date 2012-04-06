@@ -27,16 +27,14 @@ public class User {
     @Column(name = "PASSWORD")
     private String password;
 
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", unique = true)
     private String email;
 
     @Column(name="ENABLED")
     private boolean enabled;
 
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Role role;
-
 
 
     public Role getRole() {
@@ -49,14 +47,6 @@ public class User {
 
     public User() {
     }
-
-    public User(int id, String login, String password, String email) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.email = email;
-    }
-
     public int getId() {
         return id;
     }
