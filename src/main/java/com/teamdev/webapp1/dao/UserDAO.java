@@ -16,6 +16,8 @@ public interface UserDAO {
     public void addUser(User contact);
 
     public User getUser(int id);
+    
+    User getUserByName(String name);
 
     public void updateUser(User user);
 

@@ -36,24 +36,6 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
     @Override
     @Transactional
-    public void addUser(User user) {
-        userDAO.addUser(user);
-    }
-
-    @Override
-    @Transactional
-    public List<User> listUsers() {
-        return userDAO.listUsers();
-    }
-
-    @Override
-    @Transactional
-    public void removeUser(Integer id) {
-        userDAO.removeUser(id);
-    }
-
-    @Override
-    @Transactional
     public void activateUser(String activationKey) {
         Activation activation = activationDAO.getActivationByKey(activationKey);
 

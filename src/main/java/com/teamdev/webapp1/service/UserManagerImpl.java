@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 @Service
-public class UserManagerImpl implements UserManager{
+public class UserManagerImpl implements UserManager {
 
     @Autowired
     UserDAO userDAO;
@@ -25,13 +25,19 @@ public class UserManagerImpl implements UserManager{
     @Override
     @Transactional
     public User getUser(int id) {
-         return userDAO.getUser(id);
+        return userDAO.getUser(id);
+    }
+
+    @Override
+    @Transactional
+    public User getUserByName(String name) {
+        return userDAO.getUserByName(name);
     }
 
     @Override
     @Transactional
     public void updateUser(User user) {
-       userDAO.updateUser(user);
+        userDAO.updateUser(user);
     }
 
     @Override
@@ -48,7 +54,7 @@ public class UserManagerImpl implements UserManager{
 
     @Override
     public void findUser(User user) {
-        userDAO. findUser(user);
+        userDAO.findUser(user);
     }
 
     @Override

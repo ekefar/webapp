@@ -41,9 +41,9 @@ public class RegistrationController {
     }
     
     @RequestMapping(value = "/Register", method = RequestMethod.POST)
-    public String registerUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public String registerUser(HttpServletRequest request) throws IOException {
 
-        String jsonObject ="{" +req.getReader().readLine().replace("&", ",")+"}";
+        String jsonObject ="{" +request.getReader().readLine().replace("&", ",")+"}";
         jsonObject = URLDecoder.decode(jsonObject, "UTF-8");
         User user =  new Gson().fromJson(jsonObject, User.class);
         user.setRole(new Role(1,"role_user"));

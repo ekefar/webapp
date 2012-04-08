@@ -14,6 +14,8 @@ import java.util.List;
 public interface UserManager {
     
     User getUser(int id);
+    
+    User getUserByName(String name);
 
     void updateUser(User user);
 

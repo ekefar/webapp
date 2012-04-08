@@ -8,5 +8,7 @@
 		<mapping class="com.teamdev.webapp1.model.User" />
         <mapping class="com.teamdev.webapp1.model.Role"/>
         <mapping class="com.teamdev.webapp1.model.Activation"/>
-	</session-factory>
+        <mapping class="com.teamdev.webapp1.model.UserProfile"/>
+
+    </session-factory>
 </hibernate-configuration>
