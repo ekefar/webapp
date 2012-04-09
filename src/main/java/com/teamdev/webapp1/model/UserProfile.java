@@ -14,8 +14,6 @@ import javax.persistence.*;
 @Table(name = "USER_PROFILES")
 public class UserProfile {
 
-
-
     @Id
     @Column(name="ID")
     @GeneratedValue
