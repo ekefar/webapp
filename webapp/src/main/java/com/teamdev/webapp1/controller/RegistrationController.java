@@ -2,6 +2,7 @@ package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.teamdev.webapp1.dao.RoleDAO;
 import com.teamdev.webapp1.model.Role;
 import com.teamdev.webapp1.model.User;
 import com.teamdev.webapp1.service.MailService;
@@ -35,6 +36,9 @@ public class RegistrationController {
     @Autowired
     private MailService mailSender;
 
+    @Autowired
+    RoleDAO roleDAO;
+
     @RequestMapping(value = "/Register", method = RequestMethod.GET)
     public String requestRegisterPage(){
         return "Signup";
@@ -46,7 +50,9 @@ public class RegistrationController {
         String jsonObject ="{" +request.getReader().readLine().replace("&", ",")+"}";
         jsonObject = URLDecoder.decode(jsonObject, "UTF-8");
         User user =  new Gson().fromJson(jsonObject, User.class);
-        user.setRole(new Role(1,"role_user"));
+
+
+        user.setRole(new Role(1, "ROLE_USER"));
         user.setEnabled(false);
 
         userRegistrationService.requestActivation(user);

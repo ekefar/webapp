@@ -20,7 +20,7 @@ To change this template use File | Settings | File Templates.
     <script type="text/javascript">
         $(document).ready(function () {
             $('#regButton').click(function () {
-                $.post("/Register", $('#myForm').serialize(), 'json');
+                $.post("/Register", $('#regForm').serialize(), 'json');
                 $("#regForm").append("Check your e-mail.")
             });
 

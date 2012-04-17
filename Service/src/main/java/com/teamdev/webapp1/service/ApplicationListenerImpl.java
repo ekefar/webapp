@@ -2,6 +2,7 @@ package com.teamdev.webapp1.service;
 
 import com.teamdev.webapp1.dao.RoleDAO;
 import com.teamdev.webapp1.model.Role;
+import com.teamdev.webapp1.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -22,6 +23,10 @@ public class ApplicationListenerImpl implements ApplicationListener<ContextRefre
     @Autowired
     RoleDAO roleDAO;
 
+
+    @Autowired
+    UserManager userManager;
+
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -34,5 +39,10 @@ public class ApplicationListenerImpl implements ApplicationListener<ContextRefre
         if(roleDAO.getAdminRole() == null){
             roleDAO.addRole(new Role("ROLE_ADMIN"));
         }
+
+
     }
+
+
+
 }
