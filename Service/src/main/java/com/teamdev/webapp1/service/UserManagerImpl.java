@@ -19,8 +19,12 @@ import java.util.List;
 @Service
 public class UserManagerImpl implements UserManager {
 
-    @Autowired
     UserDAO userDAO;
+
+    @Autowired
+    public UserManagerImpl(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     @Override
     @Transactional

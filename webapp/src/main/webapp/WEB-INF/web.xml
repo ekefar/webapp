@@ -9,7 +9,8 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             /WEB-INF/security.xml,
-            /WEB-INF/mail.xml
+            /WEB-INF/mail.xml,
+            /WEB-INF/persistence-configuration.cfg.xml
         </param-value>
     </context-param>
 
@@ -42,7 +43,7 @@
 
 
     <welcome-file-list>
-        <welcome-file>/views/upload/uploadform.jsp</welcome-file>
+        <welcome-file>/views/Welcome.jsp</welcome-file>
     </welcome-file-list>
 
 

@@ -9,6 +9,7 @@
 
 
     <mvc:annotation-driven/>
+
     <context:component-scan base-package="com.teamdev.webapp1.controller"/>
     <context:component-scan base-package="com.teamdev.webapp1.dao"/>
     <context:component-scan base-package="com.teamdev.webapp1.service"/>
@@ -29,7 +30,7 @@
 
     <bean name="contextRefreshedApplicationListener" class="com.teamdev.webapp1.service.ApplicationListenerImpl" />
 
-    <import resource="data.xml"/>
     <import resource="mail.xml"/>
+    <import resource="persistence-configuration.cfg.xml"/>
 
 </beans>

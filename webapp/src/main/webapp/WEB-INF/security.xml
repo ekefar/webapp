@@ -7,7 +7,7 @@
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <import resource="data.xml"/>
+    <import resource="persistence-configuration.cfg.xml"/>
 
     <security:http  auto-config="true">
         <security:intercept-url pattern="/Welcome*" access="ROLE_ADMIN, ROLE_USER"/>
