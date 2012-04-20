@@ -9,7 +9,7 @@
 
 
     <mvc:annotation-driven/>
-
+    <context:annotation-config/>
     <context:component-scan base-package="com.teamdev.webapp1.controller"/>
     <context:component-scan base-package="com.teamdev.webapp1.dao"/>
     <context:component-scan base-package="com.teamdev.webapp1.service"/>
@@ -28,7 +28,7 @@
         <property name="maxUploadSize" value="1000000"/>
     </bean>
 
-    <bean name="contextRefreshedApplicationListener" class="com.teamdev.webapp1.service.ApplicationListenerImpl" />
+    <bean name="contextRefreshedApplicationListener" class="com.teamdev.webapp1.service.ApplicationListenerImpl"/>
 
     <import resource="mail.xml"/>
     <import resource="persistence-configuration.cfg.xml"/>

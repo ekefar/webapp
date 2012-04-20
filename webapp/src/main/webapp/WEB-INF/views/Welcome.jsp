@@ -16,6 +16,7 @@
         $(document).ready(function () {
             hideSettingsValues();
 
+
             $("#profile_btn, #reset_btn").click(function () {
                 hideSettingsValues();
                 $.getJSON("/Settings/Profile", function (data) {
@@ -56,6 +57,7 @@
             });
 
             updateImage();
+            profile_btn.click();
 
         });
 
@@ -181,8 +183,7 @@
                     <tr>
 
 
-
-                        <td  align="center" colspan="2">
+                        <td align="center" colspan="2">
                             <br/>
                             <button id="reset_btn" type="button" class="navigation_btn">Reset</button>
                             <button id="profile_submit" type="button" class="navigation_btn">Save</button>

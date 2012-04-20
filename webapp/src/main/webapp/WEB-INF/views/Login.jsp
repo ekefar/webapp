@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Login Page</title>
@@ -9,12 +9,12 @@
     <script type="text/javascript" src="../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function () {
             $(":submit, :button").button();
-        }) ;
+        });
     </script>
 </head>
-<body >
+<body>
 <div id="header" class="header">
 
 </div>
@@ -34,11 +34,12 @@
             </tr>
             <tr>
                 <td>Password:</td>
-                <td><input type='password' name='j_password' />
+                <td><input type='password' name='j_password'/>
                 </td>
             </tr>
             <tr>
-                <td><a href="Register"><input id="regBtn" name="reset" value="Register" type="button" style="width: 150px"/> </a>
+                <td><a href="Register"><input id="regBtn" name="reset" value="Register" type="button"
+                                              style="width: 150px"/> </a>
                 </td>
                 <td><input name="submit" type="submit"
                            value="Log in" style="width: 150px"/>

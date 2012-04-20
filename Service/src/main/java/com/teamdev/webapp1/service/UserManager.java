@@ -12,20 +12,18 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface UserManager {
-    
+
     User getUser(int id);
-    
+
     User getUserByName(String name);
 
     void updateUser(User user);
 
     void addUser(User user);
-    
+
     void removeUser(int id);
-    
-    void findUser(User user);
-    
+
     public List<User> listUsers();
-    
-    
+
+
 }

@@ -1,7 +1,6 @@
 package com.teamdev.webapp1.dao;
 
 import com.teamdev.webapp1.model.Role;
-import com.teamdev.webapp1.model.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,7 +16,7 @@ import java.util.List;
  */
 
 @Repository
-public class RoleDAOImpl implements RoleDAO{
+public class RoleDAOImpl implements RoleDAO {
 
     @Autowired
     private SessionFactory sessionFactory;

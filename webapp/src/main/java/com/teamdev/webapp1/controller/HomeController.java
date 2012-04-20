@@ -16,20 +16,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     @RequestMapping({"/index", "/"})
-    public String indexRequest(Model model){
+    public String indexRequest(Model model) {
         return "Login";
     }
-    
+
     @RequestMapping("/Signup")
-    public String signUp(){
+    public String signUp() {
         return "Signup";
     }
-    
+
     @RequestMapping("/EditUsers")
-    public String editUsers(){
+    public String editUsers() {
         return "EditUsers";
     }
-    
 
-            
+
 }

@@ -11,18 +11,18 @@ import java.util.List;
  * Time: 23:46
  * To change this template use File | Settings | File Templates.
  */
-public interface UserDAO{
+public interface UserDAO {
 
     public void addUser(User contact);
 
     public User getUser(int id);
-    
+
     User getUserByName(String name);
 
     public void updateUser(User user);
 
     public List<User> listUsers();
-    
+
     User findUser(User user);
 
     public void removeUser(int id);

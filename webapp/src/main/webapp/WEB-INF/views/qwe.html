@@ -37,10 +37,10 @@
 
             var uploader = new qq.FileUploader({
                 // pass the dom node (ex. $(selector)[0] for jQuery users)
-                element: document.getElementById('upload_container'),
+                element:document.getElementById('upload_container'),
                 // path to server-side upload script
-                action: '/Settings/Profile/avatar',
-                onComplete: updateImage
+                action:'/Settings/Profile/avatar',
+                onComplete:updateImage
             });
 
             updateImage();
@@ -60,7 +60,7 @@
             $("a, button").button();
         });
 
-        var updateImage =  function  (){
+        var updateImage = function () {
             var src = "/Settings/Profile/avatar?" + new Date().getTime();
             $('#avatar').attr("src", src);
             $('#upload_container').innerHTML = "";
@@ -78,7 +78,6 @@
         <a href="<c:url value=" j_spring_security_logout"/>">Logout</a>
     </div>
 </div>
-
 
 
 <div class="container">

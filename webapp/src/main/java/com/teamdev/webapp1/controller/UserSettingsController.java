@@ -1,13 +1,10 @@
 package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
-import com.teamdev.webapp1.model.Role;
 import com.teamdev.webapp1.model.User;
 import com.teamdev.webapp1.model.UserProfile;
 import com.teamdev.webapp1.service.UserManager;
 import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,15 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.*;
-import java.awt.*;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLDecoder;
-import java.security.Principal;
 
 /**
  * Created by IntelliJ IDEA.
@@ -80,7 +71,7 @@ public class UserSettingsController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/Profile/avatar",method = RequestMethod.POST)
+    @RequestMapping(value = "/Profile/avatar", method = RequestMethod.POST)
     public String setUserAvatar(HttpServletRequest request) throws IOException {
 
         User user = getUser(request);
@@ -99,7 +90,6 @@ public class UserSettingsController {
         String userName = request.getUserPrincipal().getName();
         return userManager.getUserByName(userName);
     }
-
 
 
 }

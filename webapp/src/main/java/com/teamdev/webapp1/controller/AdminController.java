@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -24,13 +23,13 @@ import java.net.URLDecoder;
 
 @Controller
 public class AdminController {
-    
+
     @Autowired
     UserManager userManager;
-    
+
     @RequestMapping(value = "/Admin/EditUsers", method = RequestMethod.GET)
     public void listUsers(HttpServletResponse response) throws IOException {
-        String usersList =new Gson().toJson(userManager.listUsers());
+        String usersList = new Gson().toJson(userManager.listUsers());
         response.getWriter().write(usersList);
     }
 
@@ -41,7 +40,7 @@ public class AdminController {
         String jsonObject = request.getReader().readLine();
         jsonObject = URLDecoder.decode(jsonObject, "UTF-8");
 
-        User userChangesRequest =  new Gson().fromJson(jsonObject, User.class);
+        User userChangesRequest = new Gson().fromJson(jsonObject, User.class);
 
         User userToChange = userManager.getUserByName(userChangesRequest.getLogin());
 

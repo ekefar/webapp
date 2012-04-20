@@ -1,7 +1,9 @@
 package com.teamdev.webapp1.service;
 
 import com.teamdev.webapp1.dao.ActivationDAO;
+import com.teamdev.webapp1.dao.ActivationRepository;
 import com.teamdev.webapp1.dao.UserDAO;
+import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.Activation;
 import com.teamdev.webapp1.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,12 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     @Autowired
     private ActivationDAO activationDAO;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    ActivationRepository activationRepository;
+
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
@@ -51,10 +59,11 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     @Transactional
     public void requestActivation(User user) {
         userDAO.addUser(user);
+        //userRepository.save(user);
 
         Activation userActivation = new Activation(createUserActivationKey(user));
         userActivation.setUser(user);
-        activationDAO.addActivation(userActivation);
+        activationRepository.save(userActivation);
 
         sendConfirmationLetter(user);
     }
@@ -62,8 +71,8 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     public String createUserActivationKey(User user) {
         return user.getLogin();
     }
-    
-    private void sendConfirmationLetter(User user){
+
+    private void sendConfirmationLetter(User user) {
         StringBuilder message = new StringBuilder();
         message.append("Welcome, " + user.getLogin() + "!");
         message.append("\n\n");
@@ -73,13 +82,13 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         mailSender.Send(user.getEmail(), "ekefar@gmail.com", "Registration success", message.toString());
     }
 
-    private void sendActivationSuccessLetter(User user){
+    private void sendActivationSuccessLetter(User user) {
         StringBuilder message = new StringBuilder();
         message.append("Congratulations, " + user.getLogin() + "!");
         message.append("\n\n");
         message.append("Your account have been successfully activated.");
         mailSender.Send(user.getEmail(), "ekefar@gmail.com", "Registration success", message.toString());
     }
-    
-    
+
+
 }

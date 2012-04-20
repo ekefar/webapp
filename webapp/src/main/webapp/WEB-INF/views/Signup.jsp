@@ -69,7 +69,9 @@ To change this template use File | Settings | File Templates.
                 </td>
 
                 <td align="center">
-                    <a href="/Welcome"> <button id="home" name="regButton" type="button" style="width: 170px">Home</button> </a>
+                    <a href="/Welcome">
+                        <button id="home" name="regButton" type="button" style="width: 170px">Home</button>
+                    </a>
                 </td>
             </tr>
         </table>
@@ -77,7 +79,6 @@ To change this template use File | Settings | File Templates.
     </form>
 
 </div>
-
 
 
 <div id="footer" class="footer">2012</div>

@@ -26,12 +26,12 @@ public class ActivationDAOImpl implements ActivationDAO {
 
     @Override
     public Activation getActivation(int id) {
-        return (Activation)sessionFactory.getCurrentSession().get(Activation.class, id);
+        return (Activation) sessionFactory.getCurrentSession().get(Activation.class, id);
     }
 
     @Override
     public Activation getActivationByKey(String activationKey) {
-       return (Activation)sessionFactory.getCurrentSession().createQuery("from Activation where activation_key=:activation_key").setString("activation_key", activationKey).uniqueResult();
+        return (Activation) sessionFactory.getCurrentSession().createQuery("from Activation where activation_key=:activation_key").setString("activation_key", activationKey).uniqueResult();
     }
 
     @Override

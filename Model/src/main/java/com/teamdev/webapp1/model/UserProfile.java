@@ -15,11 +15,11 @@ import javax.persistence.*;
 public class UserProfile {
 
     @Id
-    @Column(name="ID")
+    @Column(name = "ID")
     @GeneratedValue
     private int id;
 
-    @Column(name="NAME")
+    @Column(name = "NAME")
     private String name;
 
     @Column(name = "AGE")
@@ -33,8 +33,7 @@ public class UserProfile {
 
     @Lob
     @Column(name = "AVATAR")
-    private byte [] avatar;
-
+    private byte[] avatar;
 
 
     public int getId() {

@@ -13,16 +13,17 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ACTIVATIONS")
 public class Activation {
-    
-    @Column (name = "ID")
+
+    @Column(name = "ID")
     @Id
     @GeneratedValue
     private int id;
 
-    @Column (name = "ACTIVATION_KEY")
+    @Column(name = "ACTIVATION_KEY")
     private String activationKey;
 
     @OneToOne
+    @JoinColumn(name = "user_ID", updatable = false)
     private User user;
 
     public Activation() {

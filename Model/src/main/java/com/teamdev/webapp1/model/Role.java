@@ -19,15 +19,15 @@ public class Role {
     @GeneratedValue
     private int id;
 
-    @Column(name="NAME")
+    @Column(name = "NAME")
     private String name;
 
     public Role(int id, String name) {
         this.id = id;
         this.name = name;
     }
-    
-    public Role(String name){
+
+    public Role(String name) {
         this.name = name;
     }
 

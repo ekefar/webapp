@@ -28,7 +28,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getUser(int id) {
-        return (User)sessionFactory.getCurrentSession().load(User.class, id);
+        return (User) sessionFactory.getCurrentSession().load(User.class, id);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User findUser(User user) {
-        int userId =(Integer) sessionFactory.getCurrentSession().getIdentifier(user);
+        int userId = (Integer) sessionFactory.getCurrentSession().getIdentifier(user);
         return getUser(userId);
     }
 

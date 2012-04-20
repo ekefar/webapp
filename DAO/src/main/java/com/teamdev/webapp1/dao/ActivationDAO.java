@@ -14,8 +14,8 @@ public interface ActivationDAO {
     void addActivation(Activation activation);
 
     Activation getActivation(int id);
-    
+
     Activation getActivationByKey(String key);
-    
+
     void removeActivation(Activation activation);
 }

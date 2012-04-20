@@ -11,12 +11,12 @@ import javax.persistence.*;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-@Table(name="USERS")
+@Table(name = "USERS")
 public class User {
 
     @Id
     @GeneratedValue
-    @Column(name="ID")
+    @Column(name = "ID")
     private int id;
 
     @Column(name = "LOGIN", unique = true)
@@ -28,13 +28,14 @@ public class User {
     @Column(name = "EMAIL", unique = true)
     private String email;
 
-    @Column(name="ENABLED")
+    @Column(name = "ENABLED")
     private boolean enabled;
 
     @ManyToOne
+    @JoinColumn(name = "role_ID")
     private Role role;
 
-    @OneToOne (cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private UserProfile userProfile;
 
     public UserProfile getUserProfile() {
@@ -55,6 +56,7 @@ public class User {
 
     public User() {
     }
+
     public int getId() {
         return id;
     }

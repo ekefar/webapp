@@ -14,6 +14,6 @@ public interface UserRegistrationService {
     public void requestActivation(User user);
 
     public void activateUser(String activationKey);
-    
+
 
 }

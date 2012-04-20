@@ -1,6 +1,7 @@
 package com.teamdev.webapp1.service;
 
 import com.teamdev.webapp1.dao.UserDAO;
+import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,22 +21,25 @@ import java.util.List;
 public class UserManagerImpl implements UserManager {
 
     UserDAO userDAO;
+    UserRepository userRepository;
 
     @Autowired
-    public UserManagerImpl(UserDAO userDAO) {
+    public UserManagerImpl(UserDAO userDAO, UserRepository userRepository) {
         this.userDAO = userDAO;
+        this.userRepository = userRepository;
     }
 
     @Override
     @Transactional
     public User getUser(int id) {
-        return userDAO.getUser(id);
+        return userRepository.findOne(id);
     }
 
     @Override
     @Transactional
     public User getUserByName(String name) {
-        return userDAO.getUserByName(name);
+        return userRepository.findByLogin(name);
+
     }
 
     @Override
@@ -56,10 +60,6 @@ public class UserManagerImpl implements UserManager {
         userDAO.removeUser(id);
     }
 
-    @Override
-    public void findUser(User user) {
-        userDAO.findUser(user);
-    }
 
     @Override
     @Transactional
