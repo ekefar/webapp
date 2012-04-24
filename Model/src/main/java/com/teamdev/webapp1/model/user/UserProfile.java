@@ -1,4 +1,4 @@
-package com.teamdev.webapp1.model;
+package com.teamdev.webapp1.model.user;
 
 import javax.persistence.*;
 

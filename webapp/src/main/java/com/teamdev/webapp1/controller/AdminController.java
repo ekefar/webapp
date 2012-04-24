@@ -1,12 +1,13 @@
 package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
-import com.teamdev.webapp1.model.User;
+import com.teamdev.webapp1.model.user.User;
 import com.teamdev.webapp1.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,13 +25,17 @@ import java.net.URLDecoder;
 @Controller
 public class AdminController {
 
+    private final UserManager userManager;
+
     @Autowired
-    UserManager userManager;
+    public AdminController(UserManager userManager) {
+        this.userManager = userManager;
+    }
 
     @RequestMapping(value = "/Admin/EditUsers", method = RequestMethod.GET)
-    public void listUsers(HttpServletResponse response) throws IOException {
-        String usersList = new Gson().toJson(userManager.listUsers());
-        response.getWriter().write(usersList);
+    @ResponseBody
+    public String listUsers() {
+        return new Gson().toJson(userManager.listUsers());
     }
 
 
@@ -42,10 +47,10 @@ public class AdminController {
 
         User userChangesRequest = new Gson().fromJson(jsonObject, User.class);
 
-        User userToChange = userManager.getUserByName(userChangesRequest.getLogin());
+        User userToChange = userManager.findByLogin(userChangesRequest.getLogin());
 
         userToChange.setEnabled(userChangesRequest.isEnabled());
-        userManager.updateUser(userToChange);
+        userManager.update(userToChange);
 
     }
 }

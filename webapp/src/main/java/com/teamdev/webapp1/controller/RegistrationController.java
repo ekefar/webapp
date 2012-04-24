@@ -1,10 +1,9 @@
 package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
-import com.teamdev.webapp1.dao.RoleDAO;
-import com.teamdev.webapp1.model.Role;
-import com.teamdev.webapp1.model.User;
-import com.teamdev.webapp1.service.MailService;
+import com.teamdev.webapp1.model.user.Role;
+import com.teamdev.webapp1.model.user.Roles;
+import com.teamdev.webapp1.model.user.User;
 import com.teamdev.webapp1.service.UserRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,14 +25,12 @@ import java.net.URLDecoder;
 @Controller
 public class RegistrationController {
 
-    @Autowired
-    private UserRegistrationService userRegistrationService;
+    private final UserRegistrationService userRegistrationService;
 
     @Autowired
-    private MailService mailSender;
-
-    @Autowired
-    RoleDAO roleDAO;
+    public RegistrationController(UserRegistrationService userRegistrationService) {
+        this.userRegistrationService = userRegistrationService;
+    }
 
     @RequestMapping(value = "/Register", method = RequestMethod.GET)
     public String requestRegisterPage() {
@@ -48,7 +45,7 @@ public class RegistrationController {
         User user = new Gson().fromJson(jsonObject, User.class);
 
         user.setUserProfile(null);
-        user.setRole(new Role(1, "ROLE_USER"));
+        user.setRole(new Role(Roles.ROLE_USER));
         user.setEnabled(false);
 
         userRegistrationService.requestActivation(user);

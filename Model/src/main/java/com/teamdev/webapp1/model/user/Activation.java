@@ -1,4 +1,4 @@
-package com.teamdev.webapp1.model;
+package com.teamdev.webapp1.model.user;
 
 import javax.persistence.*;
 
@@ -23,7 +23,6 @@ public class Activation {
     private String activationKey;
 
     @OneToOne
-    @JoinColumn(name = "user_ID", updatable = false)
     private User user;
 
     public Activation() {

@@ -3,10 +3,17 @@
 
     <persistence-unit name="persistUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <class>com.teamdev.webapp1.model.User</class>
-        <class>com.teamdev.webapp1.model.Role</class>
-        <class>com.teamdev.webapp1.model.UserProfile</class>
-        <class>com.teamdev.webapp1.model.Activation</class>
+        <class>com.teamdev.webapp1.model.user.User</class>
+        <class>com.teamdev.webapp1.model.user.Role</class>
+        <class>com.teamdev.webapp1.model.user.UserProfile</class>
+        <class>com.teamdev.webapp1.model.user.Activation</class>
+        <class>com.teamdev.webapp1.model.product.Product</class>
+        <class>com.teamdev.webapp1.model.product.Category</class>
+        <class>com.teamdev.webapp1.model.product.Unit</class>
+        <class>com.teamdev.webapp1.model.order.Order</class>
+        <class>com.teamdev.webapp1.model.order.OrderDetails</class>
+        <class>com.teamdev.webapp1.model.order.Offer</class>
+
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.show_sql" value="true"/>

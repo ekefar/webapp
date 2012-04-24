@@ -1,6 +1,6 @@
 package com.teamdev.webapp1.service;
 
-import com.teamdev.webapp1.model.User;
+import com.teamdev.webapp1.model.user.User;
 
 import java.util.List;
 
@@ -13,17 +13,16 @@ import java.util.List;
  */
 public interface UserManager {
 
-    User getUser(int id);
+    User find(int id);
 
-    User getUserByName(String name);
+    User findByLogin(String login);
 
-    void updateUser(User user);
+    void update(User user);
 
-    void addUser(User user);
+    User save(User user);
 
-    void removeUser(int id);
+    void delete(int id);
 
-    public List<User> listUsers();
-
+    List<User> listUsers();
 
 }

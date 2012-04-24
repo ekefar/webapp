@@ -1,8 +1,8 @@
 package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
-import com.teamdev.webapp1.model.User;
-import com.teamdev.webapp1.model.UserProfile;
+import com.teamdev.webapp1.model.user.User;
+import com.teamdev.webapp1.model.user.UserProfile;
 import com.teamdev.webapp1.service.UserManager;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +61,7 @@ public class UserSettingsController {
             userProfile.setId(user.getUserProfile().getId());
 
         user.setUserProfile(userProfile);
-        userManager.updateUser(user);
+        userManager.update(user);
     }
 
     @RequestMapping(value = "/Profile/avatar", method = RequestMethod.GET)
@@ -80,7 +80,7 @@ public class UserSettingsController {
 
         user.getUserProfile().setAvatar(IOUtils.toByteArray(inputStream));
 
-        userManager.updateUser(user);
+        userManager.update(user);
 
         return "{'success':true}";
     }
@@ -88,7 +88,7 @@ public class UserSettingsController {
 
     private User getUser(HttpServletRequest request) {
         String userName = request.getUserPrincipal().getName();
-        return userManager.getUserByName(userName);
+        return userManager.findByLogin(userName);
     }
 
 

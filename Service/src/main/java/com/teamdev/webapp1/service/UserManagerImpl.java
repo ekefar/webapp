@@ -2,7 +2,7 @@ package com.teamdev.webapp1.service;
 
 import com.teamdev.webapp1.dao.UserDAO;
 import com.teamdev.webapp1.dao.UserRepository;
-import com.teamdev.webapp1.model.User;
+import com.teamdev.webapp1.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,39 +31,40 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     @Transactional
-    public User getUser(int id) {
+    public User find(int id) {
         return userRepository.findOne(id);
     }
 
     @Override
     @Transactional
-    public User getUserByName(String name) {
-        return userRepository.findByLogin(name);
-
+    public User findByLogin(String login) {
+        return userRepository.findByLogin(login);
     }
 
     @Override
     @Transactional
-    public void updateUser(User user) {
+    public void update(User user) {
+
+        //userRepository.updateEntity(user);
         userDAO.updateUser(user);
     }
 
     @Override
     @Transactional
-    public void addUser(User user) {
-        userDAO.addUser(user);
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
     @Override
     @Transactional
-    public void removeUser(int id) {
-        userDAO.removeUser(id);
+    public void delete(int id) {
+        userRepository.delete(id);
     }
 
 
     @Override
     @Transactional
     public List<User> listUsers() {
-        return userDAO.listUsers();
+        return userRepository.findAll();
     }
 }

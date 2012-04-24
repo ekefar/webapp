@@ -1,11 +1,8 @@
 package com.teamdev.webapp1.service;
 
-import com.teamdev.webapp1.dao.ActivationDAO;
 import com.teamdev.webapp1.dao.ActivationRepository;
-import com.teamdev.webapp1.dao.UserDAO;
-import com.teamdev.webapp1.dao.UserRepository;
-import com.teamdev.webapp1.model.Activation;
-import com.teamdev.webapp1.model.User;
+import com.teamdev.webapp1.model.user.Activation;
+import com.teamdev.webapp1.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,36 +18,29 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserRegistrationServiceImpl implements UserRegistrationService {
 
-    @Autowired
-    private UserDAO userDAO;
+    private final UserManager userManager;
+    private final MailService mailSender;
+    private final ActivationRepository activationRepository;
 
     @Autowired
-    private MailService mailSender;
-
-    @Autowired
-    private ActivationDAO activationDAO;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    ActivationRepository activationRepository;
-
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserRegistrationServiceImpl(UserManager userManager,
+                                       MailService mailSender,
+                                       ActivationRepository activationRepository) {
+        this.userManager = userManager;
+        this.mailSender = mailSender;
+        this.activationRepository = activationRepository;
     }
 
     @Override
     @Transactional
     public void activateUser(String activationKey) {
-        Activation activation = activationDAO.getActivationByKey(activationKey);
+        Activation activation = activationRepository.findByActivationKey(activationKey);
 
         if (activation != null) {
             User user = activation.getUser();
             user.setEnabled(true);
-            userDAO.updateUser(user);
-            activationDAO.removeActivation(activation);
-
+            userManager.update(user);
+            activationRepository.delete(activation);
             sendActivationSuccessLetter(user);
         }
     }
@@ -58,15 +48,15 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     @Override
     @Transactional
     public void requestActivation(User user) {
-        userDAO.addUser(user);
-        //userRepository.save(user);
+        User userToRequest = userManager.save(user);
 
-        Activation userActivation = new Activation(createUserActivationKey(user));
-        userActivation.setUser(user);
+        Activation userActivation = new Activation(createUserActivationKey(userToRequest));
+        userActivation.setUser(userToRequest);
         activationRepository.save(userActivation);
 
-        sendConfirmationLetter(user);
+        sendConfirmationLetter(userToRequest);
     }
+
 
     public String createUserActivationKey(User user) {
         return user.getLogin();

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     @RequestMapping({"/index", "/"})
-    public String indexRequest(Model model) {
+    public String indexRequest() {
         return "Login";
     }
 

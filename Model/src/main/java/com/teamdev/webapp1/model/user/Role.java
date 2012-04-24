@@ -1,4 +1,4 @@
-package com.teamdev.webapp1.model;
+package com.teamdev.webapp1.model.user;
 
 import javax.persistence.*;
 
@@ -14,6 +14,13 @@ import javax.persistence.*;
 @Table(name = "ROLES")
 public class Role {
 
+    public Role() {
+    }
+
+    public Role(Roles roles) {
+        name = roles.name();
+    }
+
     @Id
     @Column(name = "ID")
     @GeneratedValue
@@ -21,18 +28,6 @@ public class Role {
 
     @Column(name = "NAME")
     private String name;
-
-    public Role(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Role(String name) {
-        this.name = name;
-    }
-
-    public Role() {
-    }
 
     public int getId() {
         return id;

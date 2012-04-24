@@ -5,10 +5,10 @@
 
 <hibernate-configuration>
     <session-factory>
-        <mapping class="com.teamdev.webapp1.model.User"/>
-        <mapping class="com.teamdev.webapp1.model.Role"/>
-        <mapping class="com.teamdev.webapp1.model.Activation"/>
-        <mapping class="com.teamdev.webapp1.model.UserProfile"/>
+        <mapping class="com.teamdev.webapp1.model.user.User"/>
+        <mapping class="com.teamdev.webapp1.model.user.Role"/>
+        <mapping class="com.teamdev.webapp1.model.user.Activation"/>
+        <mapping class="com.teamdev.webapp1.model.user.UserProfile"/>
 
     </session-factory>
 </hibernate-configuration>

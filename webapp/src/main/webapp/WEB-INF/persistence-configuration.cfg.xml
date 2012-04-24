@@ -61,10 +61,16 @@
         </property>
         <property name="annotatedClasses">
             <list>
-                <value>com.teamdev.webapp1.model.User</value>
-                <value>com.teamdev.webapp1.model.UserProfile</value>
-                <value>com.teamdev.webapp1.model.Activation</value>
-                <value>com.teamdev.webapp1.model.Role</value>
+                <value>com.teamdev.webapp1.model.user.User</value>
+                <value>com.teamdev.webapp1.model.user.UserProfile</value>
+                <value>com.teamdev.webapp1.model.user.Activation</value>
+                <value>com.teamdev.webapp1.model.user.Role</value>
+                <value>com.teamdev.webapp1.model.product.Product</value>
+                <value>com.teamdev.webapp1.model.product.Category</value>
+                <value>com.teamdev.webapp1.model.product.Unit</value>
+                <value>com.teamdev.webapp1.model.order.Offer</value>
+                <value>com.teamdev.webapp1.model.order.Order</value>
+                <value>com.teamdev.webapp1.model.order.OrderDetails</value>
             </list>
         </property>
     </bean>

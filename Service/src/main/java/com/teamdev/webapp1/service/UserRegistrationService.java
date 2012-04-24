@@ -1,6 +1,6 @@
 package com.teamdev.webapp1.service;
 
-import com.teamdev.webapp1.model.User;
+import com.teamdev.webapp1.model.user.User;
 
 /**
  * Created by IntelliJ IDEA.

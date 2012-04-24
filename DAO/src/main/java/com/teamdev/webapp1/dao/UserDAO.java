@@ -1,6 +1,6 @@
 package com.teamdev.webapp1.dao;
 
-import com.teamdev.webapp1.model.User;
+import com.teamdev.webapp1.model.user.User;
 
 import java.util.List;
 

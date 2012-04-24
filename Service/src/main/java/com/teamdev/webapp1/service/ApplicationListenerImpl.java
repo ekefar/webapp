@@ -1,7 +1,14 @@
 package com.teamdev.webapp1.service;
 
-import com.teamdev.webapp1.dao.RoleDAO;
-import com.teamdev.webapp1.model.Role;
+import com.teamdev.webapp1.dao.CategoriesRepository;
+import com.teamdev.webapp1.dao.ProductRepository;
+import com.teamdev.webapp1.dao.RoleRepository;
+import com.teamdev.webapp1.dao.UnitRepository;
+import com.teamdev.webapp1.model.product.Category;
+import com.teamdev.webapp1.model.product.Product;
+import com.teamdev.webapp1.model.product.Unit;
+import com.teamdev.webapp1.model.user.Role;
+import com.teamdev.webapp1.model.user.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -16,26 +23,36 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class ApplicationListenerImpl implements ApplicationListener<ContextRefreshedEvent> {
 
+
+    private final RoleRepository roleRepository;
+    private final ProductRepository productRepository;
+    private final UnitRepository unitRepository;
+    private final CategoriesRepository categoriesRepository;
+
     @Autowired
-    RoleDAO roleDAO;
+    public ApplicationListenerImpl(RoleRepository roleRepository,
+                                   ProductRepository productRepository,
+                                   UnitRepository unitRepository,
+                                   CategoriesRepository categoriesRepository) {
+        this.roleRepository = roleRepository;
+        this.productRepository = productRepository;
+        this.unitRepository = unitRepository;
+        this.categoriesRepository = categoriesRepository;
+    }
 
 
-    @Autowired
-    UserManager userManager;
 
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        System.out.println("Context refreshed !@#!@#");
 
-        if (roleDAO.getUserRole() == null) {
-            roleDAO.addRole(new Role("ROLE_USER"));
+        if (roleRepository.findByName(Roles.ROLE_USER.name()) == null) {
+            roleRepository.save(new Role(Roles.ROLE_USER));
         }
 
-        if (roleDAO.getAdminRole() == null) {
-            roleDAO.addRole(new Role("ROLE_ADMIN"));
+        if (roleRepository.findByName(Roles.ROLE_ADMIN.name()) == null) {
+            roleRepository.save(new Role(Roles.ROLE_ADMIN));
         }
-
 
     }
 
