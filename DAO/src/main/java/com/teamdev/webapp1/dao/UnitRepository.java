@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  * Date: 24.04.12
  */
 public interface UnitRepository extends CrudRepository<Unit, Integer> {
+    Unit findByName(String name);
 }

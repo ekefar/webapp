@@ -12,7 +12,7 @@ import java.util.List;
  * Time: 22:53
  * To change this template use File | Settings | File Templates.
  */
-public interface UserRepository extends CrudRepository<User, Integer>{
+public interface UserRepository extends CrudRepository<User, Integer> {
 
     User findByLogin(String login);
 

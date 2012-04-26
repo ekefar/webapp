@@ -1,10 +1,15 @@
 package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.teamdev.webapp1.dao.CategoriesRepository;
 import com.teamdev.webapp1.dao.ProductRepository;
 import com.teamdev.webapp1.dao.UnitRepository;
+import com.teamdev.webapp1.model.product.Category;
 import com.teamdev.webapp1.model.product.Product;
+import com.teamdev.webapp1.model.product.Unit;
 import com.teamdev.webapp1.model.user.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,10 +50,18 @@ public class ProductController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void addProduct(HttpServletRequest request) throws IOException {
-        String jsonProduct = request.getReader().readLine();
-        jsonProduct = URLDecoder.decode(jsonProduct, "UTF-8");
+        String productStringRepresentation = request.getReader().readLine();
+        productStringRepresentation = URLDecoder.decode(productStringRepresentation, "UTF-8");
 
-        Product product = new Gson().fromJson(jsonProduct, Product.class);
+        JsonObject productJsonRepresentation = new JsonParser().parse(productStringRepresentation).getAsJsonObject();
+        String categoryName = productJsonRepresentation.get("category").getAsString();
+        String unitName = productJsonRepresentation.get("unit").getAsString();
+        String productName = productJsonRepresentation.get("product").getAsString();
+
+        Category category = categoriesRepository.findByName(categoryName);
+        Unit unit = unitRepository.findByName(unitName);
+
+        Product product = new Product(productName, unit, category);
         productRepository.save(product);
     }
 

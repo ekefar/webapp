@@ -78,7 +78,7 @@
                     Name:
                 </td>
                 <td>
-                    <input type="text" name="name" id="name" size="50" value=""/>
+                    <input type="text" name="product" id="name" size="50" value=""/>
                 </td>
             </tr>
 

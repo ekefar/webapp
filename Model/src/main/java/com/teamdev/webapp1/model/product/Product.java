@@ -37,7 +37,11 @@ public class Product {
     public Product() {
     }
 
-
+    public Product(String name, Unit unit, Category category) {
+        this.name = name;
+        this.unit = unit;
+        this.category = category;
+    }
 
     public int getId() {
         return id;
