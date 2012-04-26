@@ -1,6 +1,5 @@
 package com.teamdev.webapp1.service;
 
-import com.teamdev.webapp1.dao.UserDAO;
 import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +19,10 @@ import java.util.List;
 @Service
 public class UserManagerImpl implements UserManager {
 
-    UserDAO userDAO;
     UserRepository userRepository;
 
     @Autowired
-    public UserManagerImpl(UserDAO userDAO, UserRepository userRepository) {
-        this.userDAO = userDAO;
+    public UserManagerImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -44,9 +41,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     @Transactional
     public void update(User user) {
-
-        //userRepository.updateEntity(user);
-        userDAO.updateUser(user);
+        userRepository.save(user);
     }
 
     @Override

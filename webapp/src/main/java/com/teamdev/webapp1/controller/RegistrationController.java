@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -38,12 +39,12 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/Register", method = RequestMethod.POST)
-    public String registerUser(HttpServletRequest request) throws IOException {
+    public String registerUser(@RequestParam(value = "login") String login,
+                               @RequestParam(value = "password") String password,
+                               @RequestParam(value = "email") String email) throws IOException {
 
-        String jsonObject = "{" + request.getReader().readLine().replace("&", ",") + "}";
-        jsonObject = URLDecoder.decode(jsonObject, "UTF-8");
-        User user = new Gson().fromJson(jsonObject, User.class);
 
+        User user = new User(login, password, email);
         user.setUserProfile(null);
         user.setRole(new Role(Roles.ROLE_USER));
         user.setEnabled(false);

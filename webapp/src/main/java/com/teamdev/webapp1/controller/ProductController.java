@@ -1,25 +1,19 @@
 package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.teamdev.webapp1.dao.CategoriesRepository;
 import com.teamdev.webapp1.dao.ProductRepository;
 import com.teamdev.webapp1.dao.UnitRepository;
 import com.teamdev.webapp1.model.product.Category;
 import com.teamdev.webapp1.model.product.Product;
-import com.teamdev.webapp1.model.product.Unit;
-import com.teamdev.webapp1.model.user.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.net.URLDecoder;
+import java.util.Map;
 
 /**
  * Author: Alexander Serebriyan
@@ -44,25 +38,24 @@ public class ProductController {
 
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String showAddPage() {
+    public String showAddPage(Map<String, Object> model) {
+        model.put("categoryList", categoriesRepository.findAll());
+        model.put("unitList", unitRepository.findAll());
         return "addProduct";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void addProduct(HttpServletRequest request) throws IOException {
-        String productStringRepresentation = request.getReader().readLine();
-        productStringRepresentation = URLDecoder.decode(productStringRepresentation, "UTF-8");
+    public String addCategory(@RequestParam(value = "product") String productName,
+                              @RequestParam(value = "category") String categoryName,
+                              @RequestParam(value = "unit") String unitName) {
 
-        JsonObject productJsonRepresentation = new JsonParser().parse(productStringRepresentation).getAsJsonObject();
-        String categoryName = productJsonRepresentation.get("category").getAsString();
-        String unitName = productJsonRepresentation.get("unit").getAsString();
-        String productName = productJsonRepresentation.get("product").getAsString();
+        Product product = new Product(
+                productName,
+                unitRepository.findByName(unitName),
+                categoriesRepository.findByName(categoryName));
 
-        Category category = categoriesRepository.findByName(categoryName);
-        Unit unit = unitRepository.findByName(unitName);
-
-        Product product = new Product(productName, unit, category);
         productRepository.save(product);
+        return "addProduct";
     }
 
     @RequestMapping("/listCategories")

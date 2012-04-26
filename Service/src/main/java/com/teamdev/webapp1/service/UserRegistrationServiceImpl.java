@@ -1,6 +1,7 @@
 package com.teamdev.webapp1.service;
 
 import com.teamdev.webapp1.dao.ActivationRepository;
+import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.user.Activation;
 import com.teamdev.webapp1.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserRegistrationServiceImpl implements UserRegistrationService {
 
-    private final UserManager userManager;
+    private final UserRepository userRepository;
     private final MailService mailSender;
     private final ActivationRepository activationRepository;
 
     @Autowired
-    public UserRegistrationServiceImpl(UserManager userManager,
+    public UserRegistrationServiceImpl(UserRepository userManager,
                                        MailService mailSender,
                                        ActivationRepository activationRepository) {
-        this.userManager = userManager;
+        this.userRepository = userManager;
         this.mailSender = mailSender;
         this.activationRepository = activationRepository;
     }
@@ -39,7 +40,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         if (activation != null) {
             User user = activation.getUser();
             user.setEnabled(true);
-            userManager.update(user);
+            userRepository.save(user);
             activationRepository.delete(activation);
             sendActivationSuccessLetter(user);
         }
@@ -48,7 +49,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     @Override
     @Transactional
     public void requestActivation(User user) {
-        User userToRequest = userManager.save(user);
+        User userToRequest = userRepository.save(user);
 
         Activation userActivation = new Activation(createUserActivationKey(userToRequest));
         userActivation.setUser(userToRequest);

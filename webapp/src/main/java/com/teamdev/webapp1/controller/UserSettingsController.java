@@ -1,9 +1,9 @@
 package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
+import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.user.User;
 import com.teamdev.webapp1.model.user.UserProfile;
-import com.teamdev.webapp1.service.UserManager;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,8 +29,12 @@ import java.net.URLDecoder;
 @RequestMapping("/Settings")
 public class UserSettingsController {
 
+    private final UserRepository userRepository;
+
     @Autowired
-    UserManager userManager;
+    public UserSettingsController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @RequestMapping(value = "/Account", method = RequestMethod.GET)
     public String showAccountSettings() {
@@ -53,15 +57,15 @@ public class UserSettingsController {
         String jsonObject = "{" + request.getReader().readLine().replace("&", ",") + "}";
         jsonObject = URLDecoder.decode(jsonObject, "UTF-8");
 
-        UserProfile userProfile = new Gson().fromJson(jsonObject, UserProfile.class);
+        final UserProfile userProfile = new Gson().fromJson(jsonObject, UserProfile.class);
 
-        User user = getUser(request);
+        final User user = getUser(request);
 
         if (user.getUserProfile() != null)
             userProfile.setId(user.getUserProfile().getId());
 
         user.setUserProfile(userProfile);
-        userManager.update(user);
+        userRepository.save(user);
     }
 
     @RequestMapping(value = "/Profile/avatar", method = RequestMethod.GET)
@@ -74,21 +78,21 @@ public class UserSettingsController {
     @RequestMapping(value = "/Profile/avatar", method = RequestMethod.POST)
     public String setUserAvatar(HttpServletRequest request) throws IOException {
 
-        User user = getUser(request);
+        final User user = getUser(request);
 
-        InputStream inputStream = request.getInputStream();
+        final InputStream inputStream = request.getInputStream();
 
         user.getUserProfile().setAvatar(IOUtils.toByteArray(inputStream));
 
-        userManager.update(user);
+        userRepository.save(user);
 
         return "{'success':true}";
     }
 
 
     private User getUser(HttpServletRequest request) {
-        String userName = request.getUserPrincipal().getName();
-        return userManager.findByLogin(userName);
+        final String userName = request.getUserPrincipal().getName();
+        return userRepository.findByLogin(userName);
     }
 
 

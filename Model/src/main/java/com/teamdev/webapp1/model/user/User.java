@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "USERS")
 public class User {
-
     @Id
     @GeneratedValue
     @Column(name = "ID")
@@ -32,7 +31,7 @@ public class User {
     private boolean enabled;
 
     @ManyToOne
-    @JoinColumn(name = "role_ID")
+    @JoinColumn(name = "role_ID", insertable = false, updatable = false)
     private Role role;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -55,6 +54,12 @@ public class User {
     }
 
     public User() {
+    }
+
+    public User(String login, String password, String email) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
     }
 
     public int getId() {

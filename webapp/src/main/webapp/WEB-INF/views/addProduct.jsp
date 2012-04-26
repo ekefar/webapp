@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
 
@@ -22,48 +25,11 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            fillCategories();
-            fillUnits();
 
             $("#add_btn").click(function () {
-                $.post("/product/add", JSON.stringify($("#profile_form").serializeObject()), 'json');
-                return false;
+                $.post("/product/add", $('#product_form').serialize(), 'json');
             });
         });
-
-        $.fn.serializeObject = function () {
-            var o = {};
-            var a = this.serializeArray();
-            $.each(a, function () {
-                if (o[this.name] !== undefined) {
-                    if (!o[this.name].push) {
-                        o[this.name] = [o[this.name]];
-                    }
-                    o[this.name].push(this.value || '');
-                } else {
-                    o[this.name] = this.value || '';
-                }
-            });
-            return o;
-        };
-
-        function fillCategories() {
-            $.getJSON("/product/listCategories", function (result) {
-                var categories = $("#categories");
-                $.each(result, function () {
-                    categories.append($("<option />").text(this.name));
-                });
-            });
-        }
-
-        function fillUnits() {
-            $.getJSON("/product/listUnits", function (result) {
-                var units = $("#units");
-                $.each(result, function () {
-                    units.append($("<option />").text(this.name));
-                });
-            });
-        }
 
     </script>
 
@@ -71,7 +37,7 @@
 <body>
 <div id="profile_settings">
 
-    <form id="profile_form">
+    <form id="product_form" action="/product/add">
         <table>
             <tr>
                 <td>
@@ -87,7 +53,11 @@
                     Category:
                 </td>
                 <td>
-                    <select id="categories" name="category"></select>
+                    <select id="categories" name="category">
+                        <c:forEach items="${categoryList}" var="category">
+                            <option>${category.name}</option>
+                        </c:forEach>
+                    </select>
                 </td>
             </tr>
 
@@ -96,7 +66,11 @@
                     Unit:
                 </td>
                 <td>
-                    <select id="units" name="unit"></select>
+                    <select id="units" name="unit">
+                        <c:forEach items="${unitList}" var="unit">
+                            <option >${unit.name}</option>
+                        </c:forEach>
+                    </select>
                 </td>
             </tr>
 
@@ -110,5 +84,6 @@
         </table>
     </form>
 </div>
+
 </body>
 </html>

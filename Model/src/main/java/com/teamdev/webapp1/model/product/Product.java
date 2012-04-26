@@ -33,6 +33,9 @@ public class Product {
     private Category category;
 
 
+    @Embedded
+    Producer producer;
+
 
     public Product() {
     }
@@ -81,5 +84,13 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Producer getProducer() {
+        return producer;
+    }
+
+    public void setProducer(Producer producer) {
+        this.producer = producer;
     }
 }
