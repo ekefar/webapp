@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -47,7 +48,6 @@ public class UserSettingsController {
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public void getProfileSettings(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final User user = userManager.getUser(request);
-        //final UserProfile userProfile = user.getUserProfile();
         final String userInfo = new Gson().toJson(user);
         response.getWriter().write(userInfo);
     }
@@ -59,19 +59,20 @@ public class UserSettingsController {
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
-    public void saveProfileSettings(HttpServletRequest request,
-                                    @RequestParam(value = "name") String userName,
-                                    @RequestParam(value = "age") Byte age,
-                                    @RequestParam(value = "skype") String skype,
-                                    @RequestParam(value = "hobby") String hobby) {
+    public String saveProfileSettings(HttpServletRequest request,
+                                      @RequestParam(value = "name") String userName,
+                                      @RequestParam(value = "dateOfBirth") Date dateOfBirth,
+                                      @RequestParam(value = "skype") String skype,
+                                      @RequestParam(value = "hobby") String hobby) {
 
         final User user = userManager.getUser(request);
         user.setName(userName);
-        user.setAge(age);
+        user.setDateOfBirth(dateOfBirth);
         user.setSkype(skype);
         user.setHobby(hobby);
-
         userRepository.save(user);
+
+        return "profile";
     }
 
     @ResponseBody

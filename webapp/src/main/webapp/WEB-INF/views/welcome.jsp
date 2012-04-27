@@ -12,6 +12,9 @@
     <script type="text/javascript" src="../resources/js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
     <script src="../resources/js/fileuploader.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../resources/js/jquery.validate.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../resources/js/jquery.form.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../resources/js/jquery.maskedinput-1.3.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -22,7 +25,7 @@
                 hideSettingsValues();
                 $.getJSON("/settings/profile", function (data) {
                     $("#name").val(data.name);
-                    $("#age").val(data.age);
+                    $("#dateOfBirth").val(data.dateOfBirth);
                     $("#skype").val(data.skype);
                     $("#hobby").val(data.hobby);
                 });
@@ -48,6 +51,7 @@
             $('#profile_submit').click(function () {
                 $.post("/settings/profile", $('#profile_form').serialize());
             });
+
 
             var uploader = new qq.FileUploader({
                 // pass the dom node (ex. $(selector)[0] for jQuery users)
@@ -76,6 +80,7 @@
     <script type="text/javascript">
         $(function () {
             $("a, button").button();
+            $("#dateOfBirth").datepicker();
         });
 
         var updateImage = function () {
@@ -111,13 +116,12 @@
         </div>
 
         <div>
-            <a id="other1_btn" class="navigation_btn" href="#other1">Other 1</a>
+            <a id="offer_btn" class="navigation_btn" href="/product/addOffer">Other 1</a>
         </div>
 
         <div>
             <a id="other2_btn" class="navigation_btn" href="#other2">Other 2</a>
         </div>
-
 
         <div>
             <a id="other3_btn" class="navigation_btn" href="#other3">Other 3</a>
@@ -141,10 +145,10 @@
 
                     <tr>
                         <td>
-                            Age:
+                            Date of birth:
                         </td>
                         <td>
-                            <input type="text" name="age" id="age" size="50" value=""/>
+                            <input type="text" name="dateOfBirth" id="dateOfBirth" size="50" value=""/>
                         </td>
                     </tr>
 
@@ -202,7 +206,6 @@
         <div id="other1"> Some other settings/</div>
 
         <div id="other2"> And another settings/</div>
-
 
         <div id="other3"> And another settings once more!</div>
 

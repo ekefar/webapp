@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * Time: 21:38
  * To change this template use File | Settings | File Templates.
  */
+
 @Controller
 public class RegistrationController {
 

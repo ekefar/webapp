@@ -1,14 +1,17 @@
 package com.teamdev.webapp1.controller;
 
+import com.google.gson.Gson;
 import com.teamdev.webapp1.dao.CategoriesRepository;
 import com.teamdev.webapp1.dao.ProductRepository;
 import com.teamdev.webapp1.dao.UnitRepository;
+import com.teamdev.webapp1.model.product.Category;
 import com.teamdev.webapp1.model.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
 
@@ -41,6 +44,11 @@ public class ProductController {
         return "addProduct";
     }
 
+    @RequestMapping(value = "/addOffer", method = RequestMethod.GET)
+    public String showAddOfferPage() {
+        return "addOffer";
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addCategory(@RequestParam(value = "product") String productName,
                               @RequestParam(value = "category") String categoryName,
@@ -53,5 +61,18 @@ public class ProductController {
 
         productRepository.save(product);
         return "addProduct";
+    }
+
+    @RequestMapping("/listCategories")
+    @ResponseBody
+    public String listCategories() {
+        return new Gson().toJson(categoriesRepository.findAll());
+    }
+
+    @RequestMapping("/listProducts")
+    @ResponseBody
+    public String listProducts(@RequestParam(value = "category") String categoryName) {
+        Category category = categoriesRepository.findByName(categoryName);
+        return new Gson().toJson(productRepository.findByCategory(category));
     }
 }

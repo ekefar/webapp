@@ -31,9 +31,19 @@ public class Offer {
     @Column(name = "PRICE", nullable = false)
     private double price;
 
+    @Column(name = "DESCRIPTION")
+    private String description;
+
     public Offer() {
     }
 
+    public Offer(User user, Product product, int amount, double price, String description) {
+        this.user = user;
+        this.product = product;
+        this.amount = amount;
+        this.price = price;
+        this.description = description;
+    }
 
     public int getId() {
         return id;
@@ -73,5 +83,13 @@ public class Offer {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

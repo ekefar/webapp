@@ -2,6 +2,7 @@ package com.teamdev.webapp1.model.user;
 
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -38,9 +39,9 @@ public class User {
     @Basic(fetch = FetchType.LAZY)
     private String name;
 
-    @Column(name = "AGE")
+    @Column(name = "DATE_OF_BIRTH")
     @Basic(fetch = FetchType.LAZY)
-    private Byte age;
+    private Date dateOfBirth;
 
     @Column(name = "SKYPE")
     @Basic(fetch = FetchType.LAZY)
@@ -120,12 +121,13 @@ public class User {
         this.name = name;
     }
 
-    public Byte getAge() {
-        return age;
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setAge(Byte age) {
-        this.age = age;
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getSkype() {
