@@ -1,15 +1,13 @@
 package com.teamdev.webapp1.controller;
 
+import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.user.Role;
 import com.teamdev.webapp1.model.user.Roles;
 import com.teamdev.webapp1.model.user.User;
 import com.teamdev.webapp1.service.UserRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,6 +22,9 @@ public class RegistrationController {
     private final UserRegistrationService userRegistrationService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     public RegistrationController(UserRegistrationService userRegistrationService) {
         this.userRegistrationService = userRegistrationService;
     }
@@ -31,6 +32,21 @@ public class RegistrationController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String requestRegisterPage() {
         return "signup";
+    }
+
+
+    @RequestMapping("/register/email/check")
+    @ResponseBody
+    public String checkEmail(@RequestParam("email") String email) {
+        User user = userRepository.findByEmail(email);
+        return Boolean.toString(user == null);
+    }
+
+    @RequestMapping("/register/login/check")
+    @ResponseBody
+    public String checkLogin(@RequestParam("login") String login) {
+        User user = userRepository.findByLogin(login);
+        return Boolean.toString(user == null);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -45,7 +61,7 @@ public class RegistrationController {
 
         userRegistrationService.requestActivation(user);
 
-        return "redirect:/welcome";
+        return "login";
     }
 
     @RequestMapping(value = "/activation/{activationKey}")

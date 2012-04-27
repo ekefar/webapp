@@ -68,7 +68,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         message.append("Welcome, " + user.getLogin() + "!");
         message.append("\n\n");
         message.append("Your activation link: ");
-        message.append("http://localhost:8080/Activation/");
+        message.append("http://localhost:8080/activation/");
         message.append(createUserActivationKey(user));
         mailSender.Send(user.getEmail(), "ekefar@gmail.com", "Registration success", message.toString());
     }
