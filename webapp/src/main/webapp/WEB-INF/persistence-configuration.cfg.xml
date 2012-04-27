@@ -12,10 +12,6 @@
        http://www.springframework.org/schema/data/jpa
        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <!--<bean id="propertyPlaceholderConfigurer" class="qcs.reportsworkflow.PropertyUtils">
-        <property name="location" value="classpath:/META-INF/dao.xml"/>
-    </bean>   -->
-
     <!-- Instructs Spring to perfrom declarative transaction managemenet on annotated classes -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
@@ -67,7 +63,6 @@
         <property name="annotatedClasses">
             <list>
                 <value>com.teamdev.webapp1.model.user.User</value>
-                <value>com.teamdev.webapp1.model.user.UserProfile</value>
                 <value>com.teamdev.webapp1.model.user.Activation</value>
                 <value>com.teamdev.webapp1.model.user.Role</value>
                 <value>com.teamdev.webapp1.model.product.Product</value>

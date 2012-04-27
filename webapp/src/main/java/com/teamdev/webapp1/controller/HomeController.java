@@ -1,7 +1,6 @@
 package com.teamdev.webapp1.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -17,17 +16,17 @@ public class HomeController {
 
     @RequestMapping({"/index", "/"})
     public String indexRequest() {
-        return "Login";
+        return "login";
     }
 
-    @RequestMapping("/Signup")
+    @RequestMapping("/signup")
     public String signUp() {
-        return "Signup";
+        return "signup";
     }
 
-    @RequestMapping("/EditUsers")
+    @RequestMapping("/editUsers")
     public String editUsers() {
-        return "EditUsers";
+        return "editUsers";
     }
 
 

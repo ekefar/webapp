@@ -5,7 +5,6 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>com.teamdev.webapp1.model.user.User</class>
         <class>com.teamdev.webapp1.model.user.Role</class>
-        <class>com.teamdev.webapp1.model.user.UserProfile</class>
         <class>com.teamdev.webapp1.model.user.Activation</class>
         <class>com.teamdev.webapp1.model.product.Product</class>
         <class>com.teamdev.webapp1.model.product.Category</class>

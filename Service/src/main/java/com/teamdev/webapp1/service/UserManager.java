@@ -2,7 +2,7 @@ package com.teamdev.webapp1.service;
 
 import com.teamdev.webapp1.model.user.User;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,16 +13,7 @@ import java.util.List;
  */
 public interface UserManager {
 
-    User find(int id);
+    String getLogin(HttpServletRequest request);
 
-    User findByLogin(String login);
-
-    void update(User user);
-
-    User save(User user);
-
-    void delete(int id);
-
-    List<User> listUsers();
-
+    User getUser(HttpServletRequest request);
 }

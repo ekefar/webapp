@@ -3,19 +3,19 @@ package com.teamdev.webapp1.controller;
 import com.google.gson.Gson;
 import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.user.User;
-import com.teamdev.webapp1.model.user.UserProfile;
+import com.teamdev.webapp1.service.UserManager;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLDecoder;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,74 +26,66 @@ import java.net.URLDecoder;
  */
 
 @Controller
-@RequestMapping("/Settings")
+@RequestMapping("/settings")
 public class UserSettingsController {
 
     private final UserRepository userRepository;
+    private final UserManager userManager;
 
     @Autowired
-    public UserSettingsController(UserRepository userRepository) {
+    public UserSettingsController(UserRepository userRepository,
+                                  UserManager userManager) {
         this.userRepository = userRepository;
+        this.userManager = userManager;
     }
 
-    @RequestMapping(value = "/Account", method = RequestMethod.GET)
+    @RequestMapping(value = "/account", method = RequestMethod.GET)
     public String showAccountSettings() {
-        return "/Settings/Account";
+        return "/settings/account";
     }
 
-    @RequestMapping(value = "/Profile", method = RequestMethod.GET)
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public void getProfileSettings(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        User user = getUser(request);
-        UserProfile userProfile = user.getUserProfile();
-        String userInfo = new Gson().toJson(userProfile);
+        final User user = userManager.getUser(request);
+        //final UserProfile userProfile = user.getUserProfile();
+        final String userInfo = new Gson().toJson(user);
         response.getWriter().write(userInfo);
-
     }
 
-    @RequestMapping(value = "/Profile", method = RequestMethod.POST)
-    public void saveProfileSettings(HttpServletRequest request) throws IOException {
+    @RequestMapping(value = "/profile/avatar", method = RequestMethod.GET)
+    @ResponseBody
+    public byte[] getUserAvatar(HttpServletRequest request) {
+        return userManager.getUser(request).getAvatar();
+    }
 
-        String jsonObject = "{" + request.getReader().readLine().replace("&", ",") + "}";
-        jsonObject = URLDecoder.decode(jsonObject, "UTF-8");
+    @RequestMapping(value = "/profile", method = RequestMethod.POST)
+    public void saveProfileSettings(HttpServletRequest request,
+                                    @RequestParam(value = "name") String userName,
+                                    @RequestParam(value = "age") Byte age,
+                                    @RequestParam(value = "skype") String skype,
+                                    @RequestParam(value = "hobby") String hobby) {
 
-        final UserProfile userProfile = new Gson().fromJson(jsonObject, UserProfile.class);
+        final User user = userManager.getUser(request);
+        user.setName(userName);
+        user.setAge(age);
+        user.setSkype(skype);
+        user.setHobby(hobby);
 
-        final User user = getUser(request);
-
-        if (user.getUserProfile() != null)
-            userProfile.setId(user.getUserProfile().getId());
-
-        user.setUserProfile(userProfile);
         userRepository.save(user);
     }
 
-    @RequestMapping(value = "/Profile/avatar", method = RequestMethod.GET)
     @ResponseBody
-    public byte[] getUserAvatar(HttpServletRequest request) {
-        return getUser(request).getUserProfile().getAvatar();
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/Profile/avatar", method = RequestMethod.POST)
+    @RequestMapping(value = "/profile/avatar", method = RequestMethod.POST)
     public String setUserAvatar(HttpServletRequest request) throws IOException {
 
-        final User user = getUser(request);
+        final User user = userManager.getUser(request);
 
         final InputStream inputStream = request.getInputStream();
 
-        user.getUserProfile().setAvatar(IOUtils.toByteArray(inputStream));
+        user.setAvatar(IOUtils.toByteArray(inputStream));
 
         userRepository.save(user);
 
         return "{'success':true}";
     }
-
-
-    private User getUser(HttpServletRequest request) {
-        final String userName = request.getUserPrincipal().getName();
-        return userRepository.findByLogin(userName);
-    }
-
-
 }

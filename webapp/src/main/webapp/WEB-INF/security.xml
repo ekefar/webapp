@@ -10,12 +10,12 @@
     <import resource="persistence-configuration.cfg.xml"/>
 
     <security:http auto-config="true">
-        <security:intercept-url pattern="/Welcome*" access="ROLE_ADMIN, ROLE_USER"/>
-        <security:intercept-url pattern="/EditUsers*" access="ROLE_ADMIN"/>
+        <security:intercept-url pattern="/welcome*" access="ROLE_ADMIN, ROLE_USER"/>
+        <security:intercept-url pattern="/editUsers*" access="ROLE_ADMIN"/>
 
-        <security:form-login login-page="/Login" default-target-url="/Welcome"
-                             authentication-failure-url="/Loginfailed"/>
-        <security:logout logout-success-url="/Logout"/>
+        <security:form-login login-page="/login" default-target-url="/welcome"
+                             authentication-failure-url="/loginfailed"/>
+        <security:logout logout-success-url="/logout"/>
     </security:http>
 
     <security:authentication-manager>

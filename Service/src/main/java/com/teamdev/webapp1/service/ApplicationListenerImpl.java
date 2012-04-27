@@ -1,12 +1,6 @@
 package com.teamdev.webapp1.service;
 
-import com.teamdev.webapp1.dao.CategoriesRepository;
-import com.teamdev.webapp1.dao.ProductRepository;
 import com.teamdev.webapp1.dao.RoleRepository;
-import com.teamdev.webapp1.dao.UnitRepository;
-import com.teamdev.webapp1.model.product.Category;
-import com.teamdev.webapp1.model.product.Product;
-import com.teamdev.webapp1.model.product.Unit;
 import com.teamdev.webapp1.model.user.Role;
 import com.teamdev.webapp1.model.user.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,21 +19,11 @@ public class ApplicationListenerImpl implements ApplicationListener<ContextRefre
 
 
     private final RoleRepository roleRepository;
-    private final ProductRepository productRepository;
-    private final UnitRepository unitRepository;
-    private final CategoriesRepository categoriesRepository;
 
     @Autowired
-    public ApplicationListenerImpl(RoleRepository roleRepository,
-                                   ProductRepository productRepository,
-                                   UnitRepository unitRepository,
-                                   CategoriesRepository categoriesRepository) {
+    public ApplicationListenerImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
-        this.productRepository = productRepository;
-        this.unitRepository = unitRepository;
-        this.categoriesRepository = categoriesRepository;
     }
-
 
 
     @Override

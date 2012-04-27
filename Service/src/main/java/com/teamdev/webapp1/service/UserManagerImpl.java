@@ -4,9 +4,9 @@ import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class UserManagerImpl implements UserManager {
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserManagerImpl(UserRepository userRepository) {
@@ -27,39 +27,15 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    @Transactional
-    public User find(int id) {
-        return userRepository.findOne(id);
+    public String getLogin(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        return principal.getName();
     }
 
     @Override
-    @Transactional
-    public User findByLogin(String login) {
+    public User getUser(HttpServletRequest request) {
+        String login = getLogin(request);
         return userRepository.findByLogin(login);
     }
 
-    @Override
-    @Transactional
-    public void update(User user) {
-        userRepository.save(user);
-    }
-
-    @Override
-    @Transactional
-    public User save(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
-    @Transactional
-    public void delete(int id) {
-        userRepository.delete(id);
-    }
-
-
-    @Override
-    @Transactional
-    public List<User> listUsers() {
-        return userRepository.findAll();
-    }
 }

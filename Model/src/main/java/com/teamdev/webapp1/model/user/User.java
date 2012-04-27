@@ -10,6 +10,7 @@ import javax.persistence.*;
  * Time: 21:27
  * To change this template use File | Settings | File Templates.
  */
+
 @Entity
 @Table(name = "USERS")
 public class User {
@@ -31,27 +32,28 @@ public class User {
     private boolean enabled;
 
     @ManyToOne
-    @JoinColumn(name = "role_ID", insertable = false, updatable = false)
     private Role role;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private UserProfile userProfile;
+    @Column(name = "NAME")
+    @Basic(fetch = FetchType.LAZY)
+    private String name;
 
-    public UserProfile getUserProfile() {
-        return userProfile;
-    }
+    @Column(name = "AGE")
+    @Basic(fetch = FetchType.LAZY)
+    private Byte age;
 
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
-    }
+    @Column(name = "SKYPE")
+    @Basic(fetch = FetchType.LAZY)
+    private String skype;
 
-    public Role getRole() {
-        return role;
-    }
+    @Column(name = "HOBBY")
+    @Basic(fetch = FetchType.LAZY)
+    private String hobby;
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+    @Lob
+    @Column(name = "AVATAR")
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] avatar;
 
     public User() {
     }
@@ -60,6 +62,14 @@ public class User {
         this.login = login;
         this.password = password;
         this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public int getId() {
@@ -100,5 +110,45 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Byte getAge() {
+        return age;
+    }
+
+    public void setAge(Byte age) {
+        this.age = age;
+    }
+
+    public String getSkype() {
+        return skype;
+    }
+
+    public void setSkype(String skype) {
+        this.skype = skype;
+    }
+
+    public String getHobby() {
+        return hobby;
+    }
+
+    public void setHobby(String hobby) {
+        this.hobby = hobby;
+    }
+
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
     }
 }

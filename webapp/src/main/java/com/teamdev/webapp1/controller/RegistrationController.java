@@ -1,6 +1,5 @@
 package com.teamdev.webapp1.controller;
 
-import com.google.gson.Gson;
 import com.teamdev.webapp1.model.user.Role;
 import com.teamdev.webapp1.model.user.Roles;
 import com.teamdev.webapp1.model.user.User;
@@ -11,10 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.net.URLDecoder;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,31 +28,29 @@ public class RegistrationController {
         this.userRegistrationService = userRegistrationService;
     }
 
-    @RequestMapping(value = "/Register", method = RequestMethod.GET)
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String requestRegisterPage() {
-        return "Signup";
+        return "signup";
     }
 
-    @RequestMapping(value = "/Register", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registerUser(@RequestParam(value = "login") String login,
                                @RequestParam(value = "password") String password,
-                               @RequestParam(value = "email") String email) throws IOException {
+                               @RequestParam(value = "email") String email) {
 
 
         User user = new User(login, password, email);
-        user.setUserProfile(null);
         user.setRole(new Role(Roles.ROLE_USER));
         user.setEnabled(false);
 
         userRegistrationService.requestActivation(user);
 
-        return "redirect:/Welcome";
+        return "redirect:/welcome";
     }
 
-
-    @RequestMapping(value = "/Activation/{activationKey}")
+    @RequestMapping(value = "/activation/{activationKey}")
     public String activateUser(@PathVariable("activationKey") String activationKey) {
         userRegistrationService.activateUser(activationKey);
-        return "Welcome";
+        return "welcome";
     }
 }

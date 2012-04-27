@@ -1,17 +1,14 @@
 package com.teamdev.webapp1.controller;
 
-import com.google.gson.Gson;
 import com.teamdev.webapp1.dao.CategoriesRepository;
 import com.teamdev.webapp1.dao.ProductRepository;
 import com.teamdev.webapp1.dao.UnitRepository;
-import com.teamdev.webapp1.model.product.Category;
 import com.teamdev.webapp1.model.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
 
@@ -56,17 +53,5 @@ public class ProductController {
 
         productRepository.save(product);
         return "addProduct";
-    }
-
-    @RequestMapping("/listCategories")
-    @ResponseBody
-    public String listCategories() {
-        return new Gson().toJson(categoriesRepository.findAll());
-    }
-
-    @RequestMapping("/listUnits")
-    @ResponseBody
-    public String listUnits() {
-        return new Gson().toJson(unitRepository.findAll());
     }
 }

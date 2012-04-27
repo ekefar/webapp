@@ -1,6 +1,9 @@
 package com.teamdev.webapp1.model.user;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,14 +22,14 @@ public class Role {
 
     public Role(Roles roles) {
         name = roles.name();
+        id = roles.getId();
     }
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue
     private int id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", unique = true)
     private String name;
 
     public int getId() {

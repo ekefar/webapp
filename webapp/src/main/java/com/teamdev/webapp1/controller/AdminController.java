@@ -7,11 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.net.URLDecoder;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,25 +28,19 @@ public class AdminController {
         this.userRepository = userManager;
     }
 
-    @RequestMapping(value = "/Admin/EditUsers", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/editUsers", method = RequestMethod.GET)
     @ResponseBody
     public String listUsers() {
         return new Gson().toJson(userRepository.findAll());
     }
 
 
-    @RequestMapping(value = "/Admin/EditUsers", method = RequestMethod.POST)
-    public void updateUserInfo(HttpServletRequest request) throws IOException {
+    @RequestMapping(value = "/admin/editUsers", method = RequestMethod.POST)
+    public void updateUserInfo(@RequestParam(value = "login") String login,
+                               @RequestParam(value = "enabled") boolean enabled) {
 
-        String jsonObject = request.getReader().readLine();
-        jsonObject = URLDecoder.decode(jsonObject, "UTF-8");
-
-        User userChangesRequest = new Gson().fromJson(jsonObject, User.class);
-
-        User userToChange = userRepository.findByLogin(userChangesRequest.getLogin());
-
-        userToChange.setEnabled(userChangesRequest.isEnabled());
+        User userToChange = userRepository.findByLogin(login);
+        userToChange.setEnabled(enabled);
         userRepository.save(userToChange);
-
     }
 }
