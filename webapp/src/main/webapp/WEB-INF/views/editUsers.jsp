@@ -15,7 +15,6 @@ To change this template use File | Settings | File Templates.
 
     <script type="text/javascript" src="../resources/js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
-    <script type="text/javascript" src="../resources/js/jquery.jeditable.mini.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             showUsers();

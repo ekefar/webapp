@@ -2,17 +2,25 @@ package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
 import com.teamdev.webapp1.dao.CategoriesRepository;
+import com.teamdev.webapp1.dao.OfferRepository;
 import com.teamdev.webapp1.dao.ProductRepository;
 import com.teamdev.webapp1.dao.UnitRepository;
+import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.product.Category;
 import com.teamdev.webapp1.model.product.Product;
+import com.teamdev.webapp1.model.product.Unit;
+import com.teamdev.webapp1.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import java.beans.PropertyEditorSupport;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,9 +36,10 @@ public class ProductController {
     private final CategoriesRepository categoriesRepository;
     private final ProductRepository productRepository;
 
-
     @Autowired
-    public ProductController(UnitRepository unitRepository, CategoriesRepository categoriesRepository, ProductRepository productRepository) {
+    public ProductController(UnitRepository unitRepository,
+                             CategoriesRepository categoriesRepository,
+                             ProductRepository productRepository) {
         this.unitRepository = unitRepository;
         this.categoriesRepository = categoriesRepository;
         this.productRepository = productRepository;
@@ -39,40 +48,28 @@ public class ProductController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String showAddPage(Map<String, Object> model) {
+        model.put("product", new Product());
         model.put("categoryList", categoriesRepository.findAll());
         model.put("unitList", unitRepository.findAll());
         return "addProduct";
     }
 
-    @RequestMapping(value = "/addOffer", method = RequestMethod.GET)
-    public String showAddOfferPage() {
-        return "addOffer";
-    }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addCategory(@RequestParam(value = "product") String productName,
-                              @RequestParam(value = "category") String categoryName,
-                              @RequestParam(value = "unit") String unitName) {
-
-        Product product = new Product(
-                productName,
-                unitRepository.findByName(unitName),
-                categoriesRepository.findByName(categoryName));
-
+    public String addProduct(Product product) {
         productRepository.save(product);
-        return "addProduct";
+        return "redirect:/product/add";
     }
 
     @RequestMapping("/listCategories")
-    @ResponseBody
-    public String listCategories() {
+      @ResponseBody
+      public String listCategories() {
         return new Gson().toJson(categoriesRepository.findAll());
     }
 
-    @RequestMapping("/listProducts")
+    @RequestMapping("/listUnits")
     @ResponseBody
-    public String listProducts(@RequestParam(value = "category") String categoryName) {
-        Category category = categoriesRepository.findByName(categoryName);
-        return new Gson().toJson(productRepository.findByCategory(category));
+    public String listUnits() {
+        return new Gson().toJson(unitRepository.findAll());
     }
 }

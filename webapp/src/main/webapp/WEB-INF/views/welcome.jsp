@@ -112,11 +112,11 @@
         </div>
 
         <div>
-            <a id="products_btn" class="navigation_btn" href="/product/add">Products</a>
+            <a id="offer_btn" class="navigation_btn" href="/offer/view">Offers</a>
         </div>
 
         <div>
-            <a id="offer_btn" class="navigation_btn" href="/product/addOffer">Other 1</a>
+            <a id="products_btn" class="navigation_btn" href="/product/add">Products</a>
         </div>
 
         <div>
