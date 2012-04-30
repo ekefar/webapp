@@ -1,8 +1,12 @@
 package com.teamdev.webapp1.service;
 
 import com.teamdev.webapp1.dao.RoleRepository;
+import com.teamdev.webapp1.dao.UserRepository;
+import com.teamdev.webapp1.model.order.Offer;
+import com.teamdev.webapp1.model.user.Cart;
 import com.teamdev.webapp1.model.user.Role;
 import com.teamdev.webapp1.model.user.Roles;
+import com.teamdev.webapp1.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -20,9 +24,13 @@ public class ApplicationListenerImpl implements ApplicationListener<ContextRefre
 
     private final RoleRepository roleRepository;
 
+    private final UserRepository userRepository;
+
     @Autowired
-    public ApplicationListenerImpl(RoleRepository roleRepository) {
+    public ApplicationListenerImpl(RoleRepository roleRepository,
+                                   UserRepository userRepository) {
         this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -37,6 +45,7 @@ public class ApplicationListenerImpl implements ApplicationListener<ContextRefre
         if (roleRepository.findByName(Roles.ROLE_ADMIN.name()) == null) {
             roleRepository.save(new Role(Roles.ROLE_ADMIN));
         }
+
 
     }
 

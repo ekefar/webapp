@@ -37,6 +37,10 @@ public class Offer {
     public Offer() {
     }
 
+    public Offer(int id) {
+        this.id = id;
+    }
+
     public Offer(User user, Product product, int amount, double price, String description) {
         this.user = user;
         this.product = product;
@@ -44,6 +48,8 @@ public class Offer {
         this.price = price;
         this.description = description;
     }
+
+
 
     public int getId() {
         return id;

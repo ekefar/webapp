@@ -27,6 +27,27 @@
                     }
             );
 
+            $("#cartForm").dialog(
+                    {
+                        autoOpen:false,
+                        modal:true,
+                        resizable:false,
+                        draggable:false,
+                        position:top,
+                        buttons:{
+                            "Close":function () {
+                                $(this).dialog("close");
+                            },
+                            "Add":function () {
+                                var postData = $("#cartForm *").serialize() + "&cartId="+${cart.id};
+                                $.post("/cart/add", postData);
+                                $(this).dialog("close");
+                            }
+                        }
+                    }
+            );
+
+
             $("#offerForm").dialog(
                     {
                         autoOpen:false,
@@ -69,10 +90,20 @@
                     })
                     .button();
 
-            $("#offer_table a")
+           /* $("#offer_table a")
                     .live("click", function () {
                         var url = "/offer/view/" + $(this).attr("id");
                         var dialogDiv = $("#offerDescription");
+                        dialogDiv.load(url, function () {
+                            dialogDiv.dialog("open");
+                        });
+                    })
+                    .button();*/
+
+            $("#offer_table a")
+                    .live("click", function () {
+                        var url = "/cart/add/" + $(this).attr("id");
+                        var dialogDiv = $("#cartForm");
                         dialogDiv.load(url, function () {
                             dialogDiv.dialog("open");
                         });
@@ -106,6 +137,9 @@
             <td>
                 <a id="${offer.id}">View details</a>
             </td>
+            <td>
+                <a id="${offer.id}">Add to cart</a>
+            </td>
         </tr>
     </c:forEach>
 
@@ -115,12 +149,11 @@
     <button id="add_btn" type="button">Add new</button>
 </div>
 
-<div id="offerDescription" title="Offer info">
+<div id="offerDescription" title="Offer info"></div>
 
-</div>
+<div id="offerForm" title="New offer"></div>
 
-<div id="offerForm" title="New offer">
-</div>
+<div id="cartForm" title="Add to cart"></div>
 
 </body>
 </html>

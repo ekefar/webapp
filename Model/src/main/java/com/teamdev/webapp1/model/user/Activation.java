@@ -2,13 +2,6 @@ package com.teamdev.webapp1.model.user;
 
 import javax.persistence.*;
 
-/**
- * Created by IntelliJ IDEA.
- * User: gar
- * Date: 06.04.12
- * Time: 23:31
- * To change this template use File | Settings | File Templates.
- */
 
 @Entity
 @Table(name = "ACTIVATIONS")

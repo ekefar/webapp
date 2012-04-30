@@ -56,6 +56,9 @@ public class User {
     @Basic(fetch = FetchType.LAZY)
     private byte[] avatar;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    Cart cart;
+
     public User() {
     }
 
@@ -152,5 +155,13 @@ public class User {
 
     public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }

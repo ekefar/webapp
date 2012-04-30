@@ -1,14 +1,14 @@
 package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
-import com.teamdev.webapp1.dao.CategoriesRepository;
-import com.teamdev.webapp1.dao.OfferRepository;
-import com.teamdev.webapp1.dao.ProductRepository;
-import com.teamdev.webapp1.dao.UnitRepository;
+import com.teamdev.webapp1.dao.*;
 import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.product.Category;
 import com.teamdev.webapp1.model.product.Product;
+import com.teamdev.webapp1.model.user.Cart;
+import com.teamdev.webapp1.model.user.User;
 import com.teamdev.webapp1.service.UserManager;
+import com.teamdev.webapp1.service.UserRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,17 +31,20 @@ public class OfferController {
     private final ProductRepository productRepository;
     private final OfferRepository offerRepository;
     private final UserManager userManager;
+    private final UserRepository userRepository;
 
 
     @Autowired
     public OfferController(CategoriesRepository categoriesRepository,
                            ProductRepository productRepository,
                            OfferRepository offerRepository,
-                           UserManager userManager) {
+                           UserManager userManager,
+                           UserRepository userRepository) {
         this.categoriesRepository = categoriesRepository;
         this.productRepository = productRepository;
         this.offerRepository = offerRepository;
         this.userManager = userManager;
+        this.userRepository = userRepository;
     }
 
 
@@ -67,7 +70,9 @@ public class OfferController {
     }
 
     @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String listOffers(Map<String, Object> model) {
+    public String listOffers(Map<String, Object> model,
+                             HttpServletRequest request) {
+        model.put("cart", createUserCart(request));
         model.put("offers", offerRepository.findAll());
         return "offersView";
     }
@@ -78,5 +83,20 @@ public class OfferController {
         final Offer offer = offerRepository.findOne(offerId);
         model.put("offer", offer);
         return "offerDetails";
+    }
+
+    private Cart createUserCart(HttpServletRequest request){
+        User user = userManager.getUser(request);
+        Cart cart;
+        if(user.getCart() == null){
+            cart = new Cart();
+            user.setCart(cart);
+            User persistedUser = userRepository.save(user);
+            cart = persistedUser.getCart();
+        } else {
+            cart = user.getCart();
+        }
+
+        return cart;
     }
 }
