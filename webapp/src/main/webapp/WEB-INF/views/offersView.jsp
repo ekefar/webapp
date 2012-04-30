@@ -5,11 +5,8 @@
 <html>
 <head>
     <title></title>
-
-
     <link type="text/css" href="../resources/css/flick/jquery-ui-1.8.18.custom.css" rel="stylesheet"/>
     <link type="text/css" href="../resources/css/style.css" rel="stylesheet"/>
-
     <script type="text/javascript" src="../resources/js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
 
@@ -30,22 +27,63 @@
                     }
             );
 
+            $("#offerForm").dialog(
+                    {
+                        autoOpen:false,
+                        modal:true,
+                        resizable:false,
+                        draggable:false,
+                        position:top,
+                        width:400,
+                        buttons:{
+                            "Cancel":function () {
+                                $(this).dialog("close");
+                            },
+                            "Add":function () {
+                                var postData = $("#offerForm form").serialize();
+                                $.post("/offer/add", postData, function (result) {
+                                    $("#offer_table").append(
+                                            "<tr>" +
+                                                    "<td>" + result.product.name + "</td>" +
+                                                    "<td>" + result.price + "</td>" +
+                                                    "<td>" + result.amount + "</td>" +
+                                                    "<td><a id='" + result.id + "'>View details</a></td>" +
+                                                    "</tr>"
+                                    );
+                                    $("#"+result.id).button();
+                                }, 'json');
 
-            $("#offer_table a").click(
+                                $(this).dialog("close");
+                            }
+                        }
+                    });
+
+            $("#add_btn")
+                    .click(
                     function () {
+                        var url = "/offer/add";
+                        var dialogDiv = $("#offerForm");
+                        dialogDiv.load(url, function () {
+                            dialogDiv.dialog("open");
+                        });
+                    })
+                    .button();
+
+            $("#offer_table a")
+                    .live("click", function () {
                         var url = "/offer/view/" + $(this).attr("id");
                         var dialogDiv = $("#offerDescription");
                         dialogDiv.load(url, function () {
                             dialogDiv.dialog("open");
                         });
-                    }).button();
-
+                    })
+                    .button();
         });
-
 
     </script>
 </head>
 <body>
+
 <table id="offer_table" border="1">
 
     <tr>
@@ -73,8 +111,16 @@
 
 </table>
 
+<div>
+    <button id="add_btn" type="button">Add new</button>
+</div>
+
 <div id="offerDescription" title="Offer info">
 
 </div>
+
+<div id="offerForm" title="New offer">
+</div>
+
 </body>
 </html>

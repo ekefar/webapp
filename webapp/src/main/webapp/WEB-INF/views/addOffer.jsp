@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: alexander.serebriyan
-  Date: 24.04.12
-  Time: 18:29
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,23 +5,81 @@
 
 <html>
 <head>
-
-
     <title>
         Add offer
     </title>
 
-    <link type="text/css" href="../resources/css/flick/jquery-ui-1.8.18.custom.css" rel="stylesheet"/>
-    <link type="text/css" href="../resources/css/style.css" rel="stylesheet"/>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#categories").change(fillProducts);
+        });
 
-    <script type="text/javascript" src="../resources/js/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
 
+        function fillProducts() {
+            var postData = "id=" + $("#categories").val();
+            $.post("/offer/listProducts", postData, function (result) {
+                var products = $("#products");
+                products.html("");
+                $.each(result, function () {
+                    products.append($("<option />")
+                            .attr("value", this.id)
+                            .text(this.name));
+                });
+            }, 'json');
+        }
+
+    </script>
 </head>
+
 <body>
-<div id="profile_settings">
-    <tags:offerForm formSend="/offer/add" offer="${offer}" categories="${categoryList}" user="${user}"/>
-</div>
+    <sf:form method="POST" modelAttribute="offer">
+        <fieldset>
+            <table>
+                <tr>
+                    <td>Category:</td>
+                    <td>
+                        <sf:select path="product.category.id" id="categories" items="${categoryList}" itemValue="id"
+                                   itemLabel="name">
+                        </sf:select>
+                        <input name="user.id" value="${user.id}" type="hidden">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>Product:</td>
+                    <td><sf:select path="product.id" id="products" itemValue="id" itemLabel="name">
+                    </sf:select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Price:
+                    </td>
+                    <td>
+                        <sf:input path="price" size="10"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Amount:
+                    </td>
+                    <td>
+                        <sf:input path="amount" size="10"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Description:
+                    </td>
+                    <td>
+                        <sf:textarea path="description" size="10"/>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+    </sf:form>
+
 
 </body>
 </html>

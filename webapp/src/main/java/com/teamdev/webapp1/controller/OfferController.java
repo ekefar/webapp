@@ -54,9 +54,10 @@ public class OfferController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
     public String addOffer(Offer offer) {
-        offerRepository.save(offer);
-        return "addOffer";
+        final Offer persistedOffer = offerRepository.save(offer);
+        return new Gson().toJson(persistedOffer);
     }
 
     @RequestMapping("/listProducts")
