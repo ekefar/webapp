@@ -1,9 +1,11 @@
 package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.user.User;
 import com.teamdev.webapp1.service.UserManager;
+import flexjson.JSONSerializer;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,10 +48,11 @@ public class UserSettingsController {
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public void getProfileSettings(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @ResponseBody
+    public String getProfileSettings(HttpServletRequest request) throws IOException {
         final User user = userManager.getUser(request);
-        final String userInfo = new Gson().toJson(user);
-        response.getWriter().write(userInfo);
+        final JSONSerializer serializer = new JSONSerializer();
+        return serializer.serialize(user);
     }
 
     @RequestMapping(value = "/profile/avatar", method = RequestMethod.GET)

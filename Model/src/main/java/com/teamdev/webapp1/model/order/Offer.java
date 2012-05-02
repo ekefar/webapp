@@ -1,5 +1,6 @@
 package com.teamdev.webapp1.model.order;
 
+import com.google.gson.annotations.Expose;
 import com.teamdev.webapp1.model.product.Product;
 import com.teamdev.webapp1.model.user.User;
 
@@ -17,21 +18,27 @@ public class Offer {
     @Id
     @GeneratedValue
     @Column(name = "ID")
+    @Expose
     private int id;
 
     @ManyToOne
+    @Expose
     private User user;
 
     @ManyToOne
+    @Expose
     private Product product;
 
     @Column(name = "AMOUNT", nullable = false)
+    @Expose
     private int amount;
 
     @Column(name = "PRICE", nullable = false)
+    @Expose
     private double price;
 
     @Column(name = "DESCRIPTION")
+    @Expose
     private String description;
 
     public Offer() {

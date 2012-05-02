@@ -1,6 +1,9 @@
 package com.teamdev.webapp1.model.user;
 
 
+import com.google.gson.annotations.Expose;
+import flexjson.JSON;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -57,8 +60,7 @@ public class User {
     private byte[] avatar;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @Basic(fetch = FetchType.LAZY)
-    Cart cart;
+    private Cart cart;
 
     public User() {
     }
@@ -158,6 +160,7 @@ public class User {
         this.avatar = avatar;
     }
 
+    @JSON(include = false)
     public Cart getCart() {
         return cart;
     }

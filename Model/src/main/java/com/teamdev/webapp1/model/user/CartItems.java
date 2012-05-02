@@ -1,5 +1,6 @@
 package com.teamdev.webapp1.model.user;
 
+import com.google.gson.annotations.Expose;
 import com.teamdev.webapp1.model.order.Offer;
 
 import javax.persistence.*;
@@ -11,27 +12,31 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name = "CART_DETAILS")
-public class CartDetails {
+@Table(name = "CART_ITEMS")
+public class CartItems {
 
     @Id
     @GeneratedValue
+    @Expose
     private Integer id;
 
     @OneToOne
+    @Expose
     private Offer offer;
 
     @Column(name = "AMOUNT")
+    @Expose
     private int amount;
 
     @ManyToOne
     @JoinColumn(name = "CART_ID")
+    @Expose
     private Cart cart;
 
-    public CartDetails() {
+    public CartItems() {
     }
 
-    public CartDetails(Offer offer, int amount) {
+    public CartItems(Offer offer, int amount) {
         this.offer = offer;
         this.amount = amount;
     }

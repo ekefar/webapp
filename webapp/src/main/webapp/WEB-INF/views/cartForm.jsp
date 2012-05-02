@@ -13,7 +13,7 @@
 <body>
 <div id="offerDetails"></div>
 
-<div id="cartDetails">
+<div id="cartItems">
     <input name="offer.id" type="hidden" value="${offer.id}">
     <input name="amount" type="text">
 </div>

@@ -7,7 +7,7 @@
         <class>com.teamdev.webapp1.model.user.Role</class>
         <class>com.teamdev.webapp1.model.user.Activation</class>
         <class>com.teamdev.webapp1.model.user.Cart</class>
-        <class>com.teamdev.webapp1.model.user.CartDetails</class>
+        <class>com.teamdev.webapp1.model.user.CartItems</class>
         <class>com.teamdev.webapp1.model.product.Product</class>
         <class>com.teamdev.webapp1.model.product.Category</class>
         <class>com.teamdev.webapp1.model.product.Unit</class>

@@ -1,12 +1,11 @@
 package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.teamdev.webapp1.dao.CartDetailsRepository;
 import com.teamdev.webapp1.dao.CartRepository;
 import com.teamdev.webapp1.dao.OfferRepository;
-import com.teamdev.webapp1.model.order.Offer;
-import com.teamdev.webapp1.model.user.Cart;
-import com.teamdev.webapp1.model.user.CartDetails;
+import com.teamdev.webapp1.model.user.CartItems;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -44,16 +43,16 @@ public class CartController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addToCart(CartDetails cartDetails) {
-        cartDetailsRepository.save(cartDetails);
+    public String addToCart(CartItems cartItems) {
+        cartDetailsRepository.save(cartItems);
         return "cartForm";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public String saveRecordChanges(CartDetails cartDetails) {
-        CartDetails savedDetails = cartDetailsRepository.save(cartDetails);
-        return new Gson().toJson(savedDetails.getAmount());
+    public String saveRecordChanges(CartItems cartItems) {
+        CartItems savedItem = cartDetailsRepository.save(cartItems);
+        return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(savedItem);
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -68,14 +67,14 @@ public class CartController {
     public String cartView(@PathVariable(value = "cartId") int cartId,
                            Map<String, Object> model) {
 
-        model.put("details", cartRepository.findOne(cartId).getDetails());
+        model.put("details", cartRepository.findOne(cartId).getItems());
         return "/cart/cartView";
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
-    public String cartView(CartDetails cartDetails) {
+    public String cartView(CartItems cartItems) {
 
-        cartDetailsRepository.delete(cartDetails);
+        cartDetailsRepository.delete(cartItems);
         return "/cart/cartView";
     }
 }

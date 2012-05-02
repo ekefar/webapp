@@ -1,5 +1,6 @@
 package com.teamdev.webapp1.model.user;
 
+import com.google.gson.annotations.Expose;
 import com.teamdev.webapp1.model.order.Offer;
 
 import javax.persistence.*;
@@ -18,13 +19,19 @@ public class Cart {
     @Id
     @GeneratedValue
     @Column(name = "ID")
+    @Expose
     private Integer id;
 
     @Column(name = "CREATION_DATE")
+    @Expose
     private Date creationDate;
 
-    @OneToMany(targetEntity=CartDetails.class, fetch=FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, mappedBy = "cart")
-    private List<CartDetails> details;
+    @OneToMany(
+            targetEntity = CartItems.class,
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH},
+            mappedBy = "cart")
+    private List<CartItems> items;
 
     public Cart() {
     }
@@ -45,19 +52,19 @@ public class Cart {
         this.creationDate = creationDate;
     }
 
-    public List<CartDetails> getDetails() {
-        return details;
+    public List<CartItems> getItems() {
+        return items;
     }
 
-    public void setDetails(List<CartDetails> details) {
-        this.details = details;
+    public void setItems(List<CartItems> items) {
+        this.items = items;
     }
 
-    public void add(Offer offer, Integer amount){
-        details.add(new CartDetails(offer, amount));
+    public void add(Offer offer, Integer amount) {
+        items.add(new CartItems(offer, amount));
     }
 
-    public void add(CartDetails cartDetails){
-        details.add(cartDetails);
+    public void add(CartItems cartItems) {
+        items.add(cartItems);
     }
 }

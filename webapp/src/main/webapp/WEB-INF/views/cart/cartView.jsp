@@ -29,7 +29,9 @@
                             "Save":function () {
                                 var postData = $("#cartEdit form").serialize();
                                 $.post("/cart/edit", postData, function(result){
-                                    $("#record_"+selectedRecordId + " .amount").html(result);
+                                    $("#record_"+selectedRecordId + " .amount").html(result.amount);
+                                    var total = parseInt(result.offer.price) * parseInt(result.amount);
+                                    $("#record_"+selectedRecordId + " .total").html(total);
                                 }, 'json');
 
                                 $(this).dialog("close");
@@ -89,7 +91,7 @@
             <td>${cartRecord.offer.price}</td>
             <td>${cartRecord.offer.amount}</td>
             <td class="amount">${cartRecord.amount}</td>
-            <td>${cartRecord.amount * cartRecord.offer.price}</td>
+            <td class="total">${cartRecord.amount * cartRecord.offer.price}</td>
             <td>
                 <a id="edit_${cartRecord.id}" name="${cartRecord.id}" class="edit">Edit record</a>
             </td>
