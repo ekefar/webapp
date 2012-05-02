@@ -4,17 +4,15 @@ import com.teamdev.webapp1.dao.CartRepository;
 import com.teamdev.webapp1.dao.OfferRepository;
 import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.user.Cart;
-import com.teamdev.webapp1.model.user.User;
+import com.teamdev.webapp1.model.user.CartDetails;
 import com.teamdev.webapp1.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -52,8 +50,17 @@ public class CartController {
                             @RequestParam(value = "cartId") Integer cartId) {
 
         Cart cart = cartRepository.findOne(cartId);
-        cart.add(new Offer(offerId), amount);
+        CartDetails details = new CartDetails(new Offer(offerId), amount);
+        details.setCart(cart);
+        cart.add(details);
         cartRepository.save(cart);
         return "cartForm";
+    }
+
+    @RequestMapping(value = "/view/{cartId}", method = RequestMethod.GET)
+    public String cartView(@PathVariable(value = "cartId") int cartId,
+                           Map<String, Object> model) {
+        model.put("details", cartRepository.findOne(cartId).getDetails());
+        return "cartView";
     }
 }

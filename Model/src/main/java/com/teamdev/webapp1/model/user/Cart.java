@@ -4,8 +4,7 @@ import com.teamdev.webapp1.model.order.Offer;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Author: Alexander Serebriyan
@@ -24,16 +23,10 @@ public class Cart {
     @Column(name = "CREATION_DATE")
     private Date creationDate;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Map<Offer, Integer> purchase;
+    @OneToMany(targetEntity=CartDetails.class, fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "cart")
+    private List<CartDetails> details;
 
     public Cart() {
-        purchase = new HashMap<Offer, Integer>();
-    }
-
-    public Cart(Offer offer, Integer amount) {
-        purchase = new HashMap<Offer, Integer>();
-        purchase.put(offer, amount);
     }
 
     public Integer getId() {
@@ -52,15 +45,19 @@ public class Cart {
         this.creationDate = creationDate;
     }
 
-    public Map<Offer, Integer> getPurchase() {
-        return purchase;
+    public List<CartDetails> getDetails() {
+        return details;
     }
 
-    public void setPurchase(Map<Offer, Integer> purchase) {
-        this.purchase = purchase;
+    public void setDetails(List<CartDetails> details) {
+        this.details = details;
     }
 
     public void add(Offer offer, Integer amount){
-        purchase.put(offer, amount);
+        details.add(new CartDetails(offer, amount));
+    }
+
+    public void add(CartDetails cartDetails){
+        details.add(cartDetails);
     }
 }

@@ -39,7 +39,7 @@
                                 $(this).dialog("close");
                             },
                             "Add":function () {
-                                var postData = $("#cartForm *").serialize() + "&cartId="+${cart.id};
+                                var postData = $("#cartForm *").serialize() + "&cartId=" +${cart.id};
                                 $.post("/cart/add", postData);
                                 $(this).dialog("close");
                             }
@@ -68,10 +68,12 @@
                                                     "<td>" + result.product.name + "</td>" +
                                                     "<td>" + result.price + "</td>" +
                                                     "<td>" + result.amount + "</td>" +
-                                                    "<td><a id='" + result.id + "'>View details</a></td>" +
+                                                    "<td><a id='details_" + result.id + "' name='"+ result.id  +"' class='details'>View details</a></td>" +
+                                                    "<td><a id='cart_" + result.id + "' name='"+ result.id  +"' class='cart'>Add to cart</a></td>" +
                                                     "</tr>"
                                     );
-                                    $("#"+result.id).button();
+                                    $("#details_"+result.id).button();
+                                    $("#cart_"+result.id).button();
                                 }, 'json');
 
                                 $(this).dialog("close");
@@ -90,19 +92,19 @@
                     })
                     .button();
 
-           /* $("#offer_table a")
+            $("#offer_table .details")
                     .live("click", function () {
-                        var url = "/offer/view/" + $(this).attr("id");
+                        var url = "/offer/view/" + $(this).attr("name");
                         var dialogDiv = $("#offerDescription");
                         dialogDiv.load(url, function () {
                             dialogDiv.dialog("open");
                         });
                     })
-                    .button();*/
+                    .button();
 
-            $("#offer_table a")
+            $("#offer_table .cart")
                     .live("click", function () {
-                        var url = "/cart/add/" + $(this).attr("id");
+                        var url = "/cart/add/" + $(this).attr("name");
                         var dialogDiv = $("#cartForm");
                         dialogDiv.load(url, function () {
                             dialogDiv.dialog("open");
@@ -135,10 +137,10 @@
             <td>${offer.price}</td>
             <td>${offer.amount}</td>
             <td>
-                <a id="${offer.id}">View details</a>
+                <a id="details_${offer.id}" name="${offer.id}" class="details">View details</a>
             </td>
             <td>
-                <a id="${offer.id}">Add to cart</a>
+                <a id="cart_${offer.id}" name="${offer.id}" class="cart">Add to cart</a>
             </td>
         </tr>
     </c:forEach>
@@ -147,6 +149,7 @@
 
 <div>
     <button id="add_btn" type="button">Add new</button>
+    <a href="/cart/view/${cart.id}">View cart</a>
 </div>
 
 <div id="offerDescription" title="Offer info"></div>
