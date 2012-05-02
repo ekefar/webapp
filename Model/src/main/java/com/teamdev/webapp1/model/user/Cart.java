@@ -23,7 +23,7 @@ public class Cart {
     @Column(name = "CREATION_DATE")
     private Date creationDate;
 
-    @OneToMany(targetEntity=CartDetails.class, fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "cart")
+    @OneToMany(targetEntity=CartDetails.class, fetch=FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, mappedBy = "cart")
     private List<CartDetails> details;
 
     public Cart() {

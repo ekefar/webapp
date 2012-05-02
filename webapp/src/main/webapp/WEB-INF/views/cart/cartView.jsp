@@ -51,7 +51,11 @@
 
             $("#cart_records .remove")
                     .live("click", function () {
-                        var url = "/cart/add/" + $(this).attr("name");
+                        var recordId = $(this).attr("name");
+                        var url = "/cart/remove";
+                        var postData = "id=" + recordId;
+                        $.post(url, postData);
+                        $("#record_"+recordId).remove();
                     })
                     .button();
         });

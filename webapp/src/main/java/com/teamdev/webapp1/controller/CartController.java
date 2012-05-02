@@ -71,4 +71,11 @@ public class CartController {
         model.put("details", cartRepository.findOne(cartId).getDetails());
         return "/cart/cartView";
     }
+
+    @RequestMapping(value = "/remove", method = RequestMethod.POST)
+    public String cartView(CartDetails cartDetails) {
+
+        cartDetailsRepository.delete(cartDetails);
+        return "/cart/cartView";
+    }
 }
