@@ -1,17 +1,15 @@
 package com.teamdev.webapp1.controller;
 
+import com.google.gson.Gson;
+import com.teamdev.webapp1.dao.CartDetailsRepository;
 import com.teamdev.webapp1.dao.CartRepository;
 import com.teamdev.webapp1.dao.OfferRepository;
 import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.user.Cart;
 import com.teamdev.webapp1.model.user.CartDetails;
-import com.teamdev.webapp1.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -25,42 +23,52 @@ import java.util.Map;
 public class CartController {
 
     private final OfferRepository offerRepository;
-    private final UserManager userManager;
+    private final CartDetailsRepository cartDetailsRepository;
     private final CartRepository cartRepository;
 
     @Autowired
     public CartController(OfferRepository offerRepository,
                           CartRepository cartRepository,
-                          UserManager userManager) {
+                          CartDetailsRepository cartDetailsRepository) {
         this.offerRepository = offerRepository;
         this.cartRepository = cartRepository;
-        this.userManager = userManager;
+        this.cartDetailsRepository = cartDetailsRepository;
     }
 
     @RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
     public String showAddDialog(@PathVariable(value = "id") int offerId,
                                 Map<String, Object> model) {
+
         model.put("offer", offerRepository.findOne(offerId));
         return "cartForm";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addToCart(@RequestParam(value = "offerId") Integer offerId,
-                            @RequestParam(value = "amount") Integer amount,
-                            @RequestParam(value = "cartId") Integer cartId) {
-
-        Cart cart = cartRepository.findOne(cartId);
-        CartDetails details = new CartDetails(new Offer(offerId), amount);
-        details.setCart(cart);
-        cart.add(details);
-        cartRepository.save(cart);
+    public String addToCart(CartDetails cartDetails) {
+        cartDetailsRepository.save(cartDetails);
         return "cartForm";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @ResponseBody
+    public String saveRecordChanges(CartDetails cartDetails) {
+        CartDetails savedDetails = cartDetailsRepository.save(cartDetails);
+        return new Gson().toJson(savedDetails.getAmount());
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editCartRecord(@PathVariable(value = "id") int recordId,
+                                 Map<String, Object> model) {
+
+        model.put("record", cartDetailsRepository.findOne(recordId));
+        return "/cart/cartRecordView";
     }
 
     @RequestMapping(value = "/view/{cartId}", method = RequestMethod.GET)
     public String cartView(@PathVariable(value = "cartId") int cartId,
                            Map<String, Object> model) {
+
         model.put("details", cartRepository.findOne(cartId).getDetails());
-        return "cartView";
+        return "/cart/cartView";
     }
 }
