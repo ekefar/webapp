@@ -96,7 +96,7 @@
 
 
 <div id="header" class="header">
-    <div>Welcome, ${userName}!</div>
+    <div>Welcome, ${user.login}!</div>
     <div class="logout_btn">
 
         <a href="<c:url value=" j_spring_security_logout"/>">Logout</a>
@@ -116,7 +116,7 @@
         </div>
 
         <div>
-            <a id="products_btn" class="navigation_btn" href="/product/add">Products</a>
+            <a id="products_btn" class="navigation_btn" href="/order/view/${user.id}">Orders</a>
         </div>
 
         <div>

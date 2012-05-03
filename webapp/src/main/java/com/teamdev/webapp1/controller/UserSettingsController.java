@@ -51,8 +51,8 @@ public class UserSettingsController {
     @ResponseBody
     public String getProfileSettings(HttpServletRequest request) throws IOException {
         final User user = userManager.getUser(request);
-        final JSONSerializer serializer = new JSONSerializer();
-        return serializer.serialize(user);
+        final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        return gson.toJson(user);
     }
 
     @RequestMapping(value = "/profile/avatar", method = RequestMethod.GET)

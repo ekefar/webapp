@@ -13,42 +13,48 @@ public class User {
     @Id
     @GeneratedValue
     @Column(name = "ID")
+    @Expose
     private int id;
 
     @Column(name = "LOGIN", unique = true)
+    @Expose
     private String login;
 
     @Column(name = "PASSWORD")
+    @Expose
     private String password;
 
     @Column(name = "EMAIL", unique = true)
+    @Expose
     private String email;
 
     @Column(name = "ENABLED")
+    @Expose
     private boolean enabled;
 
     @ManyToOne
+    @Expose
     private Role role;
 
     @Column(name = "NAME")
-    @Basic(fetch = FetchType.LAZY)
+    @Expose
     private String name;
 
     @Column(name = "DATE_OF_BIRTH")
-    @Basic(fetch = FetchType.LAZY)
+    @Expose
     private Date dateOfBirth;
 
     @Column(name = "SKYPE")
-    @Basic(fetch = FetchType.LAZY)
+    @Expose
     private String skype;
 
     @Column(name = "HOBBY")
-    @Basic(fetch = FetchType.LAZY)
+    @Expose
     private String hobby;
 
     @Lob
     @Column(name = "AVATAR")
-    @Basic(fetch = FetchType.LAZY)
+    @Expose
     private byte[] avatar;
 
     @OneToOne(cascade = CascadeType.ALL)

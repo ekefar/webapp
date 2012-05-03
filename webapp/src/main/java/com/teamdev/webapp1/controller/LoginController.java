@@ -22,7 +22,7 @@ public class LoginController {
 
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
     public String printWelcome(Map<String, Object> model, HttpServletRequest request) {
-        model.put("userName", userManager.getLogin(request));
+        model.put("user", userManager.getUser(request));
         return "welcome";
     }
 

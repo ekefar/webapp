@@ -6,6 +6,7 @@ import com.teamdev.webapp1.dao.CartRepository;
 import com.teamdev.webapp1.dao.OfferRepository;
 import com.teamdev.webapp1.dao.OrderRepository;
 import com.teamdev.webapp1.model.order.Order;
+import com.teamdev.webapp1.model.order.OrderStates;
 import com.teamdev.webapp1.model.user.Cart;
 import com.teamdev.webapp1.model.user.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,7 +124,7 @@ public class CartController {
             Order order = new Order(cartItem.getOffer(), cartItem.getAmount());
             order.setCustomer(cartItem.getOffer().getUser());
             order.setCreationDate(Calendar.getInstance().getTime());
-
+            order.setState(OrderStates.PROCESSING);
             orders.add(order);
         }
         return orders;

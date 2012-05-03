@@ -31,6 +31,11 @@ public class Order {
     @Expose
     private Date creationDate;
 
+    @Column(name = "STATE")
+    @Enumerated(EnumType.STRING)
+    @Expose
+    private OrderStates state;
+
     @ManyToOne
     private Offer offer;
 
@@ -69,4 +74,27 @@ public class Order {
         this.creationDate = creationDate;
     }
 
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
+    }
+
+    public OrderStates getState() {
+        return state;
+    }
+
+    public void setState(OrderStates state) {
+        this.state = state;
+    }
 }
