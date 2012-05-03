@@ -66,13 +66,12 @@
                 <value>com.teamdev.webapp1.model.user.Activation</value>
                 <value>com.teamdev.webapp1.model.user.Role</value>
                 <value>com.teamdev.webapp1.model.user.Cart</value>
-                <value>com.teamdev.webapp1.model.user.CartItems</value>
+                <value>com.teamdev.webapp1.model.user.CartItem</value>
                 <value>com.teamdev.webapp1.model.product.Product</value>
                 <value>com.teamdev.webapp1.model.product.Category</value>
                 <value>com.teamdev.webapp1.model.product.Unit</value>
                 <value>com.teamdev.webapp1.model.order.Offer</value>
                 <value>com.teamdev.webapp1.model.order.Order</value>
-                <value>com.teamdev.webapp1.model.order.OrderDetails</value>
             </list>
         </property>
     </bean>

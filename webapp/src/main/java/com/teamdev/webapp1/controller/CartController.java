@@ -1,16 +1,18 @@
 package com.teamdev.webapp1.controller;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.teamdev.webapp1.dao.CartDetailsRepository;
+import com.teamdev.webapp1.dao.CartItemsRepository;
 import com.teamdev.webapp1.dao.CartRepository;
 import com.teamdev.webapp1.dao.OfferRepository;
-import com.teamdev.webapp1.model.user.CartItems;
+import com.teamdev.webapp1.dao.OrderRepository;
+import com.teamdev.webapp1.model.order.Order;
+import com.teamdev.webapp1.model.user.Cart;
+import com.teamdev.webapp1.model.user.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.*;
 
 /**
  * Author: Alexander Serebriyan
@@ -22,16 +24,20 @@ import java.util.Map;
 public class CartController {
 
     private final OfferRepository offerRepository;
-    private final CartDetailsRepository cartDetailsRepository;
+    private final CartItemsRepository cartItemsRepository;
     private final CartRepository cartRepository;
+    private final OrderRepository orderRepository;
+
 
     @Autowired
     public CartController(OfferRepository offerRepository,
                           CartRepository cartRepository,
-                          CartDetailsRepository cartDetailsRepository) {
+                          CartItemsRepository cartItemsRepository,
+                          OrderRepository orderRepository) {
         this.offerRepository = offerRepository;
         this.cartRepository = cartRepository;
-        this.cartDetailsRepository = cartDetailsRepository;
+        this.cartItemsRepository = cartItemsRepository;
+        this.orderRepository = orderRepository;
     }
 
     @RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
@@ -43,15 +49,15 @@ public class CartController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addToCart(CartItems cartItems) {
-        cartDetailsRepository.save(cartItems);
+    public String addToCart(CartItem cartItem) {
+        cartItemsRepository.save(cartItem);
         return "cartForm";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public String saveRecordChanges(CartItems cartItems) {
-        CartItems savedItem = cartDetailsRepository.save(cartItems);
+    public String saveRecordChanges(CartItem cartItem) {
+        CartItem savedItem = cartItemsRepository.save(cartItem);
         return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(savedItem);
     }
 
@@ -59,7 +65,7 @@ public class CartController {
     public String editCartRecord(@PathVariable(value = "id") int recordId,
                                  Map<String, Object> model) {
 
-        model.put("record", cartDetailsRepository.findOne(recordId));
+        model.put("record", cartItemsRepository.findOne(recordId));
         return "/cart/cartRecordView";
     }
 
@@ -67,14 +73,60 @@ public class CartController {
     public String cartView(@PathVariable(value = "cartId") int cartId,
                            Map<String, Object> model) {
 
-        model.put("details", cartRepository.findOne(cartId).getItems());
+        model.put("cart", cartRepository.findOne(cartId));
         return "/cart/cartView";
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
-    public String cartView(CartItems cartItems) {
+    public String cartView(CartItem cartItem) {
 
-        cartDetailsRepository.delete(cartItems);
+        cartItemsRepository.delete(cartItem);
         return "/cart/cartView";
     }
+
+    @RequestMapping(value = "/order")
+    public String makeOrder(@RequestParam(value = "cartId") Integer cartId) {
+        Cart cart = cartRepository.findOne(cartId);
+
+        List<Order> orders = createOrders(cart);
+        sendNotifications(orders);
+        orderRepository.save(orders);
+        clearCart(cart);
+        return "offerView";
+    }
+
+
+    private void sendNotifications(List<Order> orders){
+
+    }
+
+    /**
+     * Remove all cart items
+     * @param cart cart to clear
+     */
+    private void clearCart(Cart cart){
+        List<CartItem> items = cart.getItems();
+        cartItemsRepository.delete(items);
+    }
+
+
+    /**
+     * Create batch of orders using user`s cart
+     * @param cart User`s cart
+     * @return  list of orders
+     */
+    private List<Order> createOrders(Cart cart) {
+        List<Order> orders = new ArrayList<Order>();
+        for(CartItem cartItem : cart.getItems()){
+
+            //create order from cart item
+            Order order = new Order(cartItem.getOffer(), cartItem.getAmount());
+            order.setCustomer(cartItem.getOffer().getUser());
+            order.setCreationDate(Calendar.getInstance().getTime());
+
+            orders.add(order);
+        }
+        return orders;
+    }
+
 }

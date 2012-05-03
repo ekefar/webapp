@@ -1,6 +1,7 @@
 package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.teamdev.webapp1.dao.*;
 import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.product.Category;
@@ -60,7 +61,8 @@ public class OfferController {
     @ResponseBody
     public String addOffer(Offer offer) {
         final Offer persistedOffer = offerRepository.save(offer);
-        return new Gson().toJson(persistedOffer);
+        final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        return gson.toJson(persistedOffer);
     }
 
     @RequestMapping("/listProducts")

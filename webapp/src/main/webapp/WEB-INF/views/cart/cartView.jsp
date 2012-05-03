@@ -60,6 +60,12 @@
                         $("#record_"+recordId).remove();
                     })
                     .button();
+            $("#order_btn")
+                    .click(function(){
+                        var postData = "cartId=" + $("#cartId").val();
+                        $.post("/cart/order", postData);
+                    })
+                    .button();
         });
     </script>
 </head>
@@ -85,7 +91,7 @@
         </th>
     </tr>
 
-    <c:forEach items="${details}" var="cartRecord">
+    <c:forEach items="${cart.items}" var="cartRecord">
         <tr id="record_${cartRecord.id}">
             <td>${cartRecord.offer.product.name}</td>
             <td>${cartRecord.offer.price}</td>
@@ -100,9 +106,12 @@
             </td>
         </tr>
     </c:forEach>
-
+    <input id="cartId" type="hidden" name="id" value="${cart.id}">
 </table>
-
+<div >
+    <button id="order_btn">Make order</button>
+</div>
 <div id="cartEdit"></div>
+
 </body>
 </html>

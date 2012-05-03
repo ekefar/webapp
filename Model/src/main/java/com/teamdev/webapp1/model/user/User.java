@@ -1,19 +1,11 @@
 package com.teamdev.webapp1.model.user;
 
-
 import com.google.gson.annotations.Expose;
 import flexjson.JSON;
 
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by IntelliJ IDEA.
- * User: gar
- * Date: 01.04.12
- * Time: 21:27
- * To change this template use File | Settings | File Templates.
- */
 
 @Entity
 @Table(name = "USERS")

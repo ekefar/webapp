@@ -27,11 +27,11 @@ public class Cart {
     private Date creationDate;
 
     @OneToMany(
-            targetEntity = CartItems.class,
+            targetEntity = CartItem.class,
             fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH},
             mappedBy = "cart")
-    private List<CartItems> items;
+    private List<CartItem> items;
 
     public Cart() {
     }
@@ -52,19 +52,19 @@ public class Cart {
         this.creationDate = creationDate;
     }
 
-    public List<CartItems> getItems() {
+    public List<CartItem> getItems() {
         return items;
     }
 
-    public void setItems(List<CartItems> items) {
+    public void setItems(List<CartItem> items) {
         this.items = items;
     }
 
     public void add(Offer offer, Integer amount) {
-        items.add(new CartItems(offer, amount));
+        items.add(new CartItem(offer, amount));
     }
 
-    public void add(CartItems cartItems) {
-        items.add(cartItems);
+    public void add(CartItem cartItem) {
+        items.add(cartItem);
     }
 }

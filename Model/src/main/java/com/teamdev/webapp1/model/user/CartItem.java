@@ -13,7 +13,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "CART_ITEMS")
-public class CartItems {
+public class CartItem {
 
     @Id
     @GeneratedValue
@@ -33,10 +33,10 @@ public class CartItems {
     @Expose
     private Cart cart;
 
-    public CartItems() {
+    public CartItem() {
     }
 
-    public CartItems(Offer offer, int amount) {
+    public CartItem(Offer offer, int amount) {
         this.offer = offer;
         this.amount = amount;
     }

@@ -22,7 +22,6 @@ public class Offer {
     private int id;
 
     @ManyToOne
-    @Expose
     private User user;
 
     @ManyToOne
@@ -55,7 +54,6 @@ public class Offer {
         this.price = price;
         this.description = description;
     }
-
 
 
     public int getId() {
