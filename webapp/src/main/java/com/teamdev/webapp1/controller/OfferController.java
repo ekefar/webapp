@@ -8,8 +8,6 @@ import com.teamdev.webapp1.dao.ProductRepository;
 import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.product.Category;
-import com.teamdev.webapp1.model.user.Cart;
-import com.teamdev.webapp1.model.user.User;
 import com.teamdev.webapp1.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,7 +29,6 @@ public class OfferController {
     private final CategoriesRepository categoriesRepository;
     private final ProductRepository productRepository;
     private final OfferRepository offerRepository;
-    private final UserManager userManager;
     private final UserRepository userRepository;
 
 
@@ -41,19 +36,18 @@ public class OfferController {
     public OfferController(CategoriesRepository categoriesRepository,
                            ProductRepository productRepository,
                            OfferRepository offerRepository,
-                           UserManager userManager,
                            UserRepository userRepository) {
         this.categoriesRepository = categoriesRepository;
         this.productRepository = productRepository;
         this.offerRepository = offerRepository;
-        this.userManager = userManager;
         this.userRepository = userRepository;
     }
 
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String showOfferAddPage(Map<String, Object> model, HttpServletRequest request) {
-        model.put("user", userManager.getUser(request));
+    public String showOfferAddPage(@PathVariable("id") Integer userId,
+                                   Map<String, Object> model) {
+        model.put("user", userRepository.findOne(userId));
         model.put("offer", new Offer());
         model.put("categoryList", categoriesRepository.findAll());
         return "addOffer";
@@ -91,7 +85,7 @@ public class OfferController {
     public String listOffers(@PathVariable("id") Integer userId,
                              Map<String, Object> model) {
         model.put("userId", userId);
-        model.put("cart", createUserCart(userId));
+        model.put("cartId", userRepository.findOne(userId).getCart().getId());
         model.put("offers", offerRepository.findNotBelongToUser(userId));
         return "/offer/all";
     }
@@ -100,7 +94,7 @@ public class OfferController {
     public String listUserOffers(@PathVariable("id") Integer userId,
                                  Map<String, Object> model) {
         model.put("userId", userId);
-        model.put("cart", createUserCart(userId));
+        model.put("cartId", userRepository.findOne(userId).getCart().getId());
         model.put("offers", offerRepository.findByUserId(userId));
         return "/offer/own";
     }
@@ -114,18 +108,4 @@ public class OfferController {
         return "offerDetails";
     }
 
-    private Cart createUserCart(Integer userId) {
-        User user = userRepository.findOne(userId);
-        Cart cart;
-        if (user.getCart() == null) {
-            cart = new Cart();
-            user.setCart(cart);
-            User persistedUser = userRepository.save(user);
-            cart = persistedUser.getCart();
-        } else {
-            cart = user.getCart();
-        }
-
-        return cart;
-    }
 }

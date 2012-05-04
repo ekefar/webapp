@@ -35,7 +35,7 @@
                             $(this).dialog("close");
                         },
                         "Add":function () {
-                            var postData = $("#cartForm *").serialize() + "&cart.id=" +${cart.id};
+                            var postData = $("#cartForm *").serialize() + "&cart.id=" +${cartId};
                             $.post("/cart/add", postData);
                             $(this).dialog("close");
                         }

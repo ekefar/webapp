@@ -15,7 +15,9 @@
 
 <div id="cartItems">
     <input name="offer.id" type="hidden" value="${offer.id}">
+    Amount: <br/>
     <input name="amount" type="text">
+
 </div>
 
 

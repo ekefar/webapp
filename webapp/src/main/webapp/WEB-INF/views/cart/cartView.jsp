@@ -59,7 +59,7 @@
                 .button();
         $("#order_btn")
                 .click(function () {
-                    var postData = "cartId=" + $("#cartId").val();
+                    var postData = "cartId=" + ${cart.id};
                     $.post("/cart/order", postData);
                 })
                 .button();
@@ -103,7 +103,7 @@
             </td>
         </tr>
     </c:forEach>
-    <input id="cartId" type="hidden" name="id" value="${cart.id}">
+
 </table>
 <div>
     <button id="order_btn">Make order</button>

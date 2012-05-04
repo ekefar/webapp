@@ -123,12 +123,11 @@
 
         </tr>
     </c:forEach>
-
+    <tr>
+        <td colspan="5" align="right"><button id="add_btn" type="button">Add new</button></td></tr>
 </table>
 
-<div>
-    <button id="add_btn" type="button">Add new</button>
-</div>
+
 
 <div id="offerNew" title="New offer"></div>
 
