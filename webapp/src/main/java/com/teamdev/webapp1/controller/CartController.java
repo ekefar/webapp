@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.*;
 
 /**
@@ -46,13 +48,13 @@ public class CartController {
                                 Map<String, Object> model) {
 
         model.put("offer", offerRepository.findOne(offerId));
-        return "cartForm";
+        return "/cart/form";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addToCart(CartItem cartItem) {
         cartItemsRepository.save(cartItem);
-        return "cartForm";
+        return "/cart/form";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
@@ -67,7 +69,7 @@ public class CartController {
                                  Map<String, Object> model) {
 
         model.put("record", cartItemsRepository.findOne(recordId));
-        return "/cart/cartRecordView";
+        return "/cart/viewItem";
     }
 
     @RequestMapping(value = "/view/{cartId}", method = RequestMethod.GET)
@@ -75,25 +77,26 @@ public class CartController {
                            Map<String, Object> model) {
 
         model.put("cart", cartRepository.findOne(cartId));
-        return "/cart/cartView";
+        return "/cart/view";
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
     public String cartView(CartItem cartItem) {
 
         cartItemsRepository.delete(cartItem);
-        return "/cart/cartView";
+        return "/cart/view";
     }
 
     @RequestMapping(value = "/order")
-    public String makeOrder(@RequestParam(value = "cartId") Integer cartId) {
+    @ResponseBody
+    public int makeOrder(@RequestParam(value = "cartId") Integer cartId) {
         Cart cart = cartRepository.findOne(cartId);
 
         List<Order> orders = createOrders(cart);
         sendNotifications(orders);
         orderRepository.save(orders);
         clearCart(cart);
-        return "offerView";
+        return HttpServletResponse.SC_OK;
     }
 
 

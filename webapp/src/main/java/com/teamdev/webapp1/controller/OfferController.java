@@ -44,20 +44,20 @@ public class OfferController {
     }
 
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
     public String showOfferAddPage(@PathVariable("id") Integer userId,
                                    Map<String, Object> model) {
         model.put("user", userRepository.findOne(userId));
         model.put("offer", new Offer());
         model.put("categoryList", categoriesRepository.findAll());
-        return "addOffer";
+        return "/offer/add";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String showOfferEditPage(@PathVariable("id") Integer offerId,
                                     Map<String, Object> model) {
         model.put("offer", offerRepository.findOne(offerId));
-        return "offerEdit";
+        return "/offer/edit";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -105,7 +105,7 @@ public class OfferController {
                             Map<String, Object> model) {
         final Offer offer = offerRepository.findOne(offerId);
         model.put("offer", offer);
-        return "offerDetails";
+        return "/offer/details";
     }
 
 }

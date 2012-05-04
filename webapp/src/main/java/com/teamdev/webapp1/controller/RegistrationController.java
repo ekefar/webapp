@@ -38,9 +38,9 @@ public class RegistrationController {
 
     @RequestMapping("/register/email/check")
     @ResponseBody
-    public String checkEmail(@RequestParam("email") String email) {
+    public Boolean checkEmail(@RequestParam("email") String email) {
         User user = userRepository.findByEmail(email);
-        return Boolean.toString(user == null);
+        return user == null;
     }
 
     @RequestMapping("/register/login/check")

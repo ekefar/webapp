@@ -7,6 +7,7 @@
 
     <link type="text/css" href="../resources/css/flick/jquery-ui-1.8.18.custom.css" rel="stylesheet"/>
     <link type="text/css" href="../resources/css/style.css" rel="stylesheet"/>
+    <link type="text/css" href="../resources/css/table_style.css" rel="stylesheet"/>
     <link href="../resources/css/fileuploader.css" rel="stylesheet" type="text/css"/>
 
     <script type="text/javascript" src="../resources/js/jquery-1.7.1.min.js"></script>
@@ -20,31 +21,33 @@
 
             $("#profile_btn")
                     .click(function () {
+                        $("#content").html("");
                         $("#content").load("/settings/profile/" + $(this).attr("name"));
 
                     })
                     .button();
 
             $("#all_offer_btn")
-                    .click(function () {
+                    .click(function () {  $("#content").html("");
                         $("#content").load("/offer/all/" + $(this).attr("name"));
                     })
                     .button();
 
             $("#my_offer_btn")
-                    .click(function () {
+                    .click(function () {    $("#content").html("");
                         $("#content").load("/offer/own/" + $(this).attr("name"));
                     })
                     .button();
 
             $("#cart_btn")
-                    .click(function () {
+                    .click(function () {     $("#content").html("");
                         $("#content").load("/cart/view/" + $(this).attr("name"));
                     })
                     .button();
 
             $("#orders_btn")
-                    .click(function () {
+                    .click(
+                    function () {     $("#content").html("");
                         $("#content").load("/order/view/" + $(this).attr("name"));
                     }).button();
 
@@ -92,11 +95,9 @@
 
     </div>
 
+    <div id="content" class="content"></div>
 
-    <div id="content"></div>
-
-
-</div>
+ </div>
 
 </body>
 </html>

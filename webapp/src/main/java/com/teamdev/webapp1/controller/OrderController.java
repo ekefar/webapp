@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.teamdev.webapp1.dao.OrderRepository;
 import com.teamdev.webapp1.model.order.Order;
 import com.teamdev.webapp1.model.order.OrderStates;
-import com.teamdev.webapp1.model.user.User;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +36,7 @@ public class OrderController {
 
     @RequestMapping("/view/{id}")
     public String viewOrders(@PathVariable("id") Integer userId,
-                             Map<String, Object> model){
+                             Map<String, Object> model) {
         model.put("userId", userId);
         return "/order/view";
     }
@@ -54,7 +52,7 @@ public class OrderController {
 
     @RequestMapping("/confirmed/{id}")
     public String viewConfirmedOrders(@PathVariable(value = "id") Integer userId,
-                                       Map<String, Object> model) {
+                                      Map<String, Object> model) {
 
         List<Order> orders = orderRepository.findByOfferUserId(userId);
         model.put("orders", findOrdersWithState(orders, OrderStates.COMPLETE, OrderStates.DENIED));
@@ -64,30 +62,31 @@ public class OrderController {
 
     @RequestMapping(value = "/confirm/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String completeOrder(@PathVariable("id") Integer orderId){
+    public String completeOrder(@PathVariable("id") Integer orderId) {
         return changeOrderState(orderId, OrderStates.COMPLETE);
     }
 
     @RequestMapping(value = "/deny/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String denyOrder(@PathVariable("id") Integer orderId){
+    public String denyOrder(@PathVariable("id") Integer orderId) {
         return changeOrderState(orderId, OrderStates.DENIED);
     }
 
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String deleteOrder(@PathVariable("id") Integer orderId){
+    public String deleteOrder(@PathVariable("id") Integer orderId) {
         return changeOrderState(orderId, OrderStates.DELETED);
     }
 
     /**
      * Change order`s state to the new one.
-     * @param orderId order`s id.
+     *
+     * @param orderId  order`s id.
      * @param newState new order`s state.
-     * @return  Json representation of changed and persisted order.
+     * @return Json representation of changed and persisted order.
      */
-    private String changeOrderState(int orderId, OrderStates newState){
+    private String changeOrderState(int orderId, OrderStates newState) {
         Order order = orderRepository.findOne(orderId);
         order.setState(newState);
         Order persistedOrder = orderRepository.save(order);
@@ -99,15 +98,16 @@ public class OrderController {
 
     /**
      * Find and return orders with specified states
+     *
      * @param orders Orders list
-     * @param states  target state
-     * @return  List of orders with specified states
+     * @param states target state
+     * @return List of orders with specified states
      */
-    private List<Order> findOrdersWithState(List<Order> orders, OrderStates ... states){
+    private List<Order> findOrdersWithState(List<Order> orders, OrderStates... states) {
         List<Order> result = new ArrayList<Order>();
 
-        for(Order o:orders){
-            if(ArrayUtils.contains(states, o.getState())){
+        for (Order o : orders) {
+            if (ArrayUtils.contains(states, o.getState())) {
                 result.add(o);
             }
         }

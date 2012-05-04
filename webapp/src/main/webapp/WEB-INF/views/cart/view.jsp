@@ -108,7 +108,7 @@
 <div>
     <button id="order_btn">Make order</button>
 </div>
-<div id="cartEdit"></div>
+<div id="cartEdit" title="Edit cart record"></div>
 
 </body>
 </html>
