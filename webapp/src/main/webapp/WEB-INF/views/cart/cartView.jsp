@@ -5,68 +5,65 @@
 <html>
 <head>
     <title></title>
-    <link type="text/css" href="../../resources/css/flick/jquery-ui-1.8.18.custom.css" rel="stylesheet"/>
-    <link type="text/css" href="../../resources/css/style.css" rel="stylesheet"/>
-    <script type="text/javascript" src="../../resources/js/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="../../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
+
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            var selectedRecordId;
 
-            $("#cartEdit").dialog(
-                    {
-                        autoOpen:false,
-                        modal:true,
-                        resizable:false,
-                        draggable:false,
-                        position:top,
-                        width:400,
-                        buttons:{
-                            "Close":function () {
-                                $(this).dialog("close");
-                            },
-                            "Save":function () {
-                                var postData = $("#cartEdit form").serialize();
-                                $.post("/cart/edit", postData, function(result){
-                                    $("#record_"+selectedRecordId + " .amount").html(result.amount);
-                                    var total = parseInt(result.offer.price) * parseInt(result.amount);
-                                    $("#record_"+selectedRecordId + " .total").html(total);
-                                }, 'json');
+        var selectedRecordId;
 
-                                $(this).dialog("close");
-                            }
+        $("#cartEdit").dialog(
+                {
+                    autoOpen:false,
+                    modal:true,
+                    resizable:false,
+                    draggable:false,
+                    position:top,
+                    width:400,
+                    buttons:{
+                        "Close":function () {
+                            $(this).dialog("close");
+                        },
+                        "Save":function () {
+                            var postData = $("#cartEdit form").serialize();
+                            $.post("/cart/edit", postData, function (result) {
+                                $("#record_" + selectedRecordId + " .amount").html(result.amount);
+                                var total = parseInt(result.offer.price) * parseInt(result.amount);
+                                $("#record_" + selectedRecordId + " .total").html(total);
+                            }, 'json');
+
+                            $(this).dialog("close");
                         }
                     }
-            );
+                }
+        );
 
-            $("#cart_records .edit")
-                    .live("click", function () {
-                        var url = "/cart/edit/" + $(this).attr("name");
-                        selectedRecordId = $(this).attr("name");
-                        var dialogDiv = $("#cartEdit");
-                        dialogDiv.load(url, function () {
-                            dialogDiv.dialog("open");
-                        });
-                    })
-                    .button();
+        $("#cart_records .edit")
+                .live("click", function () {
+                    var url = "/cart/edit/" + $(this).attr("name");
+                    selectedRecordId = $(this).attr("name");
+                    var dialogDiv = $("#cartEdit");
+                    dialogDiv.load(url, function () {
+                        dialogDiv.dialog("open");
+                    });
+                })
+                .button();
 
-            $("#cart_records .remove")
-                    .live("click", function () {
-                        var recordId = $(this).attr("name");
-                        var url = "/cart/remove";
-                        var postData = "id=" + recordId;
-                        $.post(url, postData);
-                        $("#record_"+recordId).remove();
-                    })
-                    .button();
-            $("#order_btn")
-                    .click(function(){
-                        var postData = "cartId=" + $("#cartId").val();
-                        $.post("/cart/order", postData);
-                    })
-                    .button();
-        });
+        $("#cart_records .remove")
+                .live("click", function () {
+                    var recordId = $(this).attr("name");
+                    var url = "/cart/remove";
+                    var postData = "id=" + recordId;
+                    $.post(url, postData);
+                    $("#record_" + recordId).remove();
+                })
+                .button();
+        $("#order_btn")
+                .click(function () {
+                    var postData = "cartId=" + $("#cartId").val();
+                    $.post("/cart/order", postData);
+                })
+                .button();
+
     </script>
 </head>
 
@@ -108,7 +105,7 @@
     </c:forEach>
     <input id="cartId" type="hidden" name="id" value="${cart.id}">
 </table>
-<div >
+<div>
     <button id="order_btn">Make order</button>
 </div>
 <div id="cartEdit"></div>

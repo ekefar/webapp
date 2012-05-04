@@ -5,20 +5,16 @@ import com.google.gson.GsonBuilder;
 import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.user.User;
 import com.teamdev.webapp1.service.UserManager;
-import flexjson.JSONSerializer;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,17 +38,19 @@ public class UserSettingsController {
         this.userManager = userManager;
     }
 
-    @RequestMapping(value = "/account", method = RequestMethod.GET)
-    public String showAccountSettings() {
-        return "/settings/account";
+
+    @RequestMapping(value = "/profile/{id}", method = RequestMethod.GET)
+    public String viewProfile(@PathVariable("id") Integer userId,
+                                     Map<String, Object> model) {
+        model.put("user", userRepository.findOne(userId));
+        return "userProfile";
     }
 
-    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    @RequestMapping(value = "/profile/refresh/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String getProfileSettings(HttpServletRequest request) throws IOException {
-        final User user = userManager.getUser(request);
-        final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        return gson.toJson(user);
+    public String refreshProfile(@PathVariable("id") Integer userId) {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        return gson.toJson(userRepository.findOne(userId));
     }
 
     @RequestMapping(value = "/profile/avatar", method = RequestMethod.GET)
@@ -61,21 +59,21 @@ public class UserSettingsController {
         return userManager.getUser(request).getAvatar();
     }
 
-    @RequestMapping(value = "/profile", method = RequestMethod.POST)
-    public String saveProfileSettings(HttpServletRequest request,
+    @RequestMapping(value = "/profile/{id}", method = RequestMethod.POST)
+    public String saveProfileSettings(@PathVariable ("id") Integer userId,
                                       @RequestParam(value = "name") String userName,
                                       @RequestParam(value = "dateOfBirth") Date dateOfBirth,
                                       @RequestParam(value = "skype") String skype,
                                       @RequestParam(value = "hobby") String hobby) {
 
-        final User user = userManager.getUser(request);
+        final User user = userRepository.findOne(userId);
         user.setName(userName);
         user.setDateOfBirth(dateOfBirth);
         user.setSkype(skype);
         user.setHobby(hobby);
         userRepository.save(user);
 
-        return "profile";
+        return "200";
     }
 
     @ResponseBody

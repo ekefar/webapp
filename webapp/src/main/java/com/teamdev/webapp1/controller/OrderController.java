@@ -45,7 +45,7 @@ public class OrderController {
 
     @RequestMapping("/processing/{id}")
     public String viewProcessingOrders(@PathVariable(value = "id") Integer userId,
-                             Map<String, Object> model) {
+                                       Map<String, Object> model) {
 
         List<Order> orders = orderRepository.findByOfferUserId(userId);
         model.put("orders", findOrdersWithState(orders, OrderStates.PROCESSING));

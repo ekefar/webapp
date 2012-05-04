@@ -5,13 +5,8 @@
 <html>
 <head>
     <title></title>
-    <link type="text/css" href="../../resources/css/flick/jquery-ui-1.8.18.custom.css" rel="stylesheet"/>
-    <link type="text/css" href="../../resources/css/style.css" rel="stylesheet"/>
-    <script type="text/javascript" src="../../resources/js/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="../../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
 
             $("#offerNew").dialog(
                     {
@@ -82,7 +77,6 @@
                     .button();
 
 
-
             $("#offer_table .edit")
                     .live("click", function () {
                         var url = "/offer/edit/" + $(this).attr("name");
@@ -94,7 +88,6 @@
                     .button();
 
             $("#cartView").button();
-        });
 
     </script>
 </head>

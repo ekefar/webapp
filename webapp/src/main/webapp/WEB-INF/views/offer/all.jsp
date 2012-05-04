@@ -5,69 +5,65 @@
 <html>
 <head>
     <title></title>
-    <link type="text/css" href="../../resources/css/flick/jquery-ui-1.8.18.custom.css" rel="stylesheet"/>
-    <link type="text/css" href="../../resources/css/style.css" rel="stylesheet"/>
-    <script type="text/javascript" src="../../resources/js/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="../../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#offerDescription").dialog(
-                    {
-                        autoOpen:false,
-                        modal:true,
-                        resizable:false,
-                        draggable:false,
-                        position:top,
-                        buttons:{
-                            "Close":function () {
-                                $(this).dialog("close");
-                            }
+
+        $("#offerDescription").dialog(
+                {
+                    autoOpen:false,
+                    modal:true,
+                    resizable:false,
+                    draggable:false,
+                    position:top,
+                    buttons:{
+                        "Close":function () {
+                            $(this).dialog("close");
                         }
                     }
-            );
+                }
+        );
 
-            $("#cartForm").dialog(
-                    {
-                        autoOpen:false,
-                        modal:true,
-                        resizable:false,
-                        draggable:false,
-                        position:top,
-                        buttons:{
-                            "Close":function () {
-                                $(this).dialog("close");
-                            },
-                            "Add":function () {
-                                var postData = $("#cartForm *").serialize() + "&cart.id=" +${cart.id};
-                                $.post("/cart/add", postData);
-                                $(this).dialog("close");
-                            }
+        $("#cartForm").dialog(
+                {
+                    autoOpen:false,
+                    modal:true,
+                    resizable:false,
+                    draggable:false,
+                    position:top,
+                    buttons:{
+                        "Close":function () {
+                            $(this).dialog("close");
+                        },
+                        "Add":function () {
+                            var postData = $("#cartForm *").serialize() + "&cart.id=" +${cart.id};
+                            $.post("/cart/add", postData);
+                            $(this).dialog("close");
                         }
                     }
-            );
+                }
+        );
 
 
-            $("#offer_table .details")
-                    .live("click", function () {
-                        var url = "/offer/view/" + $(this).attr("name");
-                        var dialogDiv = $("#offerDescription");
-                        dialogDiv.load(url, function () {
-                            dialogDiv.dialog("open");
-                        });
-                    })
-                    .button();
+        $("#offer_table .details")
+                .live("click", function () {
+                    var url = "/offer/view/" + $(this).attr("name");
+                    var dialogDiv = $("#offerDescription");
+                    dialogDiv.load(url, function () {
+                        dialogDiv.dialog("open");
+                    });
+                })
+                .button();
 
-            $("#offer_table .cart")
-                    .live("click", function () {
-                        var url = "/cart/add/" + $(this).attr("name");
-                        var dialogDiv = $("#cartForm");
-                        dialogDiv.load(url, function () {
-                            dialogDiv.dialog("open");
-                        });
-                    })
-                    .button();
-        });
+        $("#offer_table .cart")
+                .live("click", function () {
+                    var url = "/cart/add/" + $(this).attr("name");
+                    var dialogDiv = $("#cartForm");
+                    dialogDiv.load(url, function () {
+                        dialogDiv.dialog("open");
+                    });
+                })
+                .button();
+
 
     </script>
 </head>

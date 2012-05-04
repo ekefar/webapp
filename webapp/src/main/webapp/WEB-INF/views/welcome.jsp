@@ -14,84 +14,46 @@
     <script src="../resources/js/fileuploader.js" type="text/javascript"></script>
     <script type="text/javascript" src="../resources/js/jquery.validate.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="../resources/js/jquery.form.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../resources/js/jquery.maskedinput-1.3.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
-            hideSettingsValues();
 
+            $("#profile_btn")
+                    .click(function () {
+                        $("#content").load("/settings/profile/" + $(this).attr("name"));
 
-            $("#profile_btn, #reset_btn").click(function () {
-                hideSettingsValues();
-                $.getJSON("/settings/profile", function (data) {
-                    $("#name").val(data.name);
-                    $("#dateOfBirth").val(data.dateOfBirth);
-                    $("#skype").val(data.skype);
-                    $("#hobby").val(data.hobby);
-                });
+                    })
+                    .button();
 
-                $("#profile_settings").show();
-            });
+            $("#all_offer_btn")
+                    .click(function () {
+                        $("#content").load("/offer/all/" + $(this).attr("name"));
+                    })
+                    .button();
 
-            $("#orders_btn").click(function () {
-                hideSettingsValues();
-                $("#other1")
-                        .load("/order/view/" + $(this).attr("name"))
-                        .show();
-            });
+            $("#my_offer_btn")
+                    .click(function () {
+                        $("#content").load("/offer/own/" + $(this).attr("name"));
+                    })
+                    .button();
 
-            $("#other2_btn").click(function () {
-                hideSettingsValues();
-                $("#other2").show();
-            });
+            $("#cart_btn")
+                    .click(function () {
+                        $("#content").load("/cart/view/" + $(this).attr("name"));
+                    })
+                    .button();
 
-            $("#other3_btn").click(function () {
-                hideSettingsValues();
-                $("#other3").show();
-            });
+            $("#orders_btn")
+                    .click(function () {
+                        $("#content").load("/order/view/" + $(this).attr("name"));
+                    }).button();
 
-            $('#profile_submit').click(function () {
-                $.post("/settings/profile", $('#profile_form').serialize());
-            });
-
-
-            var uploader = new qq.FileUploader({
-                // pass the dom node (ex. $(selector)[0] for jQuery users)
-                element:document.getElementById('upload_container'),
-                // path to server-side upload script
-                action:'/settings/profile/avatar',
-                onComplete:updateImage
-            });
-
-            updateImage();
             profile_btn.click();
 
         });
 
-        function hideSettingsValues() {
-            $("#profile_settings").hide();
-            $("#other1").hide();
-            $("#other2").hide();
-            $("#other3").hide();
-        }
-
-
     </script>
 
-
-    <script type="text/javascript">
-        $(function () {
-            $("a, button").button();
-            $("#dateOfBirth").datepicker();
-        });
-
-        var updateImage = function () {
-            var src = "/settings/profile/avatar?" + new Date().getTime();
-            $('#avatar').attr("src", src);
-            $('#upload_container').innerHTML = "";
-        }
-
-    </script>
 
 </head>
 <body>
@@ -107,115 +69,34 @@
 
 <div class="container">
 
-    <div id="settings_navigation" class="navigation_vertical">
+    <div id="navigation" class="navigation_vertical">
         <div>
-            <a id="profile_btn" class="navigation_btn" href="#profile">Profile</a>
+            <a id="profile_btn" class="navigation_btn" name="${user.id}" href="#profile">Profile</a>
         </div>
 
         <div>
-            <a id="all_offer_btn" class="navigation_btn" href="/offer/all/${user.id}">All Offers</a>
+            <a id="all_offer_btn" class="navigation_btn" name="${user.id}" href="#all_offers">All Offers</a>
         </div>
 
         <div>
-            <a id="my_offer_btn" class="navigation_btn" href="/offer/own/${user.id}">My Offers</a>
+            <a id="my_offer_btn" class="navigation_btn" name="${user.id}" href="#my_offers">My Offers</a>
         </div>
 
         <div>
-            <a id="orders_btn" class="navigation_btn" name="${user.id}">Orders</a>
+            <a id="orders_btn" class="navigation_btn" name="${user.id}" href="#orders">Orders</a>
         </div>
 
         <div>
-            <a id="cartView" class="navigation_btn" href="/cart/view/${user.cart.id}">View cart</a>
+            <a id="cart_btn" class="navigation_btn" name="${user.cart.id}" href="#cart">View cart</a>
         </div>
 
     </div>
 
 
-    <div id="settings_values" class="content">
-        <div id="profile_settings">
+    <div id="content"></div>
 
-            <form id="profile_form">
-                <table>
-                    <tr>
-                        <td>
-                            Name:
-                        </td>
-                        <td>
-                            <input type="text" name="name" id="name" size="50" value=""/>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            Date of birth:
-                        </td>
-                        <td>
-                            <input type="text" name="dateOfBirth" id="dateOfBirth" size="50" value=""/>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            Skype:
-                        </td>
-                        <td>
-                            <input type="text" name="skype" id="skype" size="50" value=""/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Hobby:
-                        </td>
-                        <td>
-                            <input type="text" name="hobby" id="hobby" size="50" value=""/>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                            Avatar:
-                        </td>
-                        <td>
-                            <img id="avatar" src="" width="200" height="200"/>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-
-                        </td>
-                        <td>
-                            <div id="upload_container">
-
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-
-
-                        <td align="center" colspan="2">
-                            <br/>
-                            <button id="reset_btn" type="button" class="navigation_btn">Reset</button>
-                            <button id="profile_submit" type="button" class="navigation_btn">Save</button>
-
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-
-        <div id="other1"> Some other settings/</div>
-
-        <div id="other2"> And another settings/</div>
-
-        <div id="other3"> And another settings once more!</div>
-
-    </div>
 
 </div>
-
-<div id="footer" class="footer">2012</div>
 
 </body>
 </html>
