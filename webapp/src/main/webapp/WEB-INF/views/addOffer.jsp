@@ -12,6 +12,8 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#categories").change(fillProducts);
+            $("#categories").change();
+
         });
 
 
@@ -42,6 +44,7 @@
                                    itemLabel="name">
                         </sf:select>
                         <input name="user.id" value="${user.id}" type="hidden">
+
                     </td>
 
                 </tr>
@@ -56,7 +59,7 @@
                         Price:
                     </td>
                     <td>
-                        <sf:input path="price" size="10"/>
+                        <sf:input path="price" size="10" />
                     </td>
                 </tr>
                 <tr>

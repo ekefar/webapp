@@ -2,14 +2,15 @@ package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.teamdev.webapp1.dao.*;
+import com.teamdev.webapp1.dao.CategoriesRepository;
+import com.teamdev.webapp1.dao.OfferRepository;
+import com.teamdev.webapp1.dao.ProductRepository;
+import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.product.Category;
-import com.teamdev.webapp1.model.product.Product;
 import com.teamdev.webapp1.model.user.Cart;
 import com.teamdev.webapp1.model.user.User;
 import com.teamdev.webapp1.service.UserManager;
-import com.teamdev.webapp1.service.UserRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,11 +52,18 @@ public class OfferController {
 
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String showAddOfferPage(Map<String, Object> model, HttpServletRequest request) {
+    public String showOfferAddPage(Map<String, Object> model, HttpServletRequest request) {
         model.put("user", userManager.getUser(request));
         model.put("offer", new Offer());
         model.put("categoryList", categoriesRepository.findAll());
         return "addOffer";
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String showOfferEditPage(@PathVariable("id") Integer offerId,
+                                    Map<String, Object> model) {
+        model.put("offer", offerRepository.findOne(offerId));
+        return "offerEdit";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -65,19 +74,37 @@ public class OfferController {
         return gson.toJson(persistedOffer);
     }
 
+
     @RequestMapping("/listProducts")
     @ResponseBody
     public String listProducts(Category category) {
         return new Gson().toJson(productRepository.findByCategory(category));
     }
 
-    @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String listOffers(Map<String, Object> model,
-                             HttpServletRequest request) {
-        model.put("cart", createUserCart(request));
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public String listAllOffers(Map<String, Object> model) {
         model.put("offers", offerRepository.findAll());
-        return "offersView";
+        return "/offer/all";
     }
+
+    @RequestMapping(value = "/all/{id}", method = RequestMethod.GET)
+    public String listOffers(@PathVariable("id") Integer userId,
+                             Map<String, Object> model) {
+        model.put("userId", userId);
+        model.put("cart", createUserCart(userId));
+        model.put("offers", offerRepository.findNotBelongToUser(userId));
+        return "/offer/all";
+    }
+
+    @RequestMapping(value = "/own/{id}", method = RequestMethod.GET)
+    public String listUserOffers(@PathVariable("id") Integer userId,
+                                 Map<String, Object> model) {
+        model.put("userId", userId);
+        model.put("cart", createUserCart(userId));
+        model.put("offers", offerRepository.findByUserId(userId));
+        return "/offer/own";
+    }
+
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String viewOffer(@PathVariable("id") int offerId,
@@ -87,10 +114,10 @@ public class OfferController {
         return "offerDetails";
     }
 
-    private Cart createUserCart(HttpServletRequest request){
-        User user = userManager.getUser(request);
+    private Cart createUserCart(Integer userId) {
+        User user = userRepository.findOne(userId);
         Cart cart;
-        if(user.getCart() == null){
+        if (user.getCart() == null) {
             cart = new Cart();
             user.setCart(cart);
             User persistedUser = userRepository.save(user);

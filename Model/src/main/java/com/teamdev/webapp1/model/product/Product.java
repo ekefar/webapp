@@ -1,5 +1,7 @@
 package com.teamdev.webapp1.model.product;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 
 /**
@@ -17,24 +19,27 @@ public class Product {
     @Id
     @GeneratedValue
     @Column(name = "ID")
+    @Expose
     private int id;
 
     @Column(name = "NAME")
+    @Expose
     private String name;
 
     @Lob
     @Column(name = "ICON")
+    @Expose
     private byte[] icon;
 
     @ManyToOne
+    @Expose
     private Unit unit;
 
     @ManyToOne
+    @Expose
     private Category category;
 
 
-    @Embedded
-    Producer producer;
 
 
     public Product() {
@@ -86,11 +91,4 @@ public class Product {
         this.category = category;
     }
 
-    public Producer getProducer() {
-        return producer;
-    }
-
-    public void setProducer(Producer producer) {
-        this.producer = producer;
-    }
 }

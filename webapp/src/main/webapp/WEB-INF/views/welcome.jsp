@@ -33,9 +33,11 @@
                 $("#profile_settings").show();
             });
 
-            $("#other1_btn").click(function () {
+            $("#orders_btn").click(function () {
                 hideSettingsValues();
-                $("#other1").show();
+                $("#other1")
+                        .load("/order/view/" + $(this).attr("name"))
+                        .show();
             });
 
             $("#other2_btn").click(function () {
@@ -94,7 +96,6 @@
 </head>
 <body>
 
-
 <div id="header" class="header">
     <div>Welcome, ${user.login}!</div>
     <div class="logout_btn">
@@ -112,20 +113,21 @@
         </div>
 
         <div>
-            <a id="offer_btn" class="navigation_btn" href="/offer/view">Offers</a>
+            <a id="all_offer_btn" class="navigation_btn" href="/offer/all/${user.id}">All Offers</a>
         </div>
 
         <div>
-            <a id="products_btn" class="navigation_btn" href="/order/view/${user.id}">Orders</a>
+            <a id="my_offer_btn" class="navigation_btn" href="/offer/own/${user.id}">My Offers</a>
         </div>
 
         <div>
-            <a id="other2_btn" class="navigation_btn" href="#other2">Other 2</a>
+            <a id="orders_btn" class="navigation_btn" name="${user.id}">Orders</a>
         </div>
 
         <div>
-            <a id="other3_btn" class="navigation_btn" href="#other3">Other 3</a>
+            <a id="cartView" class="navigation_btn" href="/cart/view/${user.cart.id}">View cart</a>
         </div>
+
     </div>
 
 

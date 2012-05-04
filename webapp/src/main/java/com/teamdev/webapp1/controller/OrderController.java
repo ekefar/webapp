@@ -6,6 +6,7 @@ import com.teamdev.webapp1.dao.OrderRepository;
 import com.teamdev.webapp1.model.order.Order;
 import com.teamdev.webapp1.model.order.OrderStates;
 import com.teamdev.webapp1.model.user.User;
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -34,13 +37,28 @@ public class OrderController {
 
 
     @RequestMapping("/view/{id}")
-    public String viewOrders(@PathVariable(value = "id") Integer userId,
+    public String viewOrders(@PathVariable("id") Integer userId,
+                             Map<String, Object> model){
+        model.put("userId", userId);
+        return "/order/view";
+    }
+
+    @RequestMapping("/processing/{id}")
+    public String viewProcessingOrders(@PathVariable(value = "id") Integer userId,
                              Map<String, Object> model) {
-        User user = new User();
-        user.setId(userId);
-        List<Order> orders = orderRepository.findByOfferUser(user);
-        model.put("orders", orders);
-        return "ordersView";
+
+        List<Order> orders = orderRepository.findByOfferUserId(userId);
+        model.put("orders", findOrdersWithState(orders, OrderStates.PROCESSING));
+        return "/order/processing";
+    }
+
+    @RequestMapping("/confirmed/{id}")
+    public String viewConfirmedOrders(@PathVariable(value = "id") Integer userId,
+                                       Map<String, Object> model) {
+
+        List<Order> orders = orderRepository.findByOfferUserId(userId);
+        model.put("orders", findOrdersWithState(orders, OrderStates.COMPLETE, OrderStates.DENIED));
+        return "/order/confirmed";
     }
 
 
@@ -56,6 +74,13 @@ public class OrderController {
         return changeOrderState(orderId, OrderStates.DENIED);
     }
 
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteOrder(@PathVariable("id") Integer orderId){
+        return changeOrderState(orderId, OrderStates.DELETED);
+    }
+
     /**
      * Change order`s state to the new one.
      * @param orderId order`s id.
@@ -69,6 +94,25 @@ public class OrderController {
 
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         return gson.toJson(persistedOrder);
+    }
+
+
+    /**
+     * Find and return orders with specified states
+     * @param orders Orders list
+     * @param states  target state
+     * @return  List of orders with specified states
+     */
+    private List<Order> findOrdersWithState(List<Order> orders, OrderStates ... states){
+        List<Order> result = new ArrayList<Order>();
+
+        for(Order o:orders){
+            if(ArrayUtils.contains(states, o.getState())){
+                result.add(o);
+            }
+        }
+
+        return result;
     }
 
 }

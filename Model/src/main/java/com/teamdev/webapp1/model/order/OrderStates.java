@@ -8,5 +8,6 @@ public enum OrderStates {
     PROCESSING,
     COMPLETE,
     DENIED,
-    CANCELED
+    CANCELED,
+    DELETED
 }

@@ -5,10 +5,10 @@
 <html>
 <head>
     <title></title>
-    <link type="text/css" href="../resources/css/flick/jquery-ui-1.8.18.custom.css" rel="stylesheet"/>
-    <link type="text/css" href="../resources/css/style.css" rel="stylesheet"/>
-    <script type="text/javascript" src="../resources/js/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
+    <link type="text/css" href="../../resources/css/flick/jquery-ui-1.8.18.custom.css" rel="stylesheet"/>
+    <link type="text/css" href="../../resources/css/style.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../../resources/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="../../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -48,50 +48,6 @@
             );
 
 
-            $("#offerForm").dialog(
-                    {
-                        autoOpen:false,
-                        modal:true,
-                        resizable:false,
-                        draggable:false,
-                        position:top,
-                        width:400,
-                        buttons:{
-                            "Cancel":function () {
-                                $(this).dialog("close");
-                            },
-                            "Add":function () {
-                                var postData = $("#offerForm form").serialize();
-                                $.post("/offer/add", postData, function (result) {
-                                    $("#offer_table").append(
-                                            "<tr>" +
-                                                    "<td>" + result.product.name + "</td>" +
-                                                    "<td>" + result.price + "</td>" +
-                                                    "<td>" + result.amount + "</td>" +
-                                                    "<td><a id='details_" + result.id + "' name='"+ result.id  +"' class='details'>View details</a></td>" +
-                                                    "<td><a id='cart_" + result.id + "' name='"+ result.id  +"' class='cart'>Add to cart</a></td>" +
-                                                    "</tr>"
-                                    );
-                                    $("#details_"+result.id).button();
-                                    $("#cart_"+result.id).button();
-                                }, 'json');
-
-                                $(this).dialog("close");
-                            }
-                        }
-                    });
-
-            $("#add_btn")
-                    .click(
-                    function () {
-                        var url = "/offer/add";
-                        var dialogDiv = $("#offerForm");
-                        dialogDiv.load(url, function () {
-                            dialogDiv.dialog("open");
-                        });
-                    })
-                    .button();
-
             $("#offer_table .details")
                     .live("click", function () {
                         var url = "/offer/view/" + $(this).attr("name");
@@ -129,6 +85,9 @@
         <th>
             Amount
         </th>
+        <th>
+            Description
+        </th>
     </tr>
 
     <c:forEach items="${offers}" var="offer">
@@ -136,25 +95,21 @@
             <td>${offer.product.name}</td>
             <td>${offer.price}</td>
             <td>${offer.amount}</td>
+            <td>${offer.description}</td>
+
             <td>
                 <a id="details_${offer.id}" name="${offer.id}" class="details">View details</a>
             </td>
             <td>
                 <a id="cart_${offer.id}" name="${offer.id}" class="cart">Add to cart</a>
             </td>
+
         </tr>
     </c:forEach>
 
 </table>
 
-<div>
-    <button id="add_btn" type="button">Add new</button>
-    <a href="/cart/view/${cart.id}">View cart</a>
-</div>
-
 <div id="offerDescription" title="Offer info"></div>
-
-<div id="offerForm" title="New offer"></div>
 
 <div id="cartForm" title="Add to cart"></div>
 
