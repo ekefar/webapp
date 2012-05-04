@@ -14,64 +14,32 @@
         $(document).ready(function () {
             var selectedRecordId;
 
-            $("#cartEdit").dialog(
-                    {
-                        autoOpen:false,
-                        modal:true,
-                        resizable:false,
-                        draggable:false,
-                        position:top,
-                        width:400,
-                        buttons:{
-                            "Close":function () {
-                                $(this).dialog("close");
-                            },
-                            "Save":function () {
-                                var postData = $("#cartEdit form").serialize();
-                                $.post("/cart/edit", postData, function(result){
-                                    $("#record_"+selectedRecordId + " .amount").html(result.amount);
-                                    var total = parseInt(result.offer.price) * parseInt(result.amount);
-                                    $("#record_"+selectedRecordId + " .total").html(total);
-                                }, 'json');
-
-                                $(this).dialog("close");
-                            }
-                        }
-                    }
-            );
-
-            $("#cart_records .edit")
-                    .live("click", function () {
-                        var url = "/cart/edit/" + $(this).attr("name");
-                        selectedRecordId = $(this).attr("name");
-                        var dialogDiv = $("#cartEdit");
-                        dialogDiv.load(url, function () {
-                            dialogDiv.dialog("open");
-                        });
+            $("#orders .confirm")
+                    .click(function () {
+                        selectedRecordId = $(this).attr("name")
+                        var url = "/order/confirm/" + selectedRecordId;
+                        $.post(url, function(result){
+                            $("#record_"+selectedRecordId + " .state").html(result.state);
+                        }, 'json');
                     })
                     .button();
 
-            $("#cart_records .remove")
-                    .live("click", function () {
-                        var recordId = $(this).attr("name");
-                        var url = "/cart/remove";
-                        var postData = "id=" + recordId;
-                        $.post(url, postData);
-                        $("#record_"+recordId).remove();
+            $("#orders .deny")
+                    .click(function () {
+                        selectedRecordId = $(this).attr("name")
+                        var url = "/order/deny/" + selectedRecordId;
+                        $.post(url, function(result){
+                            $("#record_"+selectedRecordId + " .state").html(result.state);
+                        }, 'json');
                     })
                     .button();
-            $("#order_btn")
-                    .click(function(){
-                        var postData = "cartId=" + $("#cartId").val();
-                        $.post("/cart/order", postData);
-                    })
-                    .button();
+
         });
     </script>
 </head>
 
 <body>
-<table id="cart_records" border="1">
+<table id="orders" border="1">
 
     <tr>
         <th>
@@ -89,26 +57,28 @@
         <th>
             Total
         </th>
+        <th>
+            State
+        </th>
     </tr>
 
     <c:forEach items="${orders}" var="order">
-        <tr id="record_${cartRecord.id}">
+        <tr id="record_${order.id}">
             <td>${order.offer.product.name}</td>
             <td>${order.offer.price}</td>
             <td>${order.offer.amount}</td>
             <td class="amount">${order.amount}</td>
             <td class="total">${order.amount * order.offer.price}</td>
+            <td class="state">${order.state}</td>
             <td>
-                <a id="edit_${order.id}" name="${order.id}" class="edit">Edit record</a>
+                <a id="confirm_${order.id}" name="${order.id}" class="confirm">Confirm</a>
             </td>
             <td>
-                <a id="remove_${order.id}" name="${order.id}" class="remove">Remove record</a>
+                <a id="deny_${order.id}" name="${order.id}" class="deny">Deny</a>
             </td>
         </tr>
     </c:forEach>
     <input id="cartId" type="hidden" name="id" value="${cart.id}">
 </table>
-<div id="cartEdit"></div>
-
 </body>
 </html>
