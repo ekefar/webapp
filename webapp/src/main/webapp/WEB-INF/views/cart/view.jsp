@@ -59,11 +59,24 @@
                     $("#record_" + recordId).remove();
                 })
                 .button();
-        $("#order_btn")
+
+        $("#cart_records .purchase")
+                .die()
+                .live("click", function () {
+                    var recordId = $(this).attr("name");
+                    var url = "/cart/purchase";
+                    var postData = "id=" + recordId;
+                    $.post(url, postData);
+                    $("#record_" + recordId).remove();
+                })
+                .button();
+
+        $("#purchase_all_btn")
                 .unbind("click")
                 .click(function () {
                     var postData = "cartId=" + ${cart.id};
-                    $.post("/cart/order", postData);
+                    $.post("/cart/purchaseAll", postData);
+                    $("#cart_records").html("Cart is empty");
                 })
                 .button();
 
@@ -72,6 +85,10 @@
 
 <body>
 <table id="cart_records" border="1">
+
+    <c:if test="${cart.items == null}" >
+        <tr>cart is empty</tr>
+    </c:if>
 
     <tr>
         <th>
@@ -104,12 +121,15 @@
             <td>
                 <a id="remove_${cartRecord.id}" name="${cartRecord.id}" class="remove">Remove record</a>
             </td>
+            <td>
+                <a id="purchase_${cartRecord.id}" name="${cartRecord.id}" class="purchase">Purchase</a>
+            </td>
         </tr>
     </c:forEach>
 
 </table>
 <div>
-    <button id="order_btn">Make order</button>
+    <button id="purchase_all_btn">Purchase all</button>
 </div>
 <div id="cartEdit" title="Edit cart record"></div>
 

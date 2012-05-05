@@ -7,7 +7,6 @@
     <title></title>
     <script type="text/javascript">
 
-
             $("#orders .remove")
                     .unbind("click")
                     .click(function () {
@@ -43,6 +42,9 @@
             Total
         </th>
         <th>
+            Creation date
+        </th>
+        <th>
             State
         </th>
     </tr>
@@ -54,13 +56,10 @@
             <td>${order.offer.amount}</td>
             <td class="amount">${order.amount}</td>
             <td class="total">${order.amount * order.offer.price}</td>
+            <td>${order.creationDate}</td>
             <td class="state">${order.state}</td>
-            <td>
-                <a id="confirm_${order.id}" name="${order.id}" class="remove">Remove</a>
-            </td>
         </tr>
     </c:forEach>
-    <input id="cartId" type="hidden" name="id" value="${cart.id}">
 </table>
 
 </body>

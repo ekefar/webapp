@@ -8,22 +8,12 @@
 
     <script type="text/javascript">
 
-        $("#orders .confirm")
-                .unbind("click")
-                .click(function () {
-                    var selectedRecordId = $(this).attr("name")
-                    var url = "/order/confirm/" + selectedRecordId;
-                    $.post(url, function (result) {
-                        $("#record_" + selectedRecordId).remove();
-                    }, 'json');
-                })
-                .button();
 
-        $("#orders .deny")
+        $("#orders .cancel")
                 .unbind("click")
                 .click(function () {
                     var selectedRecordId = $(this).attr("name")
-                    var url = "/order/deny/" + selectedRecordId;
+                    var url = "/order/purchase/cancel/" + selectedRecordId;
                     $.post(url, function (result) {
                         $("#record_" + selectedRecordId).remove();
                     }, 'json');
@@ -71,14 +61,10 @@
             <td>${order.creationDate}</td>
             <td class="state">${order.state}</td>
             <td>
-                <a id="confirm_${order.id}" name="${order.id}" class="confirm">Confirm</a>
-            </td>
-            <td>
-                <a id="deny_${order.id}" name="${order.id}" class="deny">Deny</a>
+                <a id="cancel_${order.id}" name="${order.id}" class="cancel">Cancel</a>
             </td>
         </tr>
     </c:forEach>
-
 </table>
 </body>
 </html>

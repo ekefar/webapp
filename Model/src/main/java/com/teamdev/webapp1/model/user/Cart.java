@@ -26,6 +26,9 @@ public class Cart {
     @Expose
     private Date creationDate;
 
+    @OneToOne
+    User user;
+    
     @OneToMany(
             targetEntity = CartItem.class,
             fetch = FetchType.EAGER,
@@ -34,6 +37,10 @@ public class Cart {
     private List<CartItem> items;
 
     public Cart() {
+    }
+
+    public Cart(User user) {
+        this.user = user;
     }
 
     public Integer getId() {
@@ -66,5 +73,13 @@ public class Cart {
 
     public void add(CartItem cartItem) {
         items.add(cartItem);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

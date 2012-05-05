@@ -1,10 +1,7 @@
 package com.teamdev.webapp1.controller;
 
 import com.google.gson.GsonBuilder;
-import com.teamdev.webapp1.dao.CartItemsRepository;
-import com.teamdev.webapp1.dao.CartRepository;
-import com.teamdev.webapp1.dao.OfferRepository;
-import com.teamdev.webapp1.dao.OrderRepository;
+import com.teamdev.webapp1.dao.*;
 import com.teamdev.webapp1.model.order.Order;
 import com.teamdev.webapp1.model.order.OrderStates;
 import com.teamdev.webapp1.model.user.Cart;
@@ -30,17 +27,20 @@ public class CartController {
     private final CartItemsRepository cartItemsRepository;
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
 
 
     @Autowired
     public CartController(OfferRepository offerRepository,
                           CartRepository cartRepository,
                           CartItemsRepository cartItemsRepository,
-                          OrderRepository orderRepository) {
+                          OrderRepository orderRepository,
+                          UserRepository userRepository) {
         this.offerRepository = offerRepository;
         this.cartRepository = cartRepository;
         this.cartItemsRepository = cartItemsRepository;
         this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
     }
 
     @RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
@@ -72,11 +72,11 @@ public class CartController {
         return "/cart/viewItem";
     }
 
-    @RequestMapping(value = "/view/{cartId}", method = RequestMethod.GET)
-    public String cartView(@PathVariable(value = "cartId") int cartId,
+    @RequestMapping(value = "/view/{userId}", method = RequestMethod.GET)
+    public String cartView(@PathVariable(value = "userId") int userId,
                            Map<String, Object> model) {
 
-        model.put("cart", cartRepository.findOne(cartId));
+        model.put("cart", userRepository.findOne(userId).getCart());
         return "/cart/view";
     }
 
@@ -87,15 +87,26 @@ public class CartController {
         return "/cart/view";
     }
 
-    @RequestMapping(value = "/order")
+    @RequestMapping(value = "/purchaseAll", method = RequestMethod.POST)
     @ResponseBody
-    public int makeOrder(@RequestParam(value = "cartId") Integer cartId) {
+    public int purchaseAll(@RequestParam(value = "cartId") Integer cartId) {
         Cart cart = cartRepository.findOne(cartId);
-
-        List<Order> orders = createOrders(cart);
+        CartItem[] cartItems = cart.getItems().toArray(new CartItem[0]);
+        List<Order> orders = createOrders(cartItems);
         sendNotifications(orders);
         orderRepository.save(orders);
         clearCart(cart);
+        return HttpServletResponse.SC_OK;
+    }
+
+    @RequestMapping(value = "/purchase", method = RequestMethod.POST)
+    @ResponseBody
+    public int purchaseItem(@RequestParam(value = "id") Integer itemId) {
+        CartItem item = cartItemsRepository.findOne(itemId);
+        List<Order> orders = createOrders(item);
+        sendNotifications(orders);
+        orderRepository.save(orders);
+        cartItemsRepository.delete(item);
         return HttpServletResponse.SC_OK;
     }
 
@@ -116,16 +127,16 @@ public class CartController {
 
     /**
      * Create batch of orders using user`s cart
-     * @param cart User`s cart
+     * @param items items in user`s cart
      * @return  list of orders
      */
-    private List<Order> createOrders(Cart cart) {
+    private List<Order> createOrders(CartItem ... items) {
         List<Order> orders = new ArrayList<Order>();
-        for(CartItem cartItem : cart.getItems()){
+        for(CartItem cartItem : items){
 
             //create order from cart item
             Order order = new Order(cartItem.getOffer(), cartItem.getAmount());
-            order.setCustomer(cartItem.getOffer().getUser());
+            order.setCustomer(cartItem.getCart().getUser());
             order.setCreationDate(Calendar.getInstance().getTime());
             order.setState(OrderStates.PROCESSING);
             orders.add(order);

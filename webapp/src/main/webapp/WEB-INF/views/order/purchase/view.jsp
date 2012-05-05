@@ -7,29 +7,28 @@
 
     <script type="text/javascript">
 
-        $("#confirmed_btn")
+        $("#active_btn")
                 .unbind("click")
                 .click(function () {
-                    $("#order_view").load("/order/confirmed/${userId}");
+                    $("#order_view").load("/order/purchase/active/${userId}");
                 })
                 .button();
 
-        $("#processing")
+        $("#past_btn")
                 .unbind("click")
                 .click(function () {
-                    $("#order_view").load("/order/processing/${userId}");
+                    $("#order_view").load("/order/purchase/past/${userId}");
                 })
                 .button();
 
-        $("#processing").click();
+        $("#active_btn").click();
 
     </script>
 </head>
 <body>
 <div>
-    <button id="processing">Processing</button>
-    <button id="confirmed_btn">Confirmed</button>
-
+    <button id="active_btn" >Active</button>
+    <button id="past_btn" >Completed</button>
 </div>
 
 <div id="order_view"></div>

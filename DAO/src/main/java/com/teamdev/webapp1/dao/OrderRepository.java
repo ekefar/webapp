@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface OrderRepository extends CrudRepository<Order, Integer> {
     List<Order> findByOfferUserId(Integer id);
+    List<Order> findByCustomerId(Integer id);
 }

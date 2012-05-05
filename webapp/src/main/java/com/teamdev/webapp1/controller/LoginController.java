@@ -56,7 +56,7 @@ public class LoginController {
     private Cart createUserCart(User user) {
         Cart cart;
         if (user.getCart() == null) {
-            cart = new Cart();
+            cart = new Cart(user);
             user.setCart(cart);
             User persistedUser = userRepository.save(user);
             cart = persistedUser.getCart();

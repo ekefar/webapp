@@ -21,7 +21,6 @@
 
             $("#profile_btn")
                     .click(function () {
-                        $("#content").html("");
                         $("#content").load("/settings/profile/${user.id}");
 
                     })
@@ -29,7 +28,6 @@
 
             $("#all_offer_btn")
                     .click(function () {
-                        $("#content").html("");
                         $("#content").load("/offer/all/${user.id}");
                     })
                     .button();
@@ -42,7 +40,6 @@
 
             $("#cart_btn")
                     .click(function () {
-                        $("#content").html("");
                         $("#content").load("/cart/view/${user.id}");
                     })
                     .button();
@@ -50,8 +47,13 @@
             $("#orders_btn")
                     .click(
                     function () {
-                        $("#content").html("");
                         $("#content").load("/order/view/${user.id}");
+                    }).button();
+
+            $("#my_purchases_btn")
+                    .click(
+                    function () {
+                        $("#content").load("/order/purchase/view/${user.id}");
                     }).button();
 
             profile_btn.click();
@@ -85,6 +87,10 @@
 
         <div>
             <a id="my_offer_btn" class="navigation_btn" href="#my_offers">My Offers</a>
+        </div>
+
+        <div>
+            <a id="my_purchases_btn" class="navigation_btn" href="#my_purchases">My Purchases</a>
         </div>
 
         <div>
