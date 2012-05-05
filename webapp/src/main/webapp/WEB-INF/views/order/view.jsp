@@ -8,12 +8,14 @@
     <script type="text/javascript">
 
         $("#confirmed_btn")
+                .unbind("click")
                 .click(function () {
                     $("#order_view").load("/order/confirmed/" + $(this).attr("name"));
                 })
                 .button();
 
         $("#processing")
+                .unbind("click")
                 .click(function () {
                     $("#order_view").load("/order/processing/" + $(this).attr("name"));
                 })

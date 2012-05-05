@@ -45,6 +45,7 @@
 
 
         $("#offer_table .details")
+                .die()
                 .live("click", function () {
                     var url = "/offer/view/" + $(this).attr("name");
                     var dialogDiv = $("#offerDescription");
@@ -55,6 +56,7 @@
                 .button();
 
         $("#offer_table .cart")
+                .die()
                 .live("click", function () {
                     var url = "/cart/add/" + $(this).attr("name");
                     var dialogDiv = $("#cartForm");

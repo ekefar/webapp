@@ -38,6 +38,7 @@
         );
 
         $("#cart_records .edit")
+                .die()
                 .live("click", function () {
                     var url = "/cart/edit/" + $(this).attr("name");
                     selectedRecordId = $(this).attr("name");
@@ -49,6 +50,7 @@
                 .button();
 
         $("#cart_records .remove")
+                .die()
                 .live("click", function () {
                     var recordId = $(this).attr("name");
                     var url = "/cart/remove";
@@ -58,6 +60,7 @@
                 })
                 .button();
         $("#order_btn")
+                .unbind("click")
                 .click(function () {
                     var postData = "cartId=" + ${cart.id};
                     $.post("/cart/order", postData);

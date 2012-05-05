@@ -9,6 +9,7 @@
 
 
             $("#orders .remove")
+                    .unbind("click")
                     .click(function () {
                         var selectedRecordId = $(this).attr("name")
                         var url = "/order/delete/" + selectedRecordId;

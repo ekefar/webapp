@@ -9,6 +9,7 @@
     <script type="text/javascript">
 
         $("#orders .confirm")
+                .unbind("click")
                 .click(function () {
                     var selectedRecordId = $(this).attr("name")
                     var url = "/order/confirm/" + selectedRecordId;
@@ -19,6 +20,7 @@
                 .button();
 
         $("#orders .deny")
+                .unbind("click")
                 .click(function () {
                     var selectedRecordId = $(this).attr("name")
                     var url = "/order/deny/" + selectedRecordId;
