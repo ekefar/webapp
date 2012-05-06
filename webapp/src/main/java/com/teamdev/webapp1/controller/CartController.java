@@ -53,7 +53,21 @@ public class CartController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addToCart(CartItem cartItem) {
-        cartItemsRepository.save(cartItem);
+
+        // check if cart already contains record with this offer
+        CartItem itemForMerge = cartItemsRepository.findByOfferId(cartItem.getOffer().getId());
+
+        // if it isn`t then save new item
+        if (itemForMerge == null) {
+            cartItemsRepository.save(cartItem);
+        } else {
+
+            // otherwise, add selected amount and update record in db
+            Integer storedAmount = itemForMerge.getAmount();
+            itemForMerge.setAmount(storedAmount + cartItem.getAmount());
+            cartItemsRepository.save(itemForMerge);
+        }
+
         return "/cart/form";
     }
 
@@ -101,25 +115,26 @@ public class CartController {
 
     @RequestMapping(value = "/purchase", method = RequestMethod.POST)
     @ResponseBody
-    public int purchaseItem(@RequestParam(value = "id") Integer itemId) {
+    public String purchaseItem(@RequestParam(value = "id") Integer itemId) {
         CartItem item = cartItemsRepository.findOne(itemId);
         List<Order> orders = createOrders(item);
         sendNotifications(orders);
         orderRepository.save(orders);
         cartItemsRepository.delete(item);
-        return HttpServletResponse.SC_OK;
+        return String.valueOf(HttpServletResponse.SC_OK);
     }
 
 
-    private void sendNotifications(List<Order> orders){
+    private void sendNotifications(List<Order> orders) {
 
     }
 
     /**
      * Remove all cart items
+     *
      * @param cart cart to clear
      */
-    private void clearCart(Cart cart){
+    private void clearCart(Cart cart) {
         List<CartItem> items = cart.getItems();
         cartItemsRepository.delete(items);
     }
@@ -127,12 +142,13 @@ public class CartController {
 
     /**
      * Create batch of orders using user`s cart
+     *
      * @param items items in user`s cart
-     * @return  list of orders
+     * @return list of orders
      */
-    private List<Order> createOrders(CartItem ... items) {
+    private List<Order> createOrders(CartItem... items) {
         List<Order> orders = new ArrayList<Order>();
-        for(CartItem cartItem : items){
+        for (CartItem cartItem : items) {
 
             //create order from cart item
             Order order = new Order(cartItem.getOffer(), cartItem.getAmount());

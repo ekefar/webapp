@@ -5,7 +5,32 @@
 <html>
 <head>
     <title></title>
+    <script type="text/javascript">
 
+
+        function validateCart(){
+            var canPurchaseAll = true;
+            $("#cart_records tr").each(function(){
+                var amount = parseInt($(this).find(".amount").text());
+                var available = parseInt($(this).find(".available").text());
+                var purchaseButton = $(this).find(".purchase");
+                if(amount>available){
+                    $(purchaseButton).attr("disabled", true).addClass("ui-button-disabled ui-state-disabled");
+                    canPurchaseAll = false;
+                } else {
+                    $(purchaseButton).attr("disabled", false).removeClass("ui-button-disabled ui-state-disabled")
+                }
+            });
+
+            var purchaseAllButton =  $("#purchase_all_btn");
+
+            if(!canPurchaseAll){
+               $(purchaseAllButton).attr("disabled", true).addClass("ui-button-disabled ui-state-disabled");
+            }   else {
+                $(purchaseAllButton).attr("disabled", false).removeClass("ui-button-disabled ui-state-disabled");
+            }
+        }
+    </script>
 
     <script type="text/javascript">
 
@@ -29,6 +54,7 @@
                                 $("#record_" + selectedRecordId + " .amount").html(result.amount);
                                 var total = parseInt(result.offer.price) * parseInt(result.amount);
                                 $("#record_" + selectedRecordId + " .total").html(total);
+                                validateCart();
                             }, 'json');
 
                             $(this).dialog("close");
@@ -80,7 +106,10 @@
                 })
                 .button();
 
+        validateCart();
     </script>
+
+
 </head>
 
 <body>
@@ -112,7 +141,7 @@
         <tr id="record_${cartRecord.id}">
             <td>${cartRecord.offer.product.name}</td>
             <td>${cartRecord.offer.price}</td>
-            <td>${cartRecord.offer.amount}</td>
+            <td class="available">${cartRecord.offer.amount}</td>
             <td class="amount">${cartRecord.amount}</td>
             <td class="total">${cartRecord.amount * cartRecord.offer.price}</td>
             <td>
@@ -122,7 +151,7 @@
                 <a id="remove_${cartRecord.id}" name="${cartRecord.id}" class="remove">Remove record</a>
             </td>
             <td>
-                <a id="purchase_${cartRecord.id}" name="${cartRecord.id}" class="purchase">Purchase</a>
+                <button id="purchase_${cartRecord.id}" name="${cartRecord.id}" class="purchase">Purchase</button>
             </td>
         </tr>
     </c:forEach>

@@ -8,4 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  * Date: 02.05.12
  */
 public interface CartItemsRepository extends CrudRepository<CartItem, Integer> {
+
+    CartItem findByOfferId(Integer offerId);
 }

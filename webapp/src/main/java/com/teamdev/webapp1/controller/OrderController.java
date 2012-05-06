@@ -2,7 +2,9 @@ package com.teamdev.webapp1.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.teamdev.webapp1.dao.OfferRepository;
 import com.teamdev.webapp1.dao.OrderRepository;
+import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.order.Order;
 import com.teamdev.webapp1.model.order.OrderStates;
 import org.apache.commons.lang.ArrayUtils;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +29,14 @@ import java.util.Map;
 public class OrderController {
 
     private final OrderRepository orderRepository;
+    private final OfferRepository offerRepository;
 
 
     @Autowired
-    public OrderController(OrderRepository orderRepository) {
+    public OrderController(OrderRepository orderRepository,
+                           OfferRepository offerRepository) {
         this.orderRepository = orderRepository;
+        this.offerRepository = offerRepository;
     }
 
 
@@ -47,6 +53,7 @@ public class OrderController {
 
         List<Order> orders = orderRepository.findByOfferUserId(userId);
         model.put("orders", findOrdersWithState(orders, OrderStates.PROCESSING));
+        model.put("userId", userId);
         return "/order/processing";
     }
 
@@ -62,8 +69,16 @@ public class OrderController {
 
     @RequestMapping(value = "/confirm/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String completeOrder(@PathVariable("id") Integer orderId) {
-        return changeOrderState(orderId, OrderStates.COMPLETE);
+    public String confirmOrder(@PathVariable("id") Integer orderId) {
+        Order order = orderRepository.findOne(orderId);
+        Offer offer = order.getOffer();
+
+        Integer offerAmount = offer.getAmount();
+        offer.setAmount(offerAmount - order.getAmount());
+        order.setState(OrderStates.COMPLETE);
+        offerRepository.save(offer);
+        orderRepository.save(order);
+        return String.valueOf(HttpServletResponse.SC_OK);
     }
 
     @RequestMapping(value = "/deny/{id}", method = RequestMethod.POST)
@@ -142,7 +157,6 @@ public class OrderController {
                 result.add(o);
             }
         }
-
         return result;
     }
 
