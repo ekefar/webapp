@@ -40,6 +40,11 @@ public class Offer {
     @Expose
     private String description;
 
+    @Column(name = "STATE")
+    @Enumerated(EnumType.STRING)
+    @Expose
+    private OfferStates state;
+
     public Offer() {
     }
 
@@ -102,5 +107,13 @@ public class Offer {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public OfferStates getState() {
+        return state;
+    }
+
+    public void setState(OfferStates state) {
+        this.state = state;
     }
 }

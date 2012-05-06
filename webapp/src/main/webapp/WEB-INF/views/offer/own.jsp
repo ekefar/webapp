@@ -25,16 +25,17 @@
                         var url = "/offer/add";
                         $.post(url, postData, function (result) {
                             $("#offer_table").append(
-                                    "<tr>" +
+                                    "<tr id='offer_" + result.id+ "'>" +
                                             "<td>" + result.product.name + "</td>" +
                                             "<td>" + result.price + "</td>" +
                                             "<td>" + result.amount + "</td>" +
                                             "<td>" + result.description + "</td>" +
-                                            "<td><a id='details_" + result.id + "' name='" + result.id + "' class='edit'>Edit</a></td>" +
+                                            "<td><a id='edit_" + result.id + "' name='" + result.id + "' class='edit'>Edit</a></td>" +
+                                            "<td><a id='remove_" + result.id + "' name='" + result.id + "' class='remove'>Remove</a></td>" +
                                             "</tr>"
                             );
-                            $("#details_" + result.id).button();
-                            $("#cart_" + result.id).button();
+                            $("#edit_" + result.id).button();
+                            $("#remove_" + result.id).button();
                         }, 'json');
 
                         $(this).dialog("close");
@@ -91,6 +92,19 @@
 
             .button();
 
+    $("#offer_table .remove")
+            .die()
+            .live("click", function () {
+                var id = $(this).attr("name");
+                var url = "/offer/deactivate";
+                var postData = "id=" + id;
+                $.post(url,postData, function(result){
+                    $("#offer_" + result).remove();
+                }) ;
+            })
+
+            .button();
+
     $("#cartView").button();
 
 </script>
@@ -115,14 +129,17 @@
         </tr>
 
         <c:forEach items="${offers}" var="offer">
-            <tr>
+            <tr id="offer_${offer.id}">
                 <td>${offer.product.name}</td>
                 <td>${offer.price}</td>
                 <td>${offer.amount}</td>
                 <td>${offer.description}</td>
 
                 <td>
-                    <a id="cart_${offer.id}" name="${offer.id}" class="edit">Edit</a>
+                    <a id="edit_${offer.id}" name="${offer.id}" class="edit">Edit</a>
+                </td>
+                <td>
+                    <a id="remove_${offer.id}" name="${offer.id}" class="remove">Remove</a>
                 </td>
 
             </tr>

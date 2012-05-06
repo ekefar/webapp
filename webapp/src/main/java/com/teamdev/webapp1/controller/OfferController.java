@@ -7,14 +7,12 @@ import com.teamdev.webapp1.dao.OfferRepository;
 import com.teamdev.webapp1.dao.ProductRepository;
 import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.order.Offer;
+import com.teamdev.webapp1.model.order.OfferStates;
 import com.teamdev.webapp1.model.product.Category;
 import com.teamdev.webapp1.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -63,6 +61,7 @@ public class OfferController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String addOffer(Offer offer) {
+        offer.setState(OfferStates.ACTIVE);
         final Offer persistedOffer = offerRepository.save(offer);
         final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         return gson.toJson(persistedOffer);
@@ -95,10 +94,18 @@ public class OfferController {
                                  Map<String, Object> model) {
         model.put("userId", userId);
         model.put("cartId", userRepository.findOne(userId).getCart().getId());
-        model.put("offers", offerRepository.findByUserId(userId));
+        model.put("offers", offerRepository.findByUserIdAndState(userId, OfferStates.ACTIVE));
         return "/offer/own";
     }
 
+    @RequestMapping(value = "/deactivate", method = RequestMethod.POST)
+    @ResponseBody
+    public String deactivateOffer(@RequestParam("id") Integer offerId){
+        Offer offer = offerRepository.findOne(offerId);
+        offer.setState(OfferStates.PASSIVE);
+        Offer persistedOffer = offerRepository.save(offer);
+        return new Gson().toJson(persistedOffer.getId());
+    }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String viewOffer(@PathVariable("id") int offerId,
