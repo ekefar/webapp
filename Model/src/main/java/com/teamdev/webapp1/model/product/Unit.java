@@ -1,6 +1,9 @@
 package com.teamdev.webapp1.model.product;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * Author: Alexander Serebriyan
@@ -17,6 +20,8 @@ public class Unit {
     private int id;
 
     @Column(name = "NAME", unique = true)
+    @NotEmpty
+    @Size(min = 2, max = 30)
     private String name;
 
     public Unit() {

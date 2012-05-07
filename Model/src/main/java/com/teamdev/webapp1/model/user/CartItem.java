@@ -2,8 +2,12 @@ package com.teamdev.webapp1.model.user;
 
 import com.google.gson.annotations.Expose;
 import com.teamdev.webapp1.model.order.Offer;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 
 /**
@@ -26,6 +30,7 @@ public class CartItem {
 
     @Column(name = "AMOUNT")
     @Expose
+    @Min(1)
     private int amount;
 
     @ManyToOne

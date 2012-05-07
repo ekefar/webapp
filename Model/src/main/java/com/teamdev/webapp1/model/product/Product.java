@@ -1,8 +1,11 @@
 package com.teamdev.webapp1.model.product;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,6 +27,8 @@ public class Product {
 
     @Column(name = "NAME")
     @Expose
+    @Size(min = 2)
+    @NotEmpty
     private String name;
 
     @Lob
@@ -33,13 +38,13 @@ public class Product {
 
     @ManyToOne
     @Expose
+    @Valid
     private Unit unit;
 
     @ManyToOne
     @Expose
+    @Valid
     private Category category;
-
-
 
 
     public Product() {

@@ -7,7 +7,10 @@ import com.teamdev.webapp1.model.user.User;
 import com.teamdev.webapp1.service.UserRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * Created by IntelliJ IDEA.
@@ -38,9 +41,9 @@ public class RegistrationController {
 
     @RequestMapping("/register/email/check")
     @ResponseBody
-    public Boolean checkEmail(@RequestParam("email") String email) {
+    public String checkEmail(@RequestParam("email") String email) {
         User user = userRepository.findByEmail(email);
-        return user == null;
+        return Boolean.toString(user == null);
     }
 
     @RequestMapping("/register/login/check")
@@ -51,15 +54,13 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerUser(@RequestParam(value = "login") String login,
-                               @RequestParam(value = "password") String password,
-                               @RequestParam(value = "email") String email) {
+    public String registerUser(@Valid User user, BindingResult bindingResult) {
 
-
-        User user = new User(login, password, email);
+        if (bindingResult.hasErrors()) {
+            return "signup";
+        }
         user.setRole(new Role(Roles.ROLE_USER));
         user.setEnabled(false);
-
         userRegistrationService.requestActivation(user);
 
         return "login";
@@ -68,6 +69,6 @@ public class RegistrationController {
     @RequestMapping(value = "/activation/{activationKey}")
     public String activateUser(@PathVariable("activationKey") String activationKey) {
         userRegistrationService.activateUser(activationKey);
-        return "welcome";
+        return "login";
     }
 }

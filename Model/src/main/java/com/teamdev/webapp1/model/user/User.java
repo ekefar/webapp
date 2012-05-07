@@ -1,9 +1,10 @@
 package com.teamdev.webapp1.model.user;
 
 import com.google.gson.annotations.Expose;
-import flexjson.JSON;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 
@@ -14,23 +15,26 @@ public class User {
     @GeneratedValue
     @Column(name = "ID")
     @Expose
-    private int id;
+    private Integer id;
 
     @Column(name = "LOGIN", unique = true)
     @Expose
+    @Size(min = 2, max = 12)
     private String login;
 
     @Column(name = "PASSWORD")
     @Expose
+    @Size(min = 6, max = 12)
     private String password;
 
     @Column(name = "EMAIL", unique = true)
     @Expose
+    @Email
     private String email;
 
     @Column(name = "ENABLED")
     @Expose
-    private boolean enabled;
+    private Boolean enabled;
 
     @ManyToOne
     @Expose
@@ -77,11 +81,11 @@ public class User {
         this.role = role;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -109,11 +113,11 @@ public class User {
         this.email = email;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -158,7 +162,6 @@ public class User {
         this.avatar = avatar;
     }
 
-    @JSON(include = false)
     public Cart getCart() {
         return cart;
     }

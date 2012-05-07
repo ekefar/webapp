@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.teamdev.webapp1.model.order.Offer;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class Cart {
     private Date creationDate;
 
     @OneToOne
+    @Valid
     User user;
     
     @OneToMany(

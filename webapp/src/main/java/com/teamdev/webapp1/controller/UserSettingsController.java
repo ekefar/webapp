@@ -42,7 +42,7 @@ public class UserSettingsController {
 
     @RequestMapping(value = "/profile/{id}", method = RequestMethod.GET)
     public String viewProfile(@PathVariable("id") Integer userId,
-                                     Map<String, Object> model) {
+                              Map<String, Object> model) {
         model.put("user", userRepository.findOne(userId));
         return "userProfile";
     }
@@ -50,7 +50,7 @@ public class UserSettingsController {
     @RequestMapping(value = "/profile/refresh/{id}", method = RequestMethod.GET)
     @ResponseBody
     public String refreshProfile(@PathVariable("id") Integer userId) {
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         return gson.toJson(userRepository.findOne(userId));
     }
 
@@ -61,7 +61,7 @@ public class UserSettingsController {
     }
 
     @RequestMapping(value = "/profile/{id}", method = RequestMethod.POST)
-    public String saveProfileSettings(@PathVariable ("id") Integer userId,
+    public String saveProfileSettings(@PathVariable("id") Integer userId,
                                       @RequestParam(value = "name") String userName,
                                       @RequestParam(value = "dateOfBirth") Date dateOfBirth,
                                       @RequestParam(value = "skype") String skype,

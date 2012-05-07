@@ -3,8 +3,14 @@ package com.teamdev.webapp1.model.order;
 import com.google.gson.annotations.Expose;
 import com.teamdev.webapp1.model.product.Product;
 import com.teamdev.webapp1.model.user.User;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 /**
  * Author: Alexander Serebriyan
@@ -19,22 +25,28 @@ public class Offer {
     @GeneratedValue
     @Column(name = "ID")
     @Expose
-    private int id;
+    private Integer id;
 
     @ManyToOne
+    @Valid
     private User user;
 
     @ManyToOne
     @Expose
+    @Valid
     private Product product;
 
     @Column(name = "AMOUNT", nullable = false)
     @Expose
-    private int amount;
+    @NotNull
+    @Min(1)
+    private Integer amount;
 
     @Column(name = "PRICE", nullable = false)
     @Expose
-    private double price;
+    @NotNull
+    @DecimalMin("0.01")
+    private BigDecimal price;
 
     @Column(name = "DESCRIPTION")
     @Expose
@@ -52,7 +64,7 @@ public class Offer {
         this.id = id;
     }
 
-    public Offer(User user, Product product, int amount, double price, String description) {
+    public Offer(User user, Product product, Integer amount, BigDecimal price, String description) {
         this.user = user;
         this.product = product;
         this.amount = amount;
@@ -61,11 +73,11 @@ public class Offer {
     }
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -85,19 +97,19 @@ public class Offer {
         this.product = product;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

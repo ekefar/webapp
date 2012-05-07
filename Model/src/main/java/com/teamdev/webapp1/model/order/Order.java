@@ -4,8 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.teamdev.webapp1.model.user.User;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Author: Alexander Serebriyan
@@ -13,7 +14,7 @@ import java.util.List;
  */
 
 @Entity
-@Table(name="ORDERS")
+@Table(name = "ORDERS")
 public class Order {
 
 
@@ -25,6 +26,7 @@ public class Order {
 
     @ManyToOne
     @Expose
+    @Valid
     private User customer;
 
     @Column(name = "CREATION_DATE")
@@ -37,9 +39,11 @@ public class Order {
     private OrderStates state;
 
     @ManyToOne
+    @Valid
     private Offer offer;
 
     @Column(name = "AMOUNT")
+    @Min(1)
     private Integer amount;
 
     public Order() {

@@ -8,6 +8,7 @@ import com.teamdev.webapp1.model.user.Cart;
 import com.teamdev.webapp1.model.user.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -52,7 +53,11 @@ public class CartController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addToCart(CartItem cartItem) {
+    @ResponseBody
+    public String addToCart(@Valid CartItem cartItem, BindingResult result) {
+        if (result.hasErrors()) {
+            return String.valueOf(HttpServletResponse.SC_NOT_ACCEPTABLE);
+        }
 
         // check if cart already contains record with this offer
         CartItem itemForMerge = cartItemsRepository.findByOfferId(cartItem.getOffer().getId());
@@ -73,7 +78,11 @@ public class CartController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public String saveRecordChanges(CartItem cartItem) {
+    public String saveRecordChanges(@Valid CartItem cartItem, BindingResult result) {
+        if (result.hasErrors()) {
+            return String.valueOf(HttpServletResponse.SC_NOT_ACCEPTABLE);
+        }
+
         CartItem savedItem = cartItemsRepository.save(cartItem);
         return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(savedItem);
     }
