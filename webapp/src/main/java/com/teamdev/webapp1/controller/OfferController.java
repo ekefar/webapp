@@ -10,6 +10,9 @@ import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.order.OfferStates;
 import com.teamdev.webapp1.model.product.Category;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -102,6 +105,19 @@ public class OfferController {
         model.put("cartId", userRepository.findOne(userId).getCart().getId());
         model.put("offers", offerRepository.findByUserIdAndState(userId, OfferStates.ACTIVE));
         return "/offer/own";
+    }
+
+    @RequestMapping(value = "/own/json/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String showAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                          @RequestParam(value = "rp", defaultValue = "4") Integer size           ,
+                          @RequestParam(value = "sortname", defaultValue = "title") String orderBy,
+                          @RequestParam(value = "sortorder", defaultValue = "ASC") Sort.Direction direction) {
+        final Sort.Order order = new Sort.Order(direction, orderBy);
+        final PageRequest pageRequest = new PageRequest(page, size, new Sort(order));
+        final Page<Offer> offers = offerRepository.findAll(pageRequest);
+        final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        return gson.toJson(offers.getContent());
     }
 
     @RequestMapping(value = "/deactivate", method = RequestMethod.POST)

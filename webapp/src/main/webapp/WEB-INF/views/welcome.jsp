@@ -9,12 +9,14 @@
     <link type="text/css" href="../resources/css/style.css" rel="stylesheet"/>
     <link type="text/css" href="../resources/css/table_style.css" rel="stylesheet"/>
     <link href="../resources/css/fileuploader.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="../resources/css/flexigrid.pack.css">
 
     <script type="text/javascript" src="../resources/js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
     <script src="../resources/js/fileuploader.js" type="text/javascript"></script>
     <script type="text/javascript" src="../resources/js/jquery.validate.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="../resources/js/jquery.form.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../resources/js/flexigrid.pack.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
