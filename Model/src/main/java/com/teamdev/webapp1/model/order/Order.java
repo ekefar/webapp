@@ -2,6 +2,7 @@ package com.teamdev.webapp1.model.order;
 
 import com.google.gson.annotations.Expose;
 import com.teamdev.webapp1.model.user.User;
+import com.teamdev.webapp1.model.validation.AmountAcceptable;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -15,8 +16,8 @@ import java.util.Date;
 
 @Entity
 @Table(name = "ORDERS")
+@AmountAcceptable
 public class Order {
-
 
     @Id
     @GeneratedValue

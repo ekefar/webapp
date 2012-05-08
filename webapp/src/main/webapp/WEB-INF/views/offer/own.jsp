@@ -163,13 +163,11 @@
         dataType: 'json',
         colModel : [
             {display: 'id', name : 'id', width : 40, sortable : true, align: 'center'},
-            {display: 'product', name : 'product.name', width : 40, sortable : true, align: 'center'},
             {display: 'price', name : 'price', width : 180, sortable : true, align: 'left'},
             {display: 'amount', name : 'amount', width : 120, sortable : true, align: 'left'},
             {display: 'description', name : 'description', width : 130, sortable : true, align: 'left'}
         ],
         searchitems : [
-            {display: 'product', name : 'product.name'},
             {display: 'price', name : 'price'}
         ],
         sortname: "price",
@@ -182,8 +180,6 @@
         width: 700,
         height: 200
     });
-
-
 </script>
 </body>
 </html>

@@ -1,12 +1,10 @@
 package com.teamdev.webapp1.model.user;
 
 import com.google.gson.annotations.Expose;
+import com.teamdev.webapp1.model.validation.AmountAcceptable;
 import com.teamdev.webapp1.model.order.Offer;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
 
@@ -17,6 +15,7 @@ import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "CART_ITEMS")
+@AmountAcceptable
 public class CartItem {
 
     @Id
