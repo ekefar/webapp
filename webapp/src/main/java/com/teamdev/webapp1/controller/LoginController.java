@@ -33,7 +33,7 @@ public class LoginController {
         createUserCart(user);
 
         model.put("user", user);
-        return "welcome";
+        return "/user/userPage";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

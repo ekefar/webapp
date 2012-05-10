@@ -22,21 +22,17 @@ public class Order {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    @Expose
     private Integer id;
 
     @ManyToOne
-    @Expose
     @Valid
     private User customer;
 
     @Column(name = "CREATION_DATE")
-    @Expose
     private Date creationDate;
 
     @Column(name = "STATE")
     @Enumerated(EnumType.STRING)
-    @Expose
     private OrderStates state;
 
     @ManyToOne

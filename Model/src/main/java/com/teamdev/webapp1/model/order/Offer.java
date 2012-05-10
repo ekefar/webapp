@@ -1,13 +1,10 @@
 package com.teamdev.webapp1.model.order;
 
-import com.google.gson.annotations.Expose;
 import com.teamdev.webapp1.model.product.Product;
 import com.teamdev.webapp1.model.user.User;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -26,35 +23,31 @@ public class Offer {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    @Expose
     private Integer id;
 
     @ManyToOne
     private User user;
 
     @ManyToOne
-    @Expose
     private Product product;
 
     @Column(name = "AMOUNT", nullable = false)
-    @Expose
+
     @NotNull
     @Min(1)
     private Integer amount;
 
     @Column(name = "PRICE", nullable = false)
-    @Expose
+
     @NotNull
     @DecimalMin("0.01")
     private BigDecimal price;
 
     @Column(name = "DESCRIPTION")
-    @Expose
     private String description;
 
     @Column(name = "STATE")
     @Enumerated(EnumType.STRING)
-    @Expose
     private OfferStates state;
 
     public Offer() {

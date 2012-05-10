@@ -38,6 +38,13 @@ public class ProductController {
     }
 
 
+    @RequestMapping("view")
+    public String viewProducts(Map<String, Object> model) {
+        model.put("products", productRepository.findAll());
+        return "/product/view";
+    }
+
+
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String showAddPage(Map<String, Object> model) {
         model.put("product", new Product());

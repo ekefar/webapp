@@ -1,8 +1,7 @@
 package com.teamdev.webapp1.model.user;
 
-import com.google.gson.annotations.Expose;
-import com.teamdev.webapp1.model.validation.AmountAcceptable;
 import com.teamdev.webapp1.model.order.Offer;
+import com.teamdev.webapp1.model.validation.AmountAcceptable;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnore;
 

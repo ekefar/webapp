@@ -47,8 +47,6 @@
 
 
     <welcome-file-list>
-        <welcome-file>/views/welcome.jsp</welcome-file>
+        <welcome-file>/views/home.jsp</welcome-file>
     </welcome-file-list>
-
-
 </web-app>

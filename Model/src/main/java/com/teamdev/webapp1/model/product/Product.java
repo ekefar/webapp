@@ -1,6 +1,6 @@
 package com.teamdev.webapp1.model.product;
 
-import com.google.gson.annotations.Expose;
+
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.hibernate.validator.constraints.NotEmpty;
 

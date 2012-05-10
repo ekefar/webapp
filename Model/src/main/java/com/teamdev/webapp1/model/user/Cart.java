@@ -20,11 +20,9 @@ public class Cart {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    @Expose
     private Integer id;
 
     @Column(name = "CREATION_DATE")
-    @Expose
     private Date creationDate;
 
     @OneToOne
