@@ -49,46 +49,25 @@ public class UserSettingsController {
 
     @RequestMapping(value = "/profile/refresh/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String refreshProfile(@PathVariable("id") Integer userId) {
-        final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        return gson.toJson(userRepository.findOne(userId));
+    public User refreshProfile(@PathVariable("id") Integer userId) {
+        return userRepository.findOne(userId);
     }
 
-    @RequestMapping(value = "/profile/avatar", method = RequestMethod.GET)
-    @ResponseBody
-    public byte[] getUserAvatar(HttpServletRequest request) {
-        return userManager.getUser(request).getAvatar();
-    }
+
 
     @RequestMapping(value = "/profile/{id}", method = RequestMethod.POST)
+    @ResponseBody
     public String saveProfileSettings(@PathVariable("id") Integer userId,
-                                      @RequestParam(value = "name") String userName,
-                                      @RequestParam(value = "dateOfBirth") Date dateOfBirth,
-                                      @RequestParam(value = "skype") String skype,
-                                      @RequestParam(value = "hobby") String hobby) {
+                                      @RequestParam(value = "name") String name,
+                                      @RequestParam(value = "description") String description,
+                                      @RequestParam(value = "contact") String contact) {
 
         final User user = userRepository.findOne(userId);
-        user.setName(userName);
-        user.setDateOfBirth(dateOfBirth);
-        user.setSkype(skype);
-        user.setHobby(hobby);
+        user.setCompanyName(name);
+        user.setCompanyDescription(description);
+        user.setCompanyContact(contact);
         userRepository.save(user);
-
         return String.valueOf(HttpServletResponse.SC_OK);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/profile/avatar", method = RequestMethod.POST)
-    public String setUserAvatar(HttpServletRequest request) throws IOException {
-
-        final User user = userManager.getUser(request);
-
-        final InputStream inputStream = request.getInputStream();
-
-        user.setAvatar(IOUtils.toByteArray(inputStream));
-
-        userRepository.save(user);
-
-        return "{'success':true}";
-    }
 }

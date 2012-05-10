@@ -16,6 +16,7 @@
                     ${record.offer.amount}
 
                     <input name="offer.id" value="${record.offer.id}" type="hidden">
+                    <input name="offer.amount" value="${record.offer.amount}" type="hidden">
                     <input name="id" value="${record.id}" type="hidden">
                     <input name="cart.id" value="${record.cart.id}" type="hidden">
                 </td>

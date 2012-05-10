@@ -12,10 +12,10 @@
                 .click(function () {
                     var url = "/settings/profile/refresh/" + $("#profile_settings").attr("name");
                     $.getJSON(url, function (data) {
-                        $("#name").val(data.name);
-                        $("#dateOfBirth").val(data.dateOfBirth);
-                        $("#skype").val(data.skype);
-                        $("#hobby").val(data.hobby);
+                        $("#name").val(data.companyName);
+                        $("#description").val(data.companyDescription);
+                        $("#contact").val(data.companyContact);
+
                     });
 
                     $("#profile_settings").show();
@@ -33,7 +33,7 @@
 
 
 
-        var updateImage = function () {
+    /*    var updateImage = function () {
             var src = "/settings/profile/avatar?" + new Date().getTime();
             $('#avatar').attr("src", src);
             $('#upload_container').innerHTML = "";
@@ -48,7 +48,7 @@
             onComplete:updateImage
         });
 
-        updateImage();
+        updateImage();*/
     </script>
 </head>
 <body>
@@ -62,52 +62,25 @@
                         Name:
                     </td>
                     <td>
-                        <input type="text" name="name" id="name" size="50" value="${user.name}"/>
+                        <input type="text" name="name" id="name" size="50" value="${user.companyName}"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td>
-                        Date of birth:
+                        Description:
                     </td>
                     <td>
-                        <input type="text" name="dateOfBirth" id="dateOfBirth" size="50" value="${user.dateOfBirth}"/>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        Skype:
-                    </td>
-                    <td>
-                        <input type="text" name="skype" id="skype" size="50" value="${user.skype}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Hobby:
-                    </td>
-                    <td>
-                        <input type="text" name="hobby" id="hobby" size="50" value="${user.hobby}"/>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        Avatar:
-                    </td>
-                    <td>
-                        <img id="avatar" src="" width="200" height="200"/>
+                        <textarea rows="5" cols="50" type="text" name="description" id="description" size="50" >${user.companyDescription}</textarea>
                     </td>
                 </tr>
 
                 <tr>
                     <td>
-
+                        Contact:
                     </td>
                     <td>
-                        <div id="upload_container">
-                        </div>
+                        <textarea rows="5" cols="50" type="text" name="contact" id="contact" size="50" >${user.companyContact}</textarea>
                     </td>
                 </tr>
 

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: gar
@@ -30,8 +32,8 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/editUsers", method = RequestMethod.GET)
     @ResponseBody
-    public String listUsers() {
-        return new Gson().toJson(userRepository.findAll());
+    public List<User> listUsers() {
+        return userRepository.findAll();
     }
 
 

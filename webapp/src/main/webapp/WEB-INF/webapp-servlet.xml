@@ -13,6 +13,7 @@
     <context:component-scan base-package="com.teamdev.webapp1.controller"/>
     <context:component-scan base-package="com.teamdev.webapp1.dao"/>
     <context:component-scan base-package="com.teamdev.webapp1.service"/>
+    <context:component-scan base-package="com.teamdev.webapp1.model"/>
 
     <mvc:resources mapping="/resources/**" location="/WEB-INF/resources/"/>
 

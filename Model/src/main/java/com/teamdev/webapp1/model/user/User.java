@@ -1,67 +1,51 @@
 package com.teamdev.webapp1.model.user;
 
-import com.google.gson.annotations.Expose;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Date;
 
 
 @Entity
 @Table(name = "USERS")
+@JsonAutoDetect
 public class User {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    @Expose
     private Integer id;
 
     @Column(name = "LOGIN", unique = true)
-    @Expose
     @Size(min = 2, max = 12)
     private String login;
 
     @Column(name = "PASSWORD")
-    @Expose
     @Size(min = 6, max = 12)
     private String password;
 
     @Column(name = "EMAIL", unique = true)
-    @Expose
     @Email
     private String email;
 
     @Column(name = "ENABLED")
-    @Expose
     private Boolean enabled;
 
     @ManyToOne
-    @Expose
     private Role role;
 
-    @Column(name = "NAME")
-    @Expose
-    private String name;
+    @Column(name = "COMPANY_NAME")
+    private String companyName;
 
-    @Column(name = "DATE_OF_BIRTH")
-    @Expose
-    private Date dateOfBirth;
+    @Column(name = "COMPANY_CONTACT")
+    private String companyContact;
 
-    @Column(name = "SKYPE")
-    @Expose
-    private String skype;
-
-    @Column(name = "HOBBY")
-    @Expose
-    private String hobby;
-
-    @Lob
-    @Column(name = "AVATAR")
-    @Expose
-    private byte[] avatar;
+    @Column(name = "COMPANY_DESCRIPTION")
+    private String companyDescription;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private Cart cart;
 
     public User() {
@@ -121,52 +105,35 @@ public class User {
         this.enabled = enabled;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getSkype() {
-        return skype;
-    }
-
-    public void setSkype(String skype) {
-        this.skype = skype;
-    }
-
-    public String getHobby() {
-        return hobby;
-    }
-
-    public void setHobby(String hobby) {
-        this.hobby = hobby;
-    }
-
-    public byte[] getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(byte[] avatar) {
-        this.avatar = avatar;
-    }
-
     public Cart getCart() {
         return cart;
     }
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCompanyContact() {
+        return companyContact;
+    }
+
+    public void setCompanyContact(String companyContact) {
+        this.companyContact = companyContact;
+    }
+
+    public String getCompanyDescription() {
+        return companyDescription;
+    }
+
+    public void setCompanyDescription(String companyDescription) {
+        this.companyDescription = companyDescription;
     }
 }
