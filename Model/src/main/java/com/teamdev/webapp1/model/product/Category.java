@@ -1,5 +1,6 @@
 package com.teamdev.webapp1.model.product;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "CATEGORIES")
+@JsonAutoDetect
 public class Category {
 
     @Id
@@ -22,7 +24,6 @@ public class Category {
     private int id;
 
     @Column(name = "NAME", unique = true)
-    @NotEmpty
     @Size(min = 2, max = 30)
     private String name;
 

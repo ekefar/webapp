@@ -3,6 +3,8 @@ package com.teamdev.webapp1.model.user;
 import com.google.gson.annotations.Expose;
 import com.teamdev.webapp1.model.validation.AmountAcceptable;
 import com.teamdev.webapp1.model.order.Offer;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -16,25 +18,23 @@ import javax.validation.constraints.Min;
 @Entity
 @Table(name = "CART_ITEMS")
 @AmountAcceptable
+@JsonAutoDetect
 public class CartItem {
 
     @Id
     @GeneratedValue
-    @Expose
     private Integer id;
 
     @OneToOne
-    @Expose
     private Offer offer;
 
     @Column(name = "AMOUNT")
-    @Expose
     @Min(1)
     private int amount;
 
     @ManyToOne
     @JoinColumn(name = "CART_ID")
-    @Expose
+    @JsonIgnore
     private Cart cart;
 
     public CartItem() {

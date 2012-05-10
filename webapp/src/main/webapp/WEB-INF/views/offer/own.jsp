@@ -99,7 +99,7 @@
                 var url = "/offer/deactivate";
                 var postData = "id=" + id;
                 $.post(url,postData, function(result){
-                    $("#offer_" + result).remove();
+                    $("#offer_" + result.id).remove();
                 }) ;
             })
 
@@ -155,11 +155,11 @@
 <br>
 <br>
 
-<table id="flex1" style="display: none"></table>
+<%--<table id="flex1" style="display: none"></table>
 
 <script type="text/javascript">
     $("#flex1").flexigrid({
-        url: '/offer/own/json/${userId}',
+        url: '/offer/own/paging/${userId}',
         dataType: 'json',
         colModel : [
             {display: 'id', name : 'id', width : 40, sortable : true, align: 'center'},
@@ -180,6 +180,6 @@
         width: 700,
         height: 200
     });
-</script>
+</script>--%>
 </body>
 </html>

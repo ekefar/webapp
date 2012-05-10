@@ -1,8 +1,9 @@
 package com.teamdev.webapp1.dao;
 
 import com.teamdev.webapp1.model.product.Category;
-import com.teamdev.webapp1.model.product.Unit;
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
 
 /**
  * Author: Alexander Serebriyan
@@ -10,4 +11,7 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface CategoriesRepository extends CrudRepository<Category, Integer> {
     Category findByName(String name);
+
+    List<Category> findAll();
+
 }

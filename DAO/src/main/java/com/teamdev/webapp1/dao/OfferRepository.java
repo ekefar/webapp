@@ -2,7 +2,6 @@ package com.teamdev.webapp1.dao;
 
 import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.order.OfferStates;
-import com.teamdev.webapp1.model.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -26,7 +25,7 @@ public interface OfferRepository extends CrudRepository<Offer, Integer>, PagingA
 
     @Query("select o from Offer o where o.user.id != ?")
     List<Offer> findNotBelongToUser(Integer userId);
-    
+
     List<Offer> findByState(OfferStates state);
 
 }

@@ -3,6 +3,7 @@ package com.teamdev.webapp1.model.order;
 import com.google.gson.annotations.Expose;
 import com.teamdev.webapp1.model.product.Product;
 import com.teamdev.webapp1.model.user.User;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "OFFERS")
+@JsonAutoDetect
 public class Offer {
 
     @Id
@@ -28,12 +30,10 @@ public class Offer {
     private Integer id;
 
     @ManyToOne
-    @Valid
     private User user;
 
     @ManyToOne
     @Expose
-    @Valid
     private Product product;
 
     @Column(name = "AMOUNT", nullable = false)

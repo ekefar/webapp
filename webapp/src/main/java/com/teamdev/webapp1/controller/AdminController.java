@@ -1,6 +1,5 @@
 package com.teamdev.webapp1.controller;
 
-import com.google.gson.Gson;
 import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-
-/**
- * Created by IntelliJ IDEA.
- * User: gar
- * Date: 09.04.12
- * Time: 0:24
- * To change this template use File | Settings | File Templates.
- */
 
 @Controller
 public class AdminController {

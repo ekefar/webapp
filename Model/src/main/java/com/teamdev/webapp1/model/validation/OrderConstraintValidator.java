@@ -1,6 +1,7 @@
 package com.teamdev.webapp1.model.validation;
 
 import com.teamdev.webapp1.model.order.Order;
+import com.teamdev.webapp1.model.order.OrderStates;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -19,6 +20,8 @@ public class OrderConstraintValidator implements ConstraintValidator<AmountAccep
 
     @Override
     public boolean isValid(Order value, ConstraintValidatorContext context) {
-        return value.getOffer().getAmount() > value.getAmount();
+
+        return value.getState() != OrderStates.PROCESSING || value.getOffer().getAmount() >= value.getAmount();
+
     }
 }

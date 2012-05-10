@@ -1,10 +1,9 @@
 package com.teamdev.webapp1.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.teamdev.webapp1.dao.OfferRepository;
 import com.teamdev.webapp1.dao.OrderRepository;
 import com.teamdev.webapp1.model.order.Offer;
+import com.teamdev.webapp1.model.order.OfferStates;
 import com.teamdev.webapp1.model.order.Order;
 import com.teamdev.webapp1.model.order.OrderStates;
 import org.apache.commons.lang.ArrayUtils;
@@ -76,6 +75,12 @@ public class OrderController {
         Integer offerAmount = offer.getAmount();
         offer.setAmount(offerAmount - order.getAmount());
         order.setState(OrderStates.COMPLETE);
+
+        if (offer.getAmount() == 0) {
+            offer.setState(OfferStates.PASSIVE);
+            offer.setAmount(1);                    // otherwise validation fails and object can`t be updated
+        }
+
         offerRepository.save(offer);
         orderRepository.save(order);
         return String.valueOf(HttpServletResponse.SC_OK);
@@ -83,27 +88,27 @@ public class OrderController {
 
     @RequestMapping(value = "/deny/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String denyOrder(@PathVariable("id") Integer orderId) {
+    public Order denyOrder(@PathVariable("id") Integer orderId) {
         return changeOrderState(orderId, OrderStates.DENIED);
     }
 
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String deleteOrder(@PathVariable("id") Integer orderId) {
+    public Order deleteOrder(@PathVariable("id") Integer orderId) {
         return changeOrderState(orderId, OrderStates.DELETED);
     }
 
     @RequestMapping("/purchase/view/{id}")
     public String viewPurchases(@PathVariable("id") Integer userId,
-                             Map<String, Object> model) {
+                                Map<String, Object> model) {
         model.put("userId", userId);
         return "/order/purchase/view";
     }
 
     @RequestMapping("/purchase/active/{id}")
     public String viewActivePurchases(@PathVariable(value = "id") Integer cunstomerId,
-                                       Map<String, Object> model) {
+                                      Map<String, Object> model) {
 
         List<Order> orders = orderRepository.findByCustomerId(cunstomerId);
         model.put("orders", findOrdersWithState(orders, OrderStates.PROCESSING));
@@ -112,7 +117,7 @@ public class OrderController {
 
     @RequestMapping("/purchase/past/{id}")
     public String viewPastPurchases(@PathVariable(value = "id") Integer cunstomerId,
-                                      Map<String, Object> model) {
+                                    Map<String, Object> model) {
 
         List<Order> orders = orderRepository.findByCustomerId(cunstomerId);
         model.put("orders", findOrdersWithState(orders, OrderStates.COMPLETE, OrderStates.DENIED, OrderStates.CANCELED));
@@ -121,7 +126,7 @@ public class OrderController {
 
     @RequestMapping(value = "/purchase/cancel/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String cancelOrder(@PathVariable("id") Integer orderId) {
+    public Order cancelOrder(@PathVariable("id") Integer orderId) {
         return changeOrderState(orderId, OrderStates.CANCELED);
     }
 
@@ -132,13 +137,10 @@ public class OrderController {
      * @param newState new order`s state.
      * @return Json representation of changed and persisted order.
      */
-    private String changeOrderState(int orderId, OrderStates newState) {
+    private Order changeOrderState(int orderId, OrderStates newState) {
         Order order = orderRepository.findOne(orderId);
         order.setState(newState);
-        Order persistedOrder = orderRepository.save(order);
-
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        return gson.toJson(persistedOrder);
+        return orderRepository.save(order);
     }
 
 

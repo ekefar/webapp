@@ -1,6 +1,5 @@
 package com.teamdev.webapp1.controller;
 
-import com.google.gson.GsonBuilder;
 import com.teamdev.webapp1.dao.*;
 import com.teamdev.webapp1.model.order.Order;
 import com.teamdev.webapp1.model.order.OrderStates;
@@ -13,7 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Author: Alexander Serebriyan
@@ -78,13 +80,12 @@ public class CartController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public String saveRecordChanges(@Valid CartItem cartItem, BindingResult result) {
+    public CartItem saveRecordChanges(@Valid CartItem cartItem, BindingResult result) {
         if (result.hasErrors()) {
-            return String.valueOf(HttpServletResponse.SC_NOT_ACCEPTABLE);
+            return null;
         }
 
-        CartItem savedItem = cartItemsRepository.save(cartItem);
-        return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(savedItem);
+        return cartItemsRepository.save(cartItem);
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)

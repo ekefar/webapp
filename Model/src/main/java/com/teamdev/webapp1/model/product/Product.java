@@ -1,6 +1,7 @@
 package com.teamdev.webapp1.model.product;
 
 import com.google.gson.annotations.Expose;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -17,32 +18,28 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "PRODUCTS")
+@JsonAutoDetect
 public class Product {
 
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    @Expose
     private int id;
 
     @Column(name = "NAME")
-    @Expose
     @Size(min = 2)
     @NotEmpty
     private String name;
 
     @Lob
     @Column(name = "ICON")
-    @Expose
     private byte[] icon;
 
     @ManyToOne
-    @Expose
     @Valid
     private Unit unit;
 
     @ManyToOne
-    @Expose
     @Valid
     private Category category;
 

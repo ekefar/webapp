@@ -17,6 +17,7 @@ public class CartItemConstraintValidator implements ConstraintValidator<AmountAc
 
     @Override
     public boolean isValid(CartItem value, ConstraintValidatorContext context) {
-        return value.getOffer().getAmount() > value.getAmount();
+
+        return value.getOffer().getAmount() >= value.getAmount();
     }
 }

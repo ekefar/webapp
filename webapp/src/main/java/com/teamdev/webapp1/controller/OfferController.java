@@ -1,7 +1,5 @@
 package com.teamdev.webapp1.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.teamdev.webapp1.dao.CategoriesRepository;
 import com.teamdev.webapp1.dao.OfferRepository;
 import com.teamdev.webapp1.dao.ProductRepository;
@@ -9,7 +7,7 @@ import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.order.OfferStates;
 import com.teamdev.webapp1.model.product.Category;
-import org.apache.commons.lang.StringUtils;
+import com.teamdev.webapp1.model.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,8 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,22 +64,21 @@ public class OfferController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String addOffer(@Valid Offer offer, BindingResult result) {
+    public Offer addOffer(@Valid Offer offer, BindingResult result) {
         if (result.hasErrors()) {
-            return String.valueOf(HttpServletResponse.SC_NOT_ACCEPTABLE);
+            return null;
         }
 
         offer.setState(OfferStates.ACTIVE);
-        final Offer persistedOffer = offerRepository.save(offer);
-        final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        return gson.toJson(persistedOffer);
+        offerRepository.save(offer);
+        return offerRepository.findOne(offer.getId());
     }
 
 
     @RequestMapping("/listProducts")
     @ResponseBody
-    public String listProducts(@Valid Category category) {
-        return new Gson().toJson(productRepository.findByCategory(category));
+    public List<Product> listProducts(@Valid Category category) {
+        return productRepository.findByCategory(category);
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -110,24 +107,23 @@ public class OfferController {
 
     @RequestMapping(value = "/own/paging/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String showAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                          @RequestParam(value = "rp", defaultValue = "4") Integer size,
-                          @RequestParam(value = "sortname", defaultValue = "title") String orderBy,
-                          @RequestParam(value = "sortorder", defaultValue = "ASC") Sort.Direction direction) {
+    public List<Offer> showAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                               @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                               @RequestParam(value = "sortname", defaultValue = "title") String orderBy,
+                               @RequestParam(value = "sortorder", defaultValue = "ASC") Sort.Direction direction) {
         final Sort.Order order = new Sort.Order(direction, orderBy);
-        final PageRequest pageRequest = new PageRequest(page, size, new Sort(order));
+        final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
         final Page<Offer> offers = offerRepository.findAll(pageRequest);
-        final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        return gson.toJson(offers);
+        return offers.getContent();
     }
+
 
     @RequestMapping(value = "/deactivate", method = RequestMethod.POST)
     @ResponseBody
-    public String deactivateOffer(@RequestParam("id") Integer offerId) {
+    public Offer deactivateOffer(@RequestParam("id") Integer offerId) {
         Offer offer = offerRepository.findOne(offerId);
         offer.setState(OfferStates.PASSIVE);
-        Offer persistedOffer = offerRepository.save(offer);
-        return new Gson().toJson(persistedOffer.getId());
+        return offerRepository.save(offer);
     }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)

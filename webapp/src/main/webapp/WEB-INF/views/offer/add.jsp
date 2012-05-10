@@ -44,7 +44,6 @@
                                    itemLabel="name">
                         </sf:select>
                         <input name="user.id" value="${user.id}" type="hidden">
-
                     </td>
 
                 </tr>
