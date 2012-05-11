@@ -6,19 +6,13 @@ import com.teamdev.webapp1.model.user.Roles;
 import com.teamdev.webapp1.model.user.User;
 import com.teamdev.webapp1.service.UserRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-/**
- * Created by IntelliJ IDEA.
- * User: gar
- * Date: 02.04.12
- * Time: 21:38
- * To change this template use File | Settings | File Templates.
- */
 
 @Controller
 public class RegistrationController {
@@ -61,6 +55,8 @@ public class RegistrationController {
         }
         user.setRole(new Role(Roles.ROLE_USER));
         user.setEnabled(false);
+        encodePassword(user);
+
         userRegistrationService.requestActivation(user);
 
         return "login";
@@ -70,5 +66,17 @@ public class RegistrationController {
     public String activateUser(@PathVariable("activationKey") String activationKey) {
         userRegistrationService.activateUser(activationKey);
         return "login";
+    }
+
+    /**
+     * Encodes user`s password using MD5
+     *
+     * @param user user, whose password needs to be encoded
+     */
+    private void encodePassword(User user) {
+        PasswordEncoder  encoder=new Md5PasswordEncoder();
+        String hashedPassword = encoder.encodePassword(user.getPassword(), null);
+        user.setPassword(hashedPassword);
+
     }
 }

@@ -109,9 +109,9 @@
             <a id="cart_btn" class="navigation_btn" href="#cart">View cart</a>
         </div>
 
-        <div>
+       <%-- <div>
             <a id="products_btn" class="navigation_btn" href="#products">Products catalog</a>
-        </div>
+        </div>--%>
 
     </div>
 

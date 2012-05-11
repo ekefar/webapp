@@ -3,6 +3,7 @@ package com.teamdev.webapp1.model.user;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -22,7 +23,7 @@ public class User {
     private String login;
 
     @Column(name = "PASSWORD")
-    @Size(min = 6, max = 12)
+    @NotBlank
     private String password;
 
     @Column(name = "EMAIL", unique = true)

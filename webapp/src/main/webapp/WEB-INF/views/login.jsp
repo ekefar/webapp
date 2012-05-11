@@ -38,7 +38,7 @@
                 </td>
             </tr>
             <tr>
-                <td><a href="Register"><input id="regBtn" name="reset" value="Register" type="button"
+                <td><a href="register"><input id="regBtn" name="reset" value="Register" type="button"
                                               style="width: 150px"/> </a>
                 </td>
                 <td><input name="submit" type="submit"
