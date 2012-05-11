@@ -155,31 +155,5 @@
 <br>
 <br>
 
-<%--<table id="flex1" style="display: none"></table>
-
-<script type="text/javascript">
-    $("#flex1").flexigrid({
-        url: '/offer/own/paging/${userId}',
-        dataType: 'json',
-        colModel : [
-            {display: 'id', name : 'id', width : 40, sortable : true, align: 'center'},
-            {display: 'price', name : 'price', width : 180, sortable : true, align: 'left'},
-            {display: 'amount', name : 'amount', width : 120, sortable : true, align: 'left'},
-            {display: 'description', name : 'description', width : 130, sortable : true, align: 'left'}
-        ],
-        searchitems : [
-            {display: 'price', name : 'price'}
-        ],
-        sortname: "price",
-        sortorder: "ASC",
-        usepager: true,
-        title: 'Offers',
-        useRp: true,
-        rp: 15,
-        showTableToggleBtn: true,
-        width: 700,
-        height: 200
-    });
-</script>--%>
 </body>
 </html>

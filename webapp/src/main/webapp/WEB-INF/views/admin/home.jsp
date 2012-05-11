@@ -40,6 +40,9 @@
                     })
                     .button();
 
+            $("#profile_btn")
+                    .button();
+
             users_btn.click();
 
         });
@@ -63,6 +66,10 @@
 
         <div>
             <a id="products_btn" class="navigation_btn" href="#products">Products</a>
+        </div>
+
+        <div>
+            <a id="profile_btn" class="navigation_btn" href="/admin/userProfile/${user.id}">User profile</a>
         </div>
     </div>
 

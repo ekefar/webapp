@@ -78,7 +78,6 @@ public class OrderController {
 
         if (offer.getAmount() == 0) {
             offer.setState(OfferStates.PASSIVE);
-            offer.setAmount(1);                    // otherwise validation fails and object can`t be updated
         }
 
         offerRepository.save(offer);

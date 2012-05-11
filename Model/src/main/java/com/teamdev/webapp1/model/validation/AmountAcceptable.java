@@ -10,7 +10,7 @@ import java.lang.annotation.*;
  */
 @Target( { ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy={OrderConstraintValidator.class, CartItemConstraintValidator.class})
+@Constraint(validatedBy={OrderConstraintValidator.class, CartItemConstraintValidator.class, OfferConstraintValidator.class})
 @Documented
 public @interface AmountAcceptable {
     String message() default "{com.teamdev.model.order.AmountAcceptable}";

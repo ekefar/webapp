@@ -58,11 +58,6 @@
                         $("#content").load("/order/purchase/view/${user.id}");
                     }).button();
 
-            $("#my_purchases_btn")
-                    .click(
-                    function () {
-                        $("#content").load("/product/purchase/view/${user.id}");
-                    }).button();
 
             profile_btn.click();
 
@@ -109,9 +104,6 @@
             <a id="cart_btn" class="navigation_btn" href="#cart">View cart</a>
         </div>
 
-       <%-- <div>
-            <a id="products_btn" class="navigation_btn" href="#products">Products catalog</a>
-        </div>--%>
 
     </div>
 

@@ -27,7 +27,7 @@ public class UserSettingsController {
     public String viewProfile(@PathVariable("id") Integer userId,
                               Map<String, Object> model) {
         model.put("user", userRepository.findOne(userId));
-        return "/user/userProfile";
+        return "/user/profile";
     }
 
     @RequestMapping(value = "/profile/refresh/{id}", method = RequestMethod.GET)

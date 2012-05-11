@@ -6,13 +6,8 @@ import com.teamdev.webapp1.model.user.Roles;
 import com.teamdev.webapp1.model.user.User;
 import com.teamdev.webapp1.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -34,18 +29,18 @@ public class LoginController {
     public String welcome(Map<String, Object> model, HttpServletRequest request) {
 
         User user = userManager.getUser(request);
+        createUserCart(user);
+        model.put("user", user);
 
         /*SecurityContext securityContext = SecurityContextHolder.getContext();
         if(securityContext.getAuthentication().getAuthorities().containsAll(AuthorityUtils.createAuthorityList(Roles.ROLE_ADMIN.name())) ){
             return "/admin/adminPage";
         }*/
 
-        if(user.getRole().getName().equals(Roles.ROLE_ADMIN.name())){
+        if (user.getRole().getName().equals(Roles.ROLE_ADMIN.name())) {
             return "/admin/home";
         }
 
-        createUserCart(user);
-        model.put("user", user);
         return "/user/home";
     }
 

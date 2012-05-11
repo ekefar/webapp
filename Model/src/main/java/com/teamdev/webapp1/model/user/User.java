@@ -1,6 +1,7 @@
 package com.teamdev.webapp1.model.user;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.google.gson.annotations.Expose;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -20,6 +21,7 @@ public class User {
 
     @Column(name = "LOGIN", unique = true)
     @Size(min = 2, max = 12)
+    @Expose
     private String login;
 
     @Column(name = "PASSWORD")
@@ -28,21 +30,26 @@ public class User {
 
     @Column(name = "EMAIL", unique = true)
     @Email
+    @Expose
     private String email;
 
     @Column(name = "ENABLED")
+    @Expose
     private Boolean enabled;
 
     @ManyToOne
     private Role role;
 
     @Column(name = "COMPANY_NAME")
+    @Expose
     private String companyName;
 
     @Column(name = "COMPANY_CONTACT")
+    @Expose
     private String companyContact;
 
     @Column(name = "COMPANY_DESCRIPTION")
+    @Expose
     private String companyDescription;
 
     @OneToOne(cascade = CascadeType.ALL)

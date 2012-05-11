@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -105,15 +106,16 @@ public class OfferController {
         return "/offer/own";
     }
 
-    @RequestMapping(value = "/own/paging/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/own/paging", method = RequestMethod.POST)
     @ResponseBody
     public List<Offer> showAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                @RequestParam(value = "rp", defaultValue = "4") Integer size,
                                @RequestParam(value = "sortname", defaultValue = "title") String orderBy,
-                               @RequestParam(value = "sortorder", defaultValue = "ASC") Sort.Direction direction) {
+                               @RequestParam(value = "sortorder", defaultValue = "ASC") Sort.Direction direction) throws IOException {
         final Sort.Order order = new Sort.Order(direction, orderBy);
         final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
         final Page<Offer> offers = offerRepository.findAll(pageRequest);
+
         return offers.getContent();
     }
 

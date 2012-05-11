@@ -2,6 +2,7 @@ package com.teamdev.webapp1.model.order;
 
 import com.teamdev.webapp1.model.product.Product;
 import com.teamdev.webapp1.model.user.User;
+import com.teamdev.webapp1.model.validation.AmountAcceptable;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "OFFERS")
 @JsonAutoDetect
+@AmountAcceptable
 public class Offer {
 
     @Id
@@ -34,11 +36,9 @@ public class Offer {
     @Column(name = "AMOUNT", nullable = false)
 
     @NotNull
-    @Min(1)
     private Integer amount;
 
     @Column(name = "PRICE", nullable = false)
-
     @NotNull
     @DecimalMin("0.01")
     private BigDecimal price;
