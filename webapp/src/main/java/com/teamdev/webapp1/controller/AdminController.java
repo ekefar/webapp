@@ -21,6 +21,13 @@ public class AdminController {
         this.userRepository = userManager;
     }
 
+
+    @RequestMapping(value = "/admin/users", method = RequestMethod.GET)
+    public String editUsers() {
+        return "/admin/editUsers";
+    }
+
+
     @RequestMapping(value = "/admin/editUsers", method = RequestMethod.GET)
     @ResponseBody
     public List<User> listUsers() {
