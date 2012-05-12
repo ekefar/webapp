@@ -1,11 +1,9 @@
 package com.teamdev.webapp1.controller;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.teamdev.webapp1.dao.UserRepository;
-import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.user.User;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +44,7 @@ public class AdminController {
     @RequestMapping(value = "/admin/editUsers", method = RequestMethod.POST)
     @ResponseBody
     public Boolean updateUserInfo(@RequestParam(value = "id") Integer userId,
-                               @RequestParam(value = "enabled") Boolean enabled) {
+                                  @RequestParam(value = "enabled") Boolean enabled) {
 
         User userToChange = userRepository.findOne(userId);
         userToChange.setEnabled(enabled);
@@ -57,26 +55,43 @@ public class AdminController {
     @RequestMapping(value = "/admin/users/edit", method = RequestMethod.POST)
     @ResponseBody
     public String showAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                               @RequestParam(value = "rp", defaultValue = "4") Integer size,
-                               @RequestParam(value = "sortname", defaultValue = "title") String orderBy,
-                               @RequestParam(value = "sortorder", defaultValue = "ASC") Sort.Direction direction) throws IOException {
-        final Sort.Order order = new Sort.Order(direction, orderBy);
+                          @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                          @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                          @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                          @RequestParam(value = "qtype", required = false) String searchBy,
+                          @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+
+        final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
         final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
-        final Page<User> users = userRepository.findAll(pageRequest);
+
+        final Page<User> users = "".equals(searchValue) ? userRepository.findAll(pageRequest) : userRepository.searchByLogin("%" + searchValue + "%", pageRequest);
+
         return usersToJson(users);
     }
 
-
+    /**
+     * Prepare response for the Jquery table plugin on client side.
+     * <p/>
+     * Structure :
+     * {
+     * page: page number,
+     * total: total rows,
+     * rows: array of data
+     * }
+     *
+     * @param page Page object that contains info about users.
+     * @return Json representation of page.
+     * @throws IOException
+     */
     private String usersToJson(Page<User> page) throws IOException {
         JsonParser parser = new JsonParser();
         ObjectMapper mapper = new ObjectMapper();
         String usersString = mapper.writeValueAsString(page.getContent());
         JsonElement users = parser.parse(usersString);
 
-
         JsonObject jsonPage = new JsonObject();
         jsonPage.addProperty("total", page.getTotalElements());
-        jsonPage.addProperty("page", page.getNumber()+1);
+        jsonPage.addProperty("page", page.getNumber() + 1);
         jsonPage.add("rows", users);
 
         return jsonPage.toString();

@@ -9,18 +9,12 @@ public class HomeController {
 
     @RequestMapping({"/index", "/"})
     public String indexRequest() {
-        return "login";
+        return "home";
     }
 
     @RequestMapping("/signup")
     public String signUp() {
         return "signup";
     }
-
-    @RequestMapping("/editUsers")
-    public String editUsers() {
-        return "editUsers";
-    }
-
 
 }

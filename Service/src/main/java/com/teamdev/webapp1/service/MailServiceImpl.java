@@ -6,13 +6,6 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by IntelliJ IDEA.
- * User: gar
- * Date: 03.04.12
- * Time: 0:51
- * To change this template use File | Settings | File Templates.
- */
 
 @Service
 public class MailServiceImpl implements MailService {
