@@ -17,4 +17,25 @@ public class HomeController {
         return "signup";
     }
 
+
+    @RequestMapping("/catalog")
+    public String catalog() {
+        return "catalog";
+    }
+
+    @RequestMapping("/about")
+    public String about() {
+        return "about";
+    }
+
+    @RequestMapping("/contact")
+    public String contact() {
+        return "contact";
+    }
+
+    @RequestMapping("/home")
+    public String home() {
+        return "home";
+    }
+
 }
