@@ -7,6 +7,54 @@
     <title></title>
 
     <script type="text/javascript">
+        function convertData(data) {
+
+            var rows = Array();
+
+            $.each(data.rows, function (i, row) {
+                rows.push({
+                    id:row.id,
+                    cell:[row.product.name,
+                        row.price,
+                        row.amount,
+                        "<a name='" + row.id + "' class='details button'>Подробнее</a> " +
+                                "<a name='" + row.id + "' class='cart button'>Добавить в корзину</a>"]});
+            });
+
+            return {
+                total:data.total,
+                page:data.page,
+                rows:rows
+            };
+        }
+
+        $("#offers").flexigrid({
+            url:'/offer/all/paging/${userId}',
+            dataType:'json',
+            preProcess:convertData,
+            colModel:[
+                {display:'Товар', name:'product.name', width:200, sortable:true, align:'center'},
+                {display:'Цена', name:'price', width:200, sortable:true, align:'left'},
+                {display:'В наличии', name:'amount', width:200, sortable:true, align:'left'},
+                {display:'Действия', name:'action', width:300, sortable:true, align:'left'}
+
+            ],
+            searchitems:[
+                {display:'Товар', name:'product.name'}
+            ],
+            sortname:"product.name",
+            sortorder:"ASC",
+            usepager:true,
+            useRp:true,
+            rp:15,
+            width:980,
+            height:520,
+            singleSelect: true
+        });
+
+    </script>
+
+    <script type="text/javascript">
 
         $("#offerDescription").dialog(
                 {
@@ -44,7 +92,7 @@
         );
 
 
-        $("#offer_table .details")
+        $("#offers .details")
                 .die()
                 .live("click", function () {
                     var url = "/offer/view/" + $(this).attr("name");
@@ -52,10 +100,9 @@
                     dialogDiv.load(url, function () {
                         dialogDiv.dialog("open");
                     });
-                })
-                .button();
+                });
 
-        $("#offer_table .cart")
+        $("#offers .cart")
                 .die()
                 .live("click", function () {
                     var url = "/cart/add/" + $(this).attr("name");
@@ -63,49 +110,17 @@
                     dialogDiv.load(url, function () {
                         dialogDiv.dialog("open");
                     });
-                })
-                .button();
-
+                });
 
     </script>
 </head>
 <body>
 
-<table id="offer_table" border="1">
 
-    <tr>
-        <th>
-            Product
-        </th>
-        <th>
-            Price
-        </th>
-        <th>
-            Amount
-        </th>
-        <th>
-            Description
-        </th>
-    </tr>
+<!-- Caption Line -->
+<h2 class="grid_12 caption">Каталог предложений</h2>
 
-    <c:forEach items="${offers}" var="offer">
-        <tr>
-            <td>${offer.product.name}</td>
-            <td>${offer.price}</td>
-            <td>${offer.amount}</td>
-            <td>${offer.description}</td>
-
-            <td>
-                <a id="details_${offer.id}" name="${offer.id}" class="details">View details</a>
-            </td>
-            <td>
-                <a id="cart_${offer.id}" name="${offer.id}" class="cart">Add to cart</a>
-            </td>
-
-        </tr>
-    </c:forEach>
-
-</table>
+<table id="offers" style="display: none"></table>
 
 <div id="offerDescription" title="Offer info"></div>
 

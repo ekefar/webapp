@@ -92,29 +92,28 @@
         <a class="quicknavgrid_3 quicknav alpha" href="/catalog">
             <h4 class="title ">Просмотреть каталог</h4>
             <p>Загляните в каталог предлагаемых товаров.</p>
-            <p style="text-align:center;"><img alt="" src="images/Art_Artdesigner.lv.png" /></p>
+            <p style="text-align:center;"><img alt="" src="../resources/images/catalog.png" /></p>
 
         </a>
         <a class="quicknavgrid_3 quicknav" href="/signup">
             <h4 class="title ">Создать аккаунт</h4>
             <p>Сосдайте аккаунт и получите доступ ко всем возможностям системы. </p>
-            <p style="text-align:center;"><img alt="" src="images/info.png" /></p>
+            <p style="text-align:center;"><img alt="" src="../resources/images/account2.png"  /></p>
 
         </a>
         <a class="quicknavgrid_3 quicknav" href="/about">
             <h4 class="title ">О нас</h4>
-            <p>Загляните на страницу с информацией о компании.</p>
-            <p style="text-align:center;"><img alt="" src="images/Blog_Artdesigner.lv.png" /></p>
+            <p>Загляните на страницу с информацией о компании. <br/><br/>&nbsp;</p>
+            <p style="text-align:center;"><img alt="" src="../resources/images/info.png"  /></p>
 
         </a>
         <a class="quicknavgrid_3 quicknav" href="/contact">
             <h4 class="title ">Обратная связь</h4>
-            <p>Есть вопросы либо пожелания? Напишите нам прямо сейчас!</p>
-            <p style="text-align:center;"><img alt="" src="images/hungry_bird.png" /></p>
+            <p>Есть вопросы либо пожелания? Напишите нам прямо сейчас! <br/>&nbsp;</p>
+            <p style="text-align:center;"><img alt="" src="../resources/images/mail.png"  /></p>
         </a>
     </div>
-    <div class="hr grid_12 clearfix">&nbsp;</div>
-    <!-- Footer -->
+     <div class="hr grid_12 clearfix">&nbsp;</div>
 
 
 </div><!--end wrapper-->

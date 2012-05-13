@@ -3,7 +3,6 @@ package com.teamdev.webapp1.service;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.teamdev.webapp1.model.user.User;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.data.domain.Page;
 

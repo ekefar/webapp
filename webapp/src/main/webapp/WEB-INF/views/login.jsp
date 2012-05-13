@@ -13,6 +13,7 @@
 
     <!--[if IE 6]>
     <script src="../resources/js/DD_belatedPNG_0.0.8a-min.js"></script>
+
     <script type="text/javascript" src="../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
     <script type="text/javascript" src="../resources/js/jquery.validate.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="../resources/js/jquery.form.js" charset="utf-8"></script>

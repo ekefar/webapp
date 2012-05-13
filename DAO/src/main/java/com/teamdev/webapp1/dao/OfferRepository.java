@@ -26,6 +26,10 @@ public interface OfferRepository extends CrudRepository<Offer, Integer>, PagingA
     @Query("select o from Offer o where o.user.id != ?")
     List<Offer> findNotBelongToUser(Integer userId);
 
+
+    @Query("select o from Offer o where o.user.id != ?")
+    Page<Offer> findNotBelongToUser(Integer userId, Pageable pageable);
+
     List<Offer> findByState(OfferStates state);
 
 }

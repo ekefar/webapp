@@ -1,7 +1,7 @@
 /* Global Styles */
 
 
-	body								{ background:url(images/bg.png); repeat-x #FFFFFF; font-size:12px;	font-family:'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Arial, san-serif; color:#000000;}
+	body								{ background:url(images/bg.png) repeat-x #FFFFFF; font-size:12px;	font-family:'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Arial, san-serif; color:#000000;}
 	a:focus								{outline:1px dotted;}
 	a									{color:#717171; text-decoration:none;}
 	a:hover								{text-decoration:none;}
@@ -106,7 +106,7 @@
 
 /* Footer */
 
-    .footer                             {padding-top: 10px;clear: both; position: relative;  height: 30px; margin-top: -45px; text-align: center; border-top: solid 1px #000000;}
+    .footer                             {padding-top: 10px;clear: both; position: relative;  height: 30px; margin-top: -45px; text-align: center; border-top: solid 1px #d6d6d6;}
 	.footer a							{color:#494949;}
 	.footer a:hover						{color:#9d9d9d;}
 

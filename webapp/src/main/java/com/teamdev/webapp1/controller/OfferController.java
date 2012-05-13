@@ -8,6 +8,7 @@ import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.order.OfferStates;
 import com.teamdev.webapp1.model.product.Category;
 import com.teamdev.webapp1.model.product.Product;
+import com.teamdev.webapp1.service.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -75,7 +76,6 @@ public class OfferController {
         return offerRepository.findOne(offer.getId());
     }
 
-
     @RequestMapping("/listProducts")
     @ResponseBody
     public List<Product> listProducts(@Valid Category category) {
@@ -83,19 +83,49 @@ public class OfferController {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public String listAllOffers(Map<String, Object> model) {
-        model.put("offers", offerRepository.findAll());
-        return "/offer/all";
+    public String catalog(Map<String, Object> model) {
+        return "/catalog";
+    }
+
+    @RequestMapping(value = "/all/paging", method = RequestMethod.POST)
+    @ResponseBody
+    public String catalogPagingResponse(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                        @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                        @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                        @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                        @RequestParam(value = "qtype", required = false) String searchBy,
+                                        @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+
+        final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
+        final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
+        final Page<Offer> users = offerRepository.findAll(pageRequest);
+        return Utils.pageToJson(users);
     }
 
     @RequestMapping(value = "/all/{id}", method = RequestMethod.GET)
-    public String listOffers(@PathVariable("id") Integer userId,
-                             Map<String, Object> model) {
+    public String allOffers(@PathVariable("id") Integer userId,
+                            Map<String, Object> model) {
         model.put("userId", userId);
         model.put("cartId", userRepository.findOne(userId).getCart().getId());
-        model.put("offers", offerRepository.findNotBelongToUser(userId));
         return "/offer/all";
     }
+
+    @RequestMapping(value = "/all/paging/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String allOffersPagingResponse(@PathVariable("id") Integer userId,
+                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                          @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                          @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                          @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                          @RequestParam(value = "qtype", required = false) String searchBy,
+                                          @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+
+        final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
+        final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
+        final Page<Offer> users = offerRepository.findNotBelongToUser(userId, pageRequest);
+        return Utils.pageToJson(users);
+    }
+
 
     @RequestMapping(value = "/own/{id}", method = RequestMethod.GET)
     public String listUserOffers(@PathVariable("id") Integer userId,
