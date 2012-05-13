@@ -57,11 +57,11 @@
 	.container_12 .grid_1				{width:45px;}
 	.container_12 .grid_2 				{width:130px;}
 	.container_12 .grid_3 				{width:215px;}
-	.container_12 .grid_4 				{width:200px;}
+	.container_12 .grid_4 				{width:100px;}
 	.container_12 .grid_5 				{width:385px;}
 	.container_12 .grid_6 				{width:470px;}
 	.container_12 .grid_7 				{width:555px;}
-	.container_12 .grid_8 				{width:740px;}
+	.container_12 .grid_8 				{width:840px;}
 	.container_12 .grid_9 				{width:725px;}
 	.container_12 .grid_10 				{width:810px;}
 	.container_12 .grid_11 				{width:895px;}
@@ -95,7 +95,7 @@
 /* Site Navigation */
 
 	ul#navigation						{text-transform:uppercase;}
-	ul#navigation li 					{float:right; display:inline; margin : 0 0 0 50px;}
+	ul#navigation li 					{float:right; display:inline; margin : 0 0 0 35px;}
 	ul#navigation li a					{font-family:arial, sans-serif !important; display:block; padding:44px 0 0; text-decoration:none; color:#000000; font-size:14px; font-weight:bold;}
 	ul#navigation li a:hover,
 	ul#navigation li a.current			{background:url(images/triangle.gif) no-repeat center top;}

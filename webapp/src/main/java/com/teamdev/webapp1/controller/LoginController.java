@@ -41,13 +41,9 @@ public class LoginController {
             return "/admin/home";
         }
 
-        return "/user/home";
+        return "/user/about";
     }
 
-    @RequestMapping(value = "/login")
-    public String login() {
-        return "login";
-    }
 
     @RequestMapping(value = "/loginfailed")
     public String loginError() {

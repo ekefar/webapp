@@ -41,9 +41,9 @@
 
     <!-- Navigation Menu -->
     <ul id="navigation" class="grid_8">
+        <li><a href="/login"><span class="meta">Вход/Регистрация</span><br />Вход</a></li>
         <li><a href="/contact"><span class="meta">Есть предложеня? Пишите!</span><br />Обратная связь</a></li>
         <li><a href="/about"><span class="meta">О проекте</span><br />О нас</a></li>
-        <li><a href="/login"><span class="meta">Вход/Регистрация</span><br />Аккаунт</a></li>
         <li><a href="/catalog"><span class="meta">Каталог товаров</span><br />Каталог</a></li>
         <li><a href="/home" class="current"><span class="meta">Главная</span><br />Главная</a></li>
     </ul>
@@ -85,7 +85,7 @@
 
     <!-- Caption Line -->
     <h2 class="grid_12 caption clearfix">Добро пожаловать на <span>Aurelius</span>. Здесь Вам доступен огромный каталог сельхозпродукции по лучшим ценам.
-        <u><a href="/login">Войдите</a></u> в систему и получите полный доступ ко всем возможностям системы!</h2>
+        <u><a href="/login">Войдите</a></u> в систему и получите полный доступ ко всем возможностям!</h2>
 
     <div class="hr grid_12 clearfix quicknavhr">&nbsp;</div>
     <div id="quicknav" class="grid_12">

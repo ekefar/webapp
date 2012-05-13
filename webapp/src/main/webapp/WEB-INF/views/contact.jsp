@@ -34,9 +34,9 @@
 
     <!-- Navigation Menu -->
     <ul id="navigation" class="grid_8">
+        <li><a href="/login"><span class="meta">Вход/Регистрация</span><br />Вход</a></li>
         <li><a href="/contact" class="current"><span class="meta">Есть предложеня? Пишите!</span><br />Обратная связь</a></li>
         <li><a href="/about"><span class="meta">О проекте</span><br />О нас</a></li>
-        <li><a href="/login"><span class="meta">Вход/Регистрация</span><br />Аккаунт</a></li>
         <li><a href="/catalog"><span class="meta">Каталог товаров</span><br />Каталог</a></li>
         <li><a href="/home" ><span class="meta">Главная</span><br />Главная</a></li>
     </ul>
