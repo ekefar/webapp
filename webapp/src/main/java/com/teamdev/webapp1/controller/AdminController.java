@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.user.User;
+import com.teamdev.webapp1.service.Utils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -66,36 +67,10 @@ public class AdminController {
 
         final Page<User> users = "".equals(searchValue) ? userRepository.findAll(pageRequest) : userRepository.searchByLogin("%" + searchValue + "%", pageRequest);
 
-        return usersToJson(users);
+        return Utils.pageToJson(users);
     }
 
-    /**
-     * Prepare response for the Jquery table plugin on client side.
-     * <p/>
-     * Structure :
-     * {
-     * page: page number,
-     * total: total rows,
-     * rows: array of data
-     * }
-     *
-     * @param page Page object that contains info about users.
-     * @return Json representation of page.
-     * @throws IOException
-     */
-    private String usersToJson(Page<User> page) throws IOException {
-        JsonParser parser = new JsonParser();
-        ObjectMapper mapper = new ObjectMapper();
-        String usersString = mapper.writeValueAsString(page.getContent());
-        JsonElement users = parser.parse(usersString);
 
-        JsonObject jsonPage = new JsonObject();
-        jsonPage.addProperty("total", page.getTotalElements());
-        jsonPage.addProperty("page", page.getNumber() + 1);
-        jsonPage.add("rows", users);
-
-        return jsonPage.toString();
-    }
 
     @RequestMapping("/admin/userProfile/{id}")
     public String viewUserProfile(@PathVariable("id") Integer userId,

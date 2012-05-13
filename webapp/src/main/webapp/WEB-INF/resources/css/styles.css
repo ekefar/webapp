@@ -1,6 +1,7 @@
 /* Global Styles */
 
-	body								{background:url(images/bg.png) repeat-x #FFFFFF; font-size:12px;	font-family:'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Arial, san-serif; color:#000000;}
+
+	body								{ background:url(images/bg.png); repeat-x #FFFFFF; font-size:12px;	font-family:'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Arial, san-serif; color:#000000;}
 	a:focus								{outline:1px dotted;}
 	a									{color:#717171; text-decoration:none;}
 	a:hover								{text-decoration:none;}
@@ -33,11 +34,11 @@
 	address,
 	fieldset,
 	img									{margin-bottom:20px;}
-	#wrapper							{margin-top:7px;}
+	#wrapper							{ height: 100%;}
 	ul li ul,
 	ol li ol							{margin-bottom:0px;}
 	ol									{padding: 0 0 0 5px;}
-	
+
 /* Custom Grid */
 
 	.container_12 						{margin-left:auto; margin-right:auto; width:1020px;}
@@ -66,12 +67,12 @@
 	.container_12 .grid_10 				{width:810px;}
 	.container_12 .grid_11 				{width:895px;}
 	.container_12 .grid_12 				{width:980px;}
-	
+
 /* Global Classes */
 
 	.hr									{border:none; border-bottom:1px solid #f0f0f0; border-top:1px solid #d6d6d6; clear:both; height:0; line-height:0; width:100%; font-size:0; padding:0 ;margin-bottom :20px;}
 	.pr									{border:none; border-bottom:1px solid #f0f0f0; border-top:1px solid #d6d6d6; clear:both; height:0; line-height:0; width:100%; font-size:0; padding:0; margin-bottom :30px;}
-	.dotted								{border-style:dashed; border-left:0; border-right:0;}	
+	.dotted								{border-style:dashed; border-left:0; border-right:0;}
 	.meta								{font-weight:normal;font-family:'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Arial, san-serif; font-size:11px; color:#999999 !important; line-height:16px; text-transform:none; text-shadow:none;}
 	.right								{float:right;}
 	.left								{float:left;}
@@ -81,13 +82,16 @@
 	.textright 							{text-align:right;}
 	.error,
 	.success							{display:none;}
+    .input                              {float:left; padding:8px; border:1px solid #CCCCCC; margin-left:10px; background:#fcfcfc; -moz-border-radius:5px; -webkit-border-radius:5px;}
+    .center                             {text-align: center;}
+
 
 /* Buttons */
 
 	.button, .button:visited 			{background:#000000 url(images/alert-overlay.png) repeat-x; display:inline-block; padding:5px 10px 6px; color:#fff; text-decoration:none; -moz-border-radius:5px; -webkit-border-radius:5px; -moz-box-shadow:0 1px 3px rgba(0,0,0,0.5); -webkit-box-shadow:0 1px 3px rgba(0,0,0,0.5); text-shadow:0 -1px 1px rgba(0,0,0,0.25); border-bottom:1px solid rgba(0,0,0,0.25); position:relative; cursor:pointer; font-size:13px; font-weight:bold; line-height:1; border:0;}
- 	.button:hover						{background-color:#111; color:#fff; text-decoration:none;}
+ 	.button:hover						{background-color: #0071cc; color:#fff; text-decoration:none;}
 	.button:active						{top:1px;}
-	
+
 /* Site Logo */
 
 	h1#logo 							{font-size:48px; font-weight:normal; margin-top:30px; color:#000000;}
@@ -98,14 +102,14 @@
 	ul#navigation li 					{float:right; display:inline; margin : 0 0 0 35px;}
 	ul#navigation li a					{font-family:arial, sans-serif !important; display:block; padding:44px 0 0; text-decoration:none; color:#000000; font-size:14px; font-weight:bold;}
 	ul#navigation li a:hover,
-	ul#navigation li a.current			{background:url(images/triangle.gif) no-repeat center top;}
+	ul#navigation li a.current			{background:url(images/triangle2.png) no-repeat center top ;}
 
 /* Footer */
 
-	.footer,							
+    .footer                             {padding-top: 10px;clear: both; position: relative;  height: 30px; margin-top: -45px; text-align: center; border-top: solid 1px #000000;}
 	.footer a							{color:#494949;}
 	.footer a:hover						{color:#9d9d9d;}
-	
+
 /* Sub Navigation */
 
 	ul.sidebar							{list-style:none; margin:0 0 30px 0; padding:0;}
@@ -114,7 +118,7 @@
 	ul.sidebar li:last-child a			{-moz-border-radius-bottomleft:5px; -moz-border-radius-bottomright:5px;  -webkit-border-bottom-left-radius:5px;  -webkit-border-bottom-right-radius:5px;}
 	ul.sidebar li:first-child a			{-moz-border-radius-topleft:5px; -moz-border-radius-topright:5px;  -webkit-border-top-left-radius:5px;  -webkit-border-top-right-radius:5px;}
 	ul.sidebar a:hover					{width:280px; background:#f6f6f6; padding:10px 0 10px 20px;}
-	
+
 /* Caption */
 
 	h2.caption 							{color:#494949; text-shadow:1px 1px 1px #cfcfcf; font-size:23px; line-height:30px;font-weight:normal; }
@@ -137,7 +141,7 @@
 	dl.history							{margin:0 0 10px 0; zoom:1}
 	dl.history dt						{width:50px; float:left; font-weight:bold;}
 	dl.history dd						{width:250px; float:left; padding:0; margin-bottom:20px;}
-	
+
 /* Common Scroller Styles */
 
 	.roundabout-holder 					{list-style:none; width:500px; height:300px; margin:0px auto;}
@@ -156,20 +160,20 @@
 /* Featured Image Slider */
 
 	#featured							{margin:10px 0 40px 0;}
-	
+
 /* Portfolio Image Slider */
 
 	#folio_scroller_container						{margin-top:35px; margin-bottom:40px; height:auto;}
 	#folio_scroller_container .roundabout-holder	{list-style:none; height:400px; margin:0px auto 20px auto;}
-	
+
 /* Portfolio Styles */
-	
+
 	.portfolio_item						{width:223px; position:relative; margin:0 14px 28px 14px; padding:0;}
 	.portfolio_item img					{padding:5px; border: 1px solid #aaaaaa; width:211px; -webkit-border-radius: 5px; -moz-border-radius: 5px; background:#f9f9f9; margin-bottom:0px;}
 	.portfolio_item span				{display:none;}
 	.portfolio_item:hover img			{-webkit-box-shadow:0px 0px 20px #787878; -moz-box-shadow:0px 0px 20px #787878; background:#f9f9f9;}
 	.portfolio_item:hover span			{display:inline; position:absolute; bottom:6px; right:6px; padding:10px 15px; background:#f9f9f9; color:#000000; z-index:999; border-left:1px solid #aaaaaa; border-top:1px solid #aaaaaa; -webkit-border-top-left-radius: 5px; -moz-border-radius-topLeft: 5px;}
-	
+
 /* Blog Post Styles */
 
 	.post a:hover						{text-decoration:underline;}
@@ -180,7 +184,7 @@
 	.post .thumb						{width:619px; height:150px; padding:5px; border: 1px solid #cccccc; -moz-border-radius:5px; -webkit-border-radius:5px;}
 
 /* Comment's List */
-	
+
 	.commentlist						{margin:0; padding:0; margin-bottom:20px; float:left; width:100%;}
 	.commentlist li						{width:100%; clear:both; float:left; padding:0; list-style-type:none; margin:0; position:relative;}
 	.gravatar							{float:left; width:60px; padding:0px 10px 0 0; text-align: center;}
@@ -192,7 +196,7 @@
 	.author_name a{color:#000000;}
 	.comment_text						{clear:both; margin-top:10px;}
 	.comment-reply-link					{text-align:center; display:block;}
-	
+
 /* Contact Form */
 
 	p.error								{margin-left:140px; margin-top:10px;}
@@ -208,7 +212,18 @@
 	#contact_form input#subject			{width:400px;}
 	#contact_form textarea				{width:500px;height:150px; resize: none;}
 	#contact_form input.button			{float:right;}
-	
+
+
+    /*any form*/
+    .form                               {width: 300px; margin-left:auto; margin-right: auto;}
+    p.error								{margin-left:140px; margin-top:10px;}
+    .form ul li					        {margin:10px 0; list-style:none; }
+    .form input.input                   {width:180px; float: right; }
+    .form label					        {line-height:35px; width:100px; text-align:right; float:left; margin-right:10px;}
+    .form textarea				        {float:left; padding:8px; border:1px solid #CCCCCC; margin-left:10px; background:#fcfcfc; -moz-border-radius:5px; -webkit-border-radius:5px;}
+    .form textarea				        {width:500px;height:150px; resize: none;}
+    .form input.button                  {float: right;}
+
 /* Comment form */
 
 	#comment_form ul					{float:left;}
@@ -218,7 +233,7 @@
 	#comment_form textarea				{float:left; padding:8px; border:1px solid #CCCCCC; margin-left:10px; background:#fcfcfc; -moz-border-radius:5px; -webkit-border-radius:5px;}
 	#comment_form input					{width:400px;}
 	#comment_form textarea				{width:500px; height:150px; resize:none;}
-	
+
 /* Contact Page Sidebar */
 
 	.contact ul 						{list-style:none;}

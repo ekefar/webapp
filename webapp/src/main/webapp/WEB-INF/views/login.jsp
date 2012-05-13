@@ -37,7 +37,7 @@
 
 <body>
 
-<div id="wrapper" class="container_12 clearfix">
+<div id="wrapper" class="container_12 content">
 
     <!-- Text Logo -->
     <h1 id="logo" class="grid_4">Aurelius</h1>
@@ -54,51 +54,48 @@
     <div class="hr grid_12 clearfix">&nbsp;</div>
 
     <!-- Caption Line -->
-    <h2 class="grid_12 caption">Здесь можно почитать о проекте.</h2>
+    <h2 class="grid_12 caption">Вход в систему. <a href="/signup"><u>(Регистрация)</u></a></h2>
 
     <div class="hr grid_12 clearfix">&nbsp;</div>
 
     <!-- Column 1 / Content -->
 
-    <div class="grid_11">
-        <form name='f' action="<c:url value='j_spring_security_check' />"
-              method='POST'>
+    <div class="grid_12 center" >
+        <form action="<c:url value='j_spring_security_check' />" method='post' class="form" >
+            <ul>
+                <li class="clearfix">
+                    <label for="login">Логин:</label>
+                    <input id="login" type='text' name='j_username' class="input">
+                    <div class="clear"></div>
+                    <p id='name_error' class='error'>Введите логин</p>
+                </li>
+                <li class="clearfix">
+                    <label for="password">Пароль:</label>
+                    <input id="password" type='password' name='j_password' class="input"/>
+                    <div class="clear"></div>
+                    <p id='email_error' class='error'>Введите пароль</p>
+                </li>
 
-            <table>
-                <tr>
-                    <td>Login:</td>
-                    <td><input type='text' name='j_username' value=''>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><input type='password' name='j_password'/>
-                    </td>
-                </tr>
-                <tr>
-                    <td><a href="register"><input id="regBtn" name="reset" value="Register" type="button"
-                                                  style="width: 150px"/> </a>
-                    </td>
-                    <td><input name="submit" type="submit"
-                               value="Log in" style="width: 150px"/>
-                    </td>
-
-                </tr>
-
-            </table>
-
+                <li class="clearfix">
+                    <p id='mail_success' class='success'>Thank you. I'll get back to you as soon as possible.</p>
+                    <p id='mail_fail' class='error'>Sorry, an error has occurкed. Please try again later.</p>
+                    <div id="button">
+                        <input type='submit' id='send_message' class="button" value='Вход' />
+                    </div>
+                </li>
+            </ul>
         </form>
-
     </div>
 
     <div class="hr grid_12 clearfix">&nbsp;</div>
 
-    <!-- Footer -->
-    <p class="grid_12 footer clearfix">
-        <span class="float"><b>&copy; Copyright</b> Alexander Serebriyan</span>
-    </p>
+
 
 </div><!--end wrapper-->
+<!-- Footer -->
+<div class="footer ">
+    <b>&copy; Copyright</b> Alexander Serebriyan
+</div>
 </body>
 </html>
 

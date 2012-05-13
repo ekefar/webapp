@@ -52,8 +52,8 @@
     <div class="grid_8">
         <p></p>
         <!-- Contact Form -->
-        <form action='index.html' method='post' id='contact_form'>
-            <h3>Почтовая форма</h3>
+        <form action='/mail/send' method='post' id='contact_form'>
+            <h3>Заполните форму ниже</h3>
             <div class="hr dotted clearfix">&nbsp;</div>
             <ul>
                 <li class="clearfix">
@@ -120,12 +120,12 @@
 
     <div class="hr grid_12 clearfix">&nbsp;</div>
 
-    <!-- Footer -->
-    <p class="grid_12 footer clearfix">
-        <span class="float"><b>&copy; Copyright</b> Alexander Serebriyan</span>
-    </p>
+
 
 </div><!--end wrapper-->
-
+<!-- Footer -->
+<div class="footer ">
+    <b>&copy; Copyright</b> Alexander Serebriyan
+</div>
 </body>
 </html>

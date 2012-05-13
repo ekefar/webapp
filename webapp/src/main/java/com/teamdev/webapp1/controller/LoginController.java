@@ -41,7 +41,7 @@ public class LoginController {
             return "/admin/home";
         }
 
-        return "/user/about";
+        return "/user/home";
     }
 
 

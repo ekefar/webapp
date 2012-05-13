@@ -57,12 +57,13 @@
 
     <div class="hr grid_12 clearfix">&nbsp;</div>
 
-    <!-- Footer -->
-    <p class="grid_12 footer clearfix">
-        <span class="float"><b>&copy; Copyright</b> Alexander Serebriyan</span>
-    </p>
+
 
 </div><!--end wrapper-->
+<!-- Footer -->
+<div class="footer ">
+    <b>&copy; Copyright</b> Alexander Serebriyan
+</div>
 
 </body>
 </html>

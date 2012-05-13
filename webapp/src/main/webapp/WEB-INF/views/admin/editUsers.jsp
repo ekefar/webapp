@@ -4,52 +4,6 @@
     <title></title>
 
     <script type="text/javascript">
-
-        /* var showUsers = function () {
-         var output = $("#output");
-
-         output.append("<tr><th width='40%'>Login</th>" +
-         "<th width='40%'>Password</th>" +
-         "<th width='20%'>Is Enabled?</th> </tr>");
-
-
-         $.getJSON("/admin/editUsers", function (data) {
-         $.each(data, function () {
-         var userInfo = "<tr><td>" + this.login + "</td> <td>" + this.email + "</td><td>" +
-         "<input type='checkbox' id='" + this.login + "'";
-
-         if (this.enabled)
-         userInfo += "checked='checked'";
-
-         userInfo += "/></td></tr>";
-
-         output.append(userInfo);
-         });
-         });
-         };
-
-
-         showUsers();
-
-         $("#update")
-         .unbind("click")
-         .click(function () {
-         $("#output").html("");
-         showUsers();
-         });
-
-         $(":checkbox")
-         .die()
-         .live('change', function () {
-         var login = $(this).attr("id");
-         var enabled = $(this).prop("checked");
-         var postData = "login=" + login + "&enabled=" + enabled;
-         $.post("/admin/editUsers", postData);
-         });
-
-         $("button").button();*/
-
-
         function convertData(data) {
 
             var rows = Array();
@@ -63,7 +17,7 @@
                     cell:[row.login,
                         row.email,
                         row.enabled,
-                        '<a href="javascript:void(0)" class="action" id="' + row.id + '">' + action + '</a>']});
+                        '<a href="javascript:void(0)" class="action button" id="' + row.id + '">' + action + '</a>']});
             });
 
             return {
@@ -73,15 +27,15 @@
             };
         }
 
-        $("#flex1").flexigrid({
+        $("#users").flexigrid({
             url:'/admin/users/edit',
             dataType:'json',
             preProcess:convertData,
             colModel:[
-                {display:'login', name:'login', width:40, sortable:true, align:'center'},
-                {display:'email', name:'email', width:180, sortable:true, align:'left'},
-                {display:'enabled', name:'enabled', width:120, sortable:true, align:'left'},
-                {display:'action', name:'action', width:120, sortable:true, align:'left'}
+                {display:'Логин', name:'login', width:200, sortable:true, align:'center'},
+                {display:'E-mail', name:'email', width:200, sortable:true, align:'left'},
+                {display:'Активен?', name:'enabled', width:200, sortable:true, align:'left'},
+                {display:'Действия', name:'action', width:300, sortable:true, align:'left'}
 
             ],
             searchitems:[
@@ -93,13 +47,12 @@
             title:'Users',
             useRp:true,
             rp:15,
-            showTableToggleBtn:true,
-            width:700,
-            height:200
+            width:980,
+            height:500,
+            maxWidth: 980
         });
 
-        $("#flex1 .action")
-                .button()
+        $("#users .action")
                 .die()
                 .live('click', function () {
 
@@ -119,13 +72,8 @@
 
 
 <div id="outputDiv">
-    <table id="output" border="1" style="font-size: large; width: 800px; display: none;">
 
-    </table>
-
-
-    <table id="flex1" style="display: none"></table>
-
+    <table id="users" style="display: none"></table>
 
 </div>
 

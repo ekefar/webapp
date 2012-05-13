@@ -3,9 +3,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <link type="text/css" href="../resources/css/flick/jquery-ui-1.8.18.custom.css" rel="stylesheet"/>
-    <link type="text/css" href="../resources/css/style.css" rel="stylesheet"/>
 
+    <link type="text/css" href="../resources/css/styles.css" rel="stylesheet"/>
     <script type="text/javascript" src="../resources/js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
     <script type="text/javascript" src="../resources/js/jquery.validate.min.js" charset="utf-8"></script>
@@ -60,7 +59,6 @@
         $(document).ready(function () {
 
             $.validator.addMethod("checkEmail", emailCheck);
-
             $.validator.addMethod("loginCheck", loginCheck);
 
             $("#regForm").validate({
@@ -93,8 +91,6 @@
                         onclick:false
                     }
             );
-
-            $("button").button();
 
         });
 
@@ -139,12 +135,12 @@
             </tr>
             <tr>
                 <td align="center">
-                    <button id="regButton" name="regButton" type="submit" style="width: 170px">Sign up</button>
+                    <button id="regButton" name="regButton" class="button">Sign up</button>
                 </td>
 
                 <td align="center">
                     <a href="/welcome">
-                        <button id="home" name="home" type="button" style="width: 170px">Home</button>
+                        <button id="home" name="home" type="button" class="button">Home</button>
                     </a>
                 </td>
             </tr>
@@ -154,9 +150,10 @@
 
 </div>
 
-
-<div id="footer" class="footer">2012</div>
-
+<!-- Footer -->
+<div class="footer ">
+    <b>&copy; Copyright</b> Alexander Serebriyan
+</div>
 
 </body>
 </html>
