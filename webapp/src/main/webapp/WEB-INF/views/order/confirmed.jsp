@@ -57,7 +57,7 @@
             rp:15,
             width:705,
             height:520,
-            singleSelect: true
+            singleSelect:true
         });
 
 

@@ -87,10 +87,7 @@
             </ul>
         </form>
     </div>
-
     <div class="hr grid_12 clearfix">&nbsp;</div>
-
-
 
 </div><!--end wrapper-->
 <!-- Footer -->

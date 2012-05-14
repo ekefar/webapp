@@ -27,6 +27,7 @@
 <div>
     <div class="grid_3">
         <h4 class="title ">Категория</h4>
+
         <div class="hr dotted">&nbsp;</div>
         <ul class="sidebar">
             <li><a href="#orders" id="processing">Активные</a></li>

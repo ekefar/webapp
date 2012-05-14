@@ -4,7 +4,10 @@
 <html>
 <head>
 
-    <link type="text/css" href="../resources/css/styles.css" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="../resources/css/reset.css" />
+    <link rel="stylesheet" href="../resources/css/styles.css" />
+
     <script type="text/javascript" src="../resources/js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/jquery-ui-1.8.18.custom.min.js"></script>
     <script type="text/javascript" src="../resources/js/jquery.validate.min.js" charset="utf-8"></script>
@@ -30,7 +33,7 @@
             });
 
             return retResp == "true";
-        }
+        };
 
         var loginCheck = function () {
             var retResp;
@@ -101,55 +104,68 @@
 </head>
 <body>
 
-<div id="header" class="header"></div>
-<div id="distance"></div>
-<div id="signup" align="center" class="registration_form">
-    <form id="regForm" enctype="application/x-www-form-urlencoded" method="post">
+<div id="wrapper" class="container_12 content">
 
-        <table>
-            <tr>
-                <td>
-                    Login:
-                </td>
-                <td>
-                    <input type="text" name="login" id="login" size="30"
-                           class="validate[required,,maxSize[16],ajax[ajaxUserCall]] "/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Password:
-                </td>
-                <td>
-                    <input type="password" name="password" size="30" class="validate[required] text-input"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    E-mail:
-                </td>
-                <td>
-                    <input type="text" id="email" name="email" size="30"
-                           class="validate[required,custom[email]] text-input"/>
-                </td>
-            </tr>
-            <tr>
-                <td align="center">
-                    <button id="regButton" name="regButton" class="button">Sign up</button>
-                </td>
+    <!-- Text Logo -->
+    <h1 id="logo" class="grid_4">Aurelius</h1>
 
-                <td align="center">
-                    <a href="/welcome">
-                        <button id="home" name="home" type="button" class="button">Home</button>
-                    </a>
-                </td>
-            </tr>
-        </table>
+    <!-- Navigation Menu -->
+    <ul id="navigation" class="grid_8">
+        <li><a href="/login" class="current"><span class="meta">Вход/Регистрация</span><br />Вход</a></li>
+        <li><a href="/contact"><span class="meta">Есть предложеня? Пишите!</span><br />Обратная связь</a></li>
+        <li><a href="/about" ><span class="meta">О проекте</span><br />О нас</a></li>
+        <li><a href="/catalog"><span class="meta">Каталог товаров</span><br />Каталог</a></li>
+        <li><a href="/home" ><span class="meta">Главная</span><br />Главная</a></li>
+    </ul>
 
-    </form>
+    <div class="hr grid_12 clearfix">&nbsp;</div>
 
-</div>
+    <!-- Caption Line -->
+    <h2 class="grid_12 caption">Вход в систему. <a href="/signup"><u>(Регистрация)</u></a></h2>
 
+    <div class="hr grid_12 clearfix">&nbsp;</div>
+
+    <!-- Column 1 / Content -->
+
+    <div class="grid_12 center" >
+        <form id="regForm" enctype="application/x-www-form-urlencoded" method="post" class="form">
+            <ul>
+                <li class="clearfix">
+                    <label for="login">Логин:</label>
+                    <input type="text" name="login" id="login" size="50"
+                           class="validate[required,,maxSize[16],ajax[ajaxUserCall]] input"/>
+                    <p id='name_error' class='error'>Введите логин</p>
+                    <div class="clear"></div>
+
+                </li>
+                <li class="clearfix">
+                    <label for="password">Пароль:</label>
+                    <input id="password" type="password" name="password" size="50" class="validate[required] text-input input"/>
+
+                    <div class="clear"></div>
+                </li>
+                <li class="clearfix">
+                    <label for="email">E-mail:</label>
+                    <input id="email" type="text" name="email" size="50"
+                           class="validate[required,custom[email]] text-input input"/>
+                    <div class="clear"></div>
+                </li>
+                <li class="clearfix">
+                    <p id='mail_success' class='success'>Thank you. I'll get back to you as soon as possible.</p>
+                    <p id='mail_fail' class='error'>Sorry, an error has occurкed. Please try again later.</p>
+
+                        <button type="submit" id="regButton" name="regButton" class="button right">Подтвердить</button>
+
+                </li>
+            </ul>
+        </form>
+    </div>
+
+    <div class="hr grid_12 clearfix">&nbsp;</div>
+
+
+
+</div><!--end wrapper-->
 <!-- Footer -->
 <div class="footer ">
     <b>&copy; Copyright</b> Alexander Serebriyan

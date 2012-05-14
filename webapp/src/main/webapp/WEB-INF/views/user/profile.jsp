@@ -19,81 +19,79 @@
                     });
 
                     $("#profile_settings").show();
-                })
-                .button();
+                });
 
         $('#profile_submit')
                 .click(function () {
                     var url = "/settings/profile/" + $("#profile_settings").attr("name");
                     $.post(url, $('#profile_form').serialize());
-                })
-                .button();
+                });
 
         $("#dateOfBirth").datepicker();
 
 
+        /*    var updateImage = function () {
+         var src = "/settings/profile/avatar?" + new Date().getTime();
+         $('#avatar').attr("src", src);
+         $('#upload_container').innerHTML = "";
+         }
 
-    /*    var updateImage = function () {
-            var src = "/settings/profile/avatar?" + new Date().getTime();
-            $('#avatar').attr("src", src);
-            $('#upload_container').innerHTML = "";
-        }
 
+         var uploader = new qq.FileUploader({
+         // pass the dom node (ex. $(selector)[0] for jQuery users)
+         element:document.getElementById('upload_container'),
+         // path to server-side upload script
+         action:'/settings/profile/avatar',
+         onComplete:updateImage
+         });
 
-        var uploader = new qq.FileUploader({
-            // pass the dom node (ex. $(selector)[0] for jQuery users)
-            element:document.getElementById('upload_container'),
-            // path to server-side upload script
-            action:'/settings/profile/avatar',
-            onComplete:updateImage
-        });
-
-        updateImage();*/
+         updateImage();*/
     </script>
 </head>
 <body>
-<div id="settings_values" class="content">
-    <div id="profile_settings" name="${user.id}">
 
-        <form id="profile_form">
-            <table>
-                <tr>
-                    <td>
-                        Name:
-                    </td>
-                    <td>
-                        <input type="text" name="name" id="name" size="50" value="${user.companyName}"/>
-                    </td>
-                </tr>
+<div id="profile_settings" name="${user.id}">
+    <form id="profile_form">
+        <table>
+            <tr>
+                <td>
+                    Name:
+                </td>
+                <td>
+                    <input type="text" name="name" id="name" size="60"  class="input" value="${user.companyName}"/>
+                </td>
+            </tr>
 
-                <tr>
-                    <td>
-                        Description:
-                    </td>
-                    <td>
-                        <textarea rows="5" cols="50" type="text" name="description" id="description" size="50" >${user.companyDescription}</textarea>
-                    </td>
-                </tr>
+            <tr>
+                <td valign="top">
+                    Description:
+                </td>
+                <td>
+                    <textarea rows="5" cols="50" type="text" name="description" class="input"
+                              id="description">${user.companyDescription}</textarea>
+                </td>
+            </tr>
 
-                <tr>
-                    <td>
-                        Contact:
-                    </td>
-                    <td>
-                        <textarea rows="5" cols="50" type="text" name="contact" id="contact" size="50" >${user.companyContact}</textarea>
-                    </td>
-                </tr>
+            <tr>
+                <td valign="top">
+                    Contact:
+                </td>
+                <td>
+                    <textarea rows="5" cols="50" type="text" name="contact" class="input"
+                              id="contact">${user.companyContact}</textarea>
+                </td>
+            </tr>
 
-                <tr>
-                    <td align="center" colspan="2">
-                        <br/>
-                        <button id="reset_btn" type="button" class="navigation_btn">Reset</button>
-                        <button id="profile_submit" type="button" class="navigation_btn">Save</button>
+            <tr>
+                <td align="center" colspan="2">
+                    <br/>
+                    <button id="profile_submit" type="button" class="button right">Save</button>
+                    <button id="reset_btn" type="button" class="button right">Reset</button>
 
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 </body>
 </html>
