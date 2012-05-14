@@ -1,23 +1,28 @@
 package com.teamdev.webapp1.controller;
 
+import com.google.common.collect.ImmutableSet;
 import com.teamdev.webapp1.dao.OfferRepository;
 import com.teamdev.webapp1.dao.OrderRepository;
 import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.order.OfferStates;
 import com.teamdev.webapp1.model.order.Order;
 import com.teamdev.webapp1.model.order.OrderStates;
+import com.teamdev.webapp1.service.Utils;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.google.common.collect.ImmutableSet.of;
 
 /**
  * Author: Alexander Serebriyan
@@ -56,15 +61,45 @@ public class OrderController {
         return "/order/processing";
     }
 
+    @RequestMapping(value = "/active/paging/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String activeOrdersJsonResponse(@PathVariable(value = "id") Integer userId,
+                                         @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                         @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                         @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                         @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                         @RequestParam(value = "qtype", required = false) String searchBy,
+                                         @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+
+        final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
+        final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
+        final Page<Order> orders = orderRepository.findByOfferUserIdAndStateIn(userId, pageRequest, of(OrderStates.PROCESSING));
+        return Utils.pageToJson(orders);
+    }
+
     @RequestMapping("/confirmed/{id}")
     public String viewConfirmedOrders(@PathVariable(value = "id") Integer userId,
                                       Map<String, Object> model) {
 
-        List<Order> orders = orderRepository.findByOfferUserId(userId);
-        model.put("orders", findOrdersWithState(orders, OrderStates.COMPLETE, OrderStates.DENIED));
+        model.put("userId", userId);
         return "/order/confirmed";
     }
 
+    @RequestMapping(value = "/past/paging/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String pastOrdersJsonResponse(@PathVariable(value = "id") Integer userId,
+                                         @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                         @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                         @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                         @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                         @RequestParam(value = "qtype", required = false) String searchBy,
+                                         @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+
+        final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
+        final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
+        final Page<Order> orders = orderRepository.findByOfferUserIdAndStateIn(userId, pageRequest, of(OrderStates.COMPLETE, OrderStates.DENIED));
+        return Utils.pageToJson(orders);
+    }
 
     @RequestMapping(value = "/confirm/{id}", method = RequestMethod.POST)
     @ResponseBody

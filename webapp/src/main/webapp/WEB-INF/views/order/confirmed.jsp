@@ -5,62 +5,79 @@
 <html>
 <head>
     <title></title>
+
     <script type="text/javascript">
+        function convertData(data) {
 
-            $("#orders .remove")
-                    .unbind("click")
-                    .click(function () {
-                        var selectedRecordId = $(this).attr("name")
-                        var url = "/order/delete/" + selectedRecordId;
-                        $.post(url, function(result){
-                            $("#record_"+selectedRecordId).remove();
-                        }, 'json');
-                    })
-                    .button();
+            var rows = Array();
+
+            $.each(data.rows, function (i, row) {
+
+                rows.push({
+                    id:row.id,
+                    cell:[row.offer.product.name,
+                        row.offer.price,
+                        row.amount,
+                        row.amount * row.offer.price,
+                        row.creationDate,
+                        row.state,
+                        "<a class='remove button' name='" + row.id + "'>Удалить</a>"]});
+            });
+
+            return {
+                total:data.total,
+                page:data.page,
+                rows:rows
+            };
+        }
 
 
+        $("#orders").flexigrid({
+            url:'/order/past/paging/${userId}',
+            dataType:'json',
+            preProcess:convertData,
+            colModel:[
+                {display:'Товар', name:'offer.product.name', width:150, sortable:true, align:'center'},
+                {display:'Цена', name:'offer.price', width:35, sortable:true, align:'left'},
+                {display:'Заказано', name:'amount', width:50, sortable:true, align:'left'},
+                {display:'Cумма', width:50, sortable:false, align:'left'},
+                {display:'Дата создания', name:'creationDate', width:100, sortable:true, align:'left'},
+                {display:'Статус', name:'state', width:50, sortable:true, align:'left'},
+                {display:'Действие', name:'state', width:210, sortable:true, align:'left'}
+
+            ],
+            searchitems:[
+                {display:'Товар', name:'offer.product.name'}
+            ],
+            sortname:"creationDate",
+            sortorder:"ASC",
+            usepager:true,
+            title:'Завершенные заказы',
+            useRp:true,
+            rp:15,
+            width:705,
+            height:520,
+            singleSelect: true
+        });
+
+
+        $("#orders .remove")
+                .die()
+                .live("click", function () {
+                    var selectedRecordId = $(this).attr("name");
+                    var url = "/order/delete/" + selectedRecordId;
+                    $.post(url, function (result) {
+                        $("#row" + selectedRecordId).remove();
+                    }, 'json');
+                });
     </script>
+
+
 </head>
 
 <body>
-<table id="orders" border="1">
 
-    <tr>
-        <th>
-            Product
-        </th>
-        <th>
-            Price
-        </th>
-        <th>
-            Available
-        </th>
-        <th>
-            Purchased
-        </th>
-        <th>
-            Total
-        </th>
-        <th>
-            Creation date
-        </th>
-        <th>
-            State
-        </th>
-    </tr>
-
-    <c:forEach items="${orders}" var="order">
-        <tr id="record_${order.id}">
-            <td>${order.offer.product.name}</td>
-            <td>${order.offer.price}</td>
-            <td>${order.offer.amount}</td>
-            <td class="amount">${order.amount}</td>
-            <td class="total">${order.amount * order.offer.price}</td>
-            <td>${order.creationDate}</td>
-            <td class="state">${order.state}</td>
-        </tr>
-    </c:forEach>
-</table>
+<table id="orders" style="display: none"></table>
 
 </body>
 </html>

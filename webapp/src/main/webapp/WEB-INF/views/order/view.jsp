@@ -11,15 +11,13 @@
                 .unbind("click")
                 .click(function () {
                     $("#order_view").load("/order/confirmed/${userId}");
-                })
-                .button();
+                });
 
         $("#processing")
                 .unbind("click")
                 .click(function () {
                     $("#order_view").load("/order/processing/${userId}");
-                })
-                .button();
+                });
 
         $("#processing").click();
 
@@ -27,11 +25,16 @@
 </head>
 <body>
 <div>
-    <button id="processing">Processing</button>
-    <button id="confirmed_btn">Confirmed</button>
-
+    <div class="grid_3">
+        <h4 class="title ">Категория</h4>
+        <div class="hr dotted">&nbsp;</div>
+        <ul class="sidebar">
+            <li><a href="#orders" id="processing">Активные</a></li>
+            <li><a href="#orders" id="confirmed_btn">Завершенные</a></li>
+        </ul>
+    </div>
+    <div id="order_view" class="grid_7 "></div>
 </div>
 
-<div id="order_view"></div>
 </body>
 </html>

@@ -8,98 +8,109 @@
 
     <script type="text/javascript">
 
-        function validateOrders(){
-            $("#orders tr").each(function(){
+        function validateOrders() {
+            $("#orders tr").each(function () {
                 var amount = parseInt($(this).find(".amount").text());
                 var available = parseInt($(this).find(".available").text());
                 var confirmButton = $(this).find(".confirm");
-                if(amount>available){
-                    $(confirmButton).attr("disabled", true).addClass("ui-button-disabled ui-state-disabled");
-                    canPurchaseAll = false;
+                if (amount > available) {
+                    $(confirmButton).attr("disabled", true).addClass("disabled").removeClass("button");
                 } else {
-                    $(confirmButton).attr("disabled", false).removeClass("ui-button-disabled ui-state-disabled")
+                    $(confirmButton).attr("disabled", false).removeClass("disabled").addClass("button");
                 }
             });
         }
-    </script>
 
-    <script type="text/javascript">
-        validateOrders();
+
+        function convertData(data) {
+
+            var rows = Array();
+
+            $.each(data.rows, function (i, row) {
+
+                rows.push({
+                    id:row.id,
+                    cell:[row.offer.product.name,
+                        row.offer.price,
+                        row.offer.amount,
+                        row.amount,
+                        row.amount * row.offer.price,
+                        row.creationDate,
+                        "<button class='confirm button' name='" + row.id + "'>Принять</button>" +
+                                "<button class='deny button' name='" + row.id + "'>Отклонить</button>"]});
+            });
+
+            return {
+                total:data.total,
+                page:data.page,
+                rows:rows
+            };
+        }
+
+        $("#orders").flexigrid({
+            url:'/order/active/paging/${userId}',
+            dataType:'json',
+            preProcess:convertData,
+            colModel:[
+                {display:'Товар', name:'offer.product.name', width:130, sortable:true, align:'center'},
+                {display:'Цена', name:'offer.price', width:35, sortable:true, align:'left'},
+                {display:'Доступно', name:'offer.amount', width:50, sortable:true, align:'left', colClass:'available'},
+                {display:'Заказано', name:'amount', width:50, sortable:true, align:'left', colClass:'amount'},
+                {display:'Сумма', width:50, sortable:false, align:'left'},
+                {display:'Дата создания', name:'creationDate', width:100, sortable:true, align:'left'},
+                {display:'Действие', name:'state', width:210, sortable:true, align:'left'}
+
+            ],
+            searchitems:[
+                {display:'Товар', name:'offer.product.name'}
+            ],
+            sortname:"creationDate",
+            sortorder:"ASC",
+            usepager:true,
+            title:'Активные заказы',
+            useRp:true,
+            rp:15,
+            width:705,
+            height:520,
+            singleSelect:true,
+            onSuccess:function () {
+                $("#orders").each(function () {
+                    $("td[abbr='amount']").addClass("amount");
+                    $("td[abbr='offer.amount']").addClass("available");
+                });
+                validateOrders();
+            }
+        });
 
         $("#orders .confirm")
-                .unbind("click")
-                .click(function () {
+                .die("click")
+                .live("click", function () {
                     var selectedRecordId = $(this).attr("name");
                     var url = "/order/confirm/" + selectedRecordId;
                     $.post(url, function (result) {
-                        $("#record_" + selectedRecordId).remove();
-                        $("#order_view").load("/order/processing/${userId}");
-                    });
-                })
-                .button();
+                        $("#orders").flexReload();
+                    }, 'json');
+                });
 
         $("#orders .deny")
-                .unbind("click")
-                .click(function () {
-                    var selectedRecordId = $(this).attr("name")
+                .die("click")
+                .live("click", function () {
+                    var selectedRecordId = $(this).attr("name");
                     var url = "/order/deny/" + selectedRecordId;
                     $.post(url, function (result) {
-                        $("#record_" + selectedRecordId).remove();
+                        $("#orders").flexReload();
                     }, 'json');
-                })
-                .button();
+                });
 
 
     </script>
+
+
 </head>
 
 <body>
-<div id="#order_view">
-    <table id="orders" border="1">
 
-        <tr>
-            <th>
-                Product
-            </th>
-            <th>
-                Price
-            </th>
-            <th>
-                Available
-            </th>
-            <th>
-                Purchased
-            </th>
-            <th>
-                Total
-            </th>
-            <th>
-                Creation date
-            </th>
-            <th>
-                State
-            </th>
-        </tr>
+<table id="orders" style="display: none"></table>
 
-        <c:forEach items="${orders}" var="order">
-            <tr id="record_${order.id}">
-                <td>${order.offer.product.name}</td>
-                <td>${order.offer.price}</td>
-                <td class="available">${order.offer.amount}</td>
-                <td class="amount">${order.amount}</td>
-                <td class="total">${order.amount * order.offer.price}</td>
-                <td>${order.creationDate}</td>
-                <td class="state">${order.state}</td>
-                <td>
-                    <button id="confirm_${order.id}" name="${order.id}" class="confirm">Confirm</button>
-                </td>
-                <td>
-                    <a id="deny_${order.id}" name="${order.id}" class="deny">Deny</a>
-                </td>
-            </tr>
-        </c:forEach>
-
-    </table>
-</div>
 </body>
 </html>

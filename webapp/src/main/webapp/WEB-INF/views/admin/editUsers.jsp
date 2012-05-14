@@ -48,8 +48,8 @@
             useRp:true,
             rp:15,
             width:980,
-            height:500,
-            maxWidth: 980
+            height:520,
+            singleSelect: true
         });
 
         $("#users .action")
