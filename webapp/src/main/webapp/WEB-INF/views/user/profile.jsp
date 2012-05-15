@@ -85,8 +85,8 @@
             <tr>
                 <td align="center" colspan="2">
                     <br/>
-                    <button id="profile_submit" type="button" class="button right">Save</button>
-                    <button id="reset_btn" type="button" class="button right">Reset</button>
+                    <button id="profile_submit" type="button" class="button right">Сохранить</button>
+                    <button id="reset_btn" type="button" class="button right">Сброс</button>
 
                 </td>
             </tr>

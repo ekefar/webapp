@@ -27,7 +27,7 @@ public class Cart {
 
     @OneToOne
     @Valid
-    User user;
+    private User user;
     
     @OneToMany(
             targetEntity = CartItem.class,

@@ -1,40 +1,95 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <html>
 <head>
     <title></title>
-    <script type="text/javascript">
 
+    <script type="text/javascript">
+        var selectedRecordId;
 
         function validateCart(){
             var canPurchaseAll = true;
-            $("#cart_records tr").each(function(){
+            $("#cart tr").each(function(){
                 var amount = parseInt($(this).find(".amount").text());
                 var available = parseInt($(this).find(".available").text());
                 var purchaseButton = $(this).find(".purchase");
                 if(amount>available){
-                    $(purchaseButton).attr("disabled", true).addClass("ui-button-disabled ui-state-disabled");
+                    $(purchaseButton).attr("disabled", true).addClass("disabled").removeClass("button");
                     canPurchaseAll = false;
                 } else {
-                    $(purchaseButton).attr("disabled", false).removeClass("ui-button-disabled ui-state-disabled")
+                    $(purchaseButton).attr("disabled", false).removeClass("disabled").addClass("button");
                 }
             });
 
             var purchaseAllButton =  $("#purchase_all_btn");
 
             if(!canPurchaseAll){
-               $(purchaseAllButton).attr("disabled", true).addClass("ui-button-disabled ui-state-disabled");
+                $(purchaseAllButton).attr("disabled", true).addClass("disabled").removeClass("button");
             }   else {
-                $(purchaseAllButton).attr("disabled", false).removeClass("ui-button-disabled ui-state-disabled");
+                $(purchaseAllButton).attr("disabled", false).removeClass("disabled").addClass("button");
             }
         }
-    </script>
 
-    <script type="text/javascript">
+        function convertData(data) {
 
-        var selectedRecordId;
+            var rows = Array();
+
+            $.each(data.rows, function (i, row) {
+
+                rows.push({
+                    id:row.id,
+                    cell:[row.offer.product.name,
+                        row.offer.price,
+                        row.offer.amount,
+                        row.amount,
+                        row.amount * row.offer.price,
+                        "<button class='edit button' name='" + row.id + "'>Изменить</button>" +
+                                "<button class='remove button' name='" + row.id + "'>Удалить</button>"+
+                                "<button class='purchase button' name='" + row.id + "'>Заказать</button>"]});
+            });
+
+            return {
+                total:data.total,
+                page:data.page,
+                rows:rows
+            };
+        }
+
+
+        $("#cart").flexigrid({
+            url:'/cart/view/paging/${cartId}',
+            dataType:'json',
+            preProcess:convertData,
+            colModel:[
+                {display:'Товар', name:'offer.product.name', width:150, sortable:true, align:'center'},
+                {display:'Цена', name:'offer.price', width:50, sortable:true, align:'left'},
+                {display:'Доступно', name:'offer.amount', width:70, sortable:true, align:'left', colClass:'available'},
+                {display:'Заказано', name:'amount', width:70, sortable:true, align:'left', colClass:'amount'},
+                {display:'Сумма', width:100, sortable:false, align:'left'},
+                {display:'Действие', name:'state', width:300, sortable:true, align:'left'}
+
+            ],
+            searchitems:[
+                {display:'Товар', name:'offer.product.name'}
+            ],
+            sortname:"amount",
+            sortorder:"ASC",
+            usepager:true,
+            title:'',
+            useRp:true,
+            rp:15,
+            width:980,
+            height:530,
+            singleSelect:true,
+            onSuccess:function () {
+                $("#cart").each(function () {
+                    $("td[abbr='amount']").addClass("amount");
+                    $("td[abbr='offer.amount']").addClass("available");
+                });
+                validateCart();
+            }
+        });
 
         $("#cartEdit").dialog(
                 {
@@ -51,10 +106,7 @@
                         "Save":function () {
                             var postData = $("#cartEdit form").serialize();
                             $.post("/cart/edit", postData, function (result) {
-                                $("#record_" + selectedRecordId + " .amount").html(result.amount);
-                                var total = parseInt(result.offer.price) * parseInt(result.amount);
-                                $("#record_" + selectedRecordId + " .total").html(total);
-                                validateCart();
+                                $("#cart").flexReload();
                             }, 'json');
 
                             $(this).dialog("close");
@@ -63,7 +115,7 @@
                 }
         );
 
-        $("#cart_records .edit")
+        $("#cart .edit")
                 .die()
                 .live("click", function () {
                     var url = "/cart/edit/" + $(this).attr("name");
@@ -72,94 +124,53 @@
                     dialogDiv.load(url, function () {
                         dialogDiv.dialog("open");
                     });
-                })
-                .button();
+                });
 
-        $("#cart_records .remove")
+        $("#cart .remove")
                 .die()
                 .live("click", function () {
                     var recordId = $(this).attr("name");
                     var url = "/cart/remove";
                     var postData = "id=" + recordId;
-                    $.post(url, postData);
-                    $("#record_" + recordId).remove();
-                })
-                .button();
+                    $.post(url, postData, function (result) {
+                        $("#cart").flexReload();
+                    }, 'json');
+                });
 
-        $("#cart_records .purchase")
+        $("#cart .purchase")
                 .die()
                 .live("click", function () {
                     var recordId = $(this).attr("name");
                     var url = "/cart/purchase";
                     var postData = "id=" + recordId;
-                    $.post(url, postData);
-                    $("#record_" + recordId).remove();
-                })
-                .button();
+                    $.post(url, postData, function (result) {
+                        $("#cart").flexReload();
+                    }, 'json');
+                });
 
         $("#purchase_all_btn")
                 .unbind("click")
                 .click(function () {
-                    var postData = "cartId=" + ${cart.id};
-                    $.post("/cart/purchaseAll", postData);
-                    $("#cart_records").html("Cart is empty");
-                })
-                .button();
+                    var postData = "cartId=" + ${cartId};
+                    $.post("/cart/purchaseAll", postData, function (result) {
+                        $("#cart").flexReload();
+                    }, 'json');
 
-        validateCart();
+                });
     </script>
-
 
 </head>
 
 <body>
-<table id="cart_records" border="1">
 
-    <c:if test="${cart.items == null}" >
-        <tr>cart is empty</tr>
-    </c:if>
+<!-- Caption Line -->
+<h2 class="grid_12 caption">Корзина заказов</h2>
+<table id="cart" style="display: none"></table>
 
-    <tr>
-        <th>
-            Product
-        </th>
-        <th>
-            Price
-        </th>
-        <th>
-            Available
-        </th>
-        <th>
-            Purchased
-        </th>
-        <th>
-            Total
-        </th>
-    </tr>
-
-    <c:forEach items="${cart.items}" var="cartRecord">
-        <tr id="record_${cartRecord.id}">
-            <td>${cartRecord.offer.product.name}</td>
-            <td>${cartRecord.offer.price}</td>
-            <td class="available">${cartRecord.offer.amount}</td>
-            <td class="amount">${cartRecord.amount}</td>
-            <td class="total">${cartRecord.amount * cartRecord.offer.price}</td>
-            <td>
-                <a id="edit_${cartRecord.id}" name="${cartRecord.id}" class="edit">Edit record</a>
-            </td>
-            <td>
-                <a id="remove_${cartRecord.id}" name="${cartRecord.id}" class="remove">Remove record</a>
-            </td>
-            <td>
-                <button id="purchase_${cartRecord.id}" name="${cartRecord.id}" class="purchase">Purchase</button>
-            </td>
-        </tr>
-    </c:forEach>
-
-</table>
 <div>
-    <button id="purchase_all_btn">Purchase all</button>
+    <button id="purchase_all_btn" class="button right">Заказать все</button>
 </div>
+
 <div id="cartEdit" title="Edit cart record"></div>
 
 </body>

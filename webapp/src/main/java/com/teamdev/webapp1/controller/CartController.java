@@ -5,13 +5,18 @@ import com.teamdev.webapp1.model.order.Order;
 import com.teamdev.webapp1.model.order.OrderStates;
 import com.teamdev.webapp1.model.user.Cart;
 import com.teamdev.webapp1.model.user.CartItem;
+import com.teamdev.webapp1.service.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -96,19 +101,36 @@ public class CartController {
         return "/cart/viewItem";
     }
 
-    @RequestMapping(value = "/view/{userId}", method = RequestMethod.GET)
-    public String cartView(@PathVariable(value = "userId") int userId,
+    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+    public String cartView(@PathVariable(value = "id") Integer userId,
                            Map<String, Object> model) {
-
-        model.put("cart", userRepository.findOne(userId).getCart());
+        model.put("cartId", userRepository.findOne(userId).getCart().getId());
+        model.put("userId", userId);
         return "/cart/view";
     }
 
+    @RequestMapping(value = "/view/paging/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String cartJsonResponse(@PathVariable(value = "id") Integer userId,
+                                   @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                   @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                   @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                   @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                   @RequestParam(value = "qtype", required = false) String searchBy,
+                                   @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+
+        final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
+        final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
+        final Page<CartItem> cartItems = cartItemsRepository.findByCartId(userId, pageRequest);
+        return Utils.pageToJson(cartItems);
+    }
+
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
-    public String cartView(CartItem cartItem) {
+    @ResponseBody
+    public int cartView(CartItem cartItem) {
 
         cartItemsRepository.delete(cartItem);
-        return "/cart/view";
+        return HttpServletResponse.SC_OK;
     }
 
     @RequestMapping(value = "/purchaseAll", method = RequestMethod.POST)
@@ -125,13 +147,13 @@ public class CartController {
 
     @RequestMapping(value = "/purchase", method = RequestMethod.POST)
     @ResponseBody
-    public String purchaseItem(@RequestParam(value = "id") Integer itemId) {
+    public int purchaseItem(@RequestParam(value = "id") Integer itemId) {
         CartItem item = cartItemsRepository.findOne(itemId);
         List<Order> orders = createOrders(item);
         sendNotifications(orders);
         orderRepository.save(orders);
         cartItemsRepository.delete(item);
-        return String.valueOf(HttpServletResponse.SC_OK);
+        return HttpServletResponse.SC_OK;
     }
 
 
