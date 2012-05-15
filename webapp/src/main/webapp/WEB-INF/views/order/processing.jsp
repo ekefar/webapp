@@ -88,7 +88,7 @@
                     var selectedRecordId = $(this).attr("name");
                     var url = "/order/confirm/" + selectedRecordId;
                     $.post(url, function (result) {
-                        $("#orders").flexReload();
+                        $("#row" + result.id).remove();
                     }, 'json');
                 });
 
@@ -98,7 +98,7 @@
                     var selectedRecordId = $(this).attr("name");
                     var url = "/order/deny/" + selectedRecordId;
                     $.post(url, function (result) {
-                        $("#orders").flexReload();
+                        $("#row" + result.id).remove();
                     }, 'json');
                 });
 

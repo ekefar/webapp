@@ -1,5 +1,6 @@
 package com.teamdev.webapp1.controller;
 
+import com.google.common.collect.ImmutableSet;
 import com.teamdev.webapp1.dao.CategoriesRepository;
 import com.teamdev.webapp1.dao.OfferRepository;
 import com.teamdev.webapp1.dao.ProductRepository;
@@ -21,6 +22,8 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
+import static com.google.common.collect.ImmutableSet.*;
 
 /**
  * Created by Alexander Serebriyan
@@ -103,7 +106,7 @@ public class OfferController {
     }
 
     @RequestMapping(value = "/all/{id}", method = RequestMethod.GET)
-    public String allOffers(@PathVariable("id") Integer userId,
+    public String listAllOffers(@PathVariable("id") Integer userId,
                             Map<String, Object> model) {
         model.put("userId", userId);
         model.put("cartId", userRepository.findOne(userId).getCart().getId());
@@ -128,7 +131,7 @@ public class OfferController {
 
 
     @RequestMapping(value = "/own/{id}", method = RequestMethod.GET)
-    public String listUserOffers(@PathVariable("id") Integer userId,
+    public String listOwnOffers(@PathVariable("id") Integer userId,
                                  Map<String, Object> model) {
         model.put("userId", userId);
         model.put("cartId", userRepository.findOne(userId).getCart().getId());
@@ -136,18 +139,23 @@ public class OfferController {
         return "/offer/own";
     }
 
-    @RequestMapping(value = "/own/paging", method = RequestMethod.POST)
+    @RequestMapping(value = "/own/paging/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public List<Offer> showAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                               @RequestParam(value = "rp", defaultValue = "4") Integer size,
-                               @RequestParam(value = "sortname", defaultValue = "title") String orderBy,
-                               @RequestParam(value = "sortorder", defaultValue = "ASC") Sort.Direction direction) throws IOException {
-        final Sort.Order order = new Sort.Order(direction, orderBy);
-        final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
-        final Page<Offer> offers = offerRepository.findAll(pageRequest);
+    public String ownOffersPagingResponse(@PathVariable("id") Integer userId,
+                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                          @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                          @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                          @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                          @RequestParam(value = "qtype", required = false) String searchBy,
+                                          @RequestParam(value = "query", required = false) String searchValue) throws IOException {
 
-        return offers.getContent();
+        final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
+        final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
+        final Page<Offer> offers = offerRepository.findByUserIdAndStateIn(userId, of(OfferStates.ACTIVE), pageRequest);
+        return Utils.pageToJson(offers);
     }
+
+
 
 
     @RequestMapping(value = "/deactivate", method = RequestMethod.POST)

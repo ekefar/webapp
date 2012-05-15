@@ -5,20 +5,19 @@ import com.teamdev.webapp1.model.order.OfferStates;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by IntelliJ IDEA.
- * User: gar
- * Date: 29.04.12
- * Time: 21:19
- * To change this template use File | Settings | File Templates.
- */
-public interface OfferRepository extends CrudRepository<Offer, Integer>, PagingAndSortingRepository<Offer, Integer> {
+
+public interface OfferRepository extends PagingAndSortingRepository<Offer, Integer> {
+
     List<Offer> findByUserIdAndState(Integer userId, OfferStates state);
+
+    @Query("select o from Offer o where o.user.id = :id and o.state in :states")
+    Page<Offer> findByUserIdAndStateIn(@Param("id") Integer userId, @Param("states") Collection<OfferStates> states, Pageable pageable);
 
     @Override
     Page<Offer> findAll(Pageable pageable);
@@ -27,8 +26,8 @@ public interface OfferRepository extends CrudRepository<Offer, Integer>, PagingA
     List<Offer> findNotBelongToUser(Integer userId);
 
 
-    @Query("select o from Offer o where o.user.id != ?")
-    Page<Offer> findNotBelongToUser(Integer userId, Pageable pageable);
+    @Query("select o from Offer o where o.user.id != :id")
+    Page<Offer> findNotBelongToUser(@Param("id") Integer userId, Pageable pageable);
 
     List<Offer> findByState(OfferStates state);
 

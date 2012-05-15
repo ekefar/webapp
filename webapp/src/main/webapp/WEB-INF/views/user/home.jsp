@@ -99,11 +99,10 @@
         <li><a href="<c:url value=" j_spring_security_logout"/>"><br>Выход</a></li>
         <li><a id="cart_btn" href="#cart"><span class="meta">Корзина товаров</span><br/>Корзина</a></li>
         <li><a id="profile_btn" href="#profile"><span class="meta">Мои  настройки</span><br/>Профиль</a></li>
-        <li><a id="my_offer_btn" href="#my_offers"><span class="meta">Мои предложения</span><br/>предлжения</a></li>
+        <li><a id="my_offer_btn" href="#my_offers"><span class="meta">Мои предложения</span><br/>предложения</a></li>
         <li><a id="my_purchases_btn" href="#my_purchases"><span class="meta">Мои покупки</span><br/>Покупки</a></li>
         <li><a id="orders_btn" href="#orders"><span class="meta">Мои заказы</span><br/>Заказы</a></li>
         <li><a id="all_offer_btn" href="#all_offers"><span class="meta">Полный каталог</span><br/>Каталог</a></li>
-
     </ul>
 
     <div class="hr grid_12 clearfix">&nbsp;</div>

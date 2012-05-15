@@ -133,7 +133,7 @@
                     var url = "/cart/remove";
                     var postData = "id=" + recordId;
                     $.post(url, postData, function (result) {
-                        $("#cart").flexReload();
+                        $("#row" + result.id).remove();
                     }, 'json');
                 });
 
@@ -166,7 +166,6 @@
 <!-- Caption Line -->
 <h2 class="grid_12 caption">Корзина заказов</h2>
 <table id="cart" style="display: none"></table>
-
 <div>
     <button id="purchase_all_btn" class="button right">Заказать все</button>
 </div>

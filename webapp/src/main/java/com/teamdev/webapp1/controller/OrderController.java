@@ -103,7 +103,7 @@ public class OrderController {
 
     @RequestMapping(value = "/confirm/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String confirmOrder(@PathVariable("id") Integer orderId) {
+    public Order confirmOrder(@PathVariable("id") Integer orderId) {
         Order order = orderRepository.findOne(orderId);
         Offer offer = order.getOffer();
 
@@ -116,8 +116,7 @@ public class OrderController {
         }
 
         offerRepository.save(offer);
-        orderRepository.save(order);
-        return String.valueOf(HttpServletResponse.SC_OK);
+        return orderRepository.save(order);
     }
 
     @RequestMapping(value = "/deny/{id}", method = RequestMethod.POST)
