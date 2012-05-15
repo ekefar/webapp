@@ -71,7 +71,7 @@
             useRp:true,
             rp:15,
             width:705,
-            height:520,
+            height:530,
             singleSelect:true,
             onSuccess:function () {
                 $("#orders").each(function () {

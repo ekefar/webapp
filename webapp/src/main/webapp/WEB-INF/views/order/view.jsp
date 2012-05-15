@@ -25,6 +25,8 @@
 </head>
 <body>
 <div>
+    <!-- Caption Line -->
+
     <div class="grid_3">
         <h4 class="title ">Категория</h4>
 

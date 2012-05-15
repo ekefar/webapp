@@ -141,7 +141,6 @@
                 <li class="clearfix">
                     <label for="password">Пароль:</label>
                     <input id="password" type="password" name="password" size="50" class="validate[required] text-input input"/>
-
                     <div class="clear"></div>
                 </li>
                 <li class="clearfix">
@@ -153,9 +152,7 @@
                 <li class="clearfix">
                     <p id='mail_success' class='success'>Thank you. I'll get back to you as soon as possible.</p>
                     <p id='mail_fail' class='error'>Sorry, an error has occurкed. Please try again later.</p>
-
                         <button type="submit" id="regButton" name="regButton" class="button right">Подтвердить</button>
-
                 </li>
             </ul>
         </form>

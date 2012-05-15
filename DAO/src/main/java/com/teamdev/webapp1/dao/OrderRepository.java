@@ -23,6 +23,10 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Integ
     @Query("select o from Order  o where o.offer.user.id = :userId and o.state in :states")
     Page<Order> findByOfferUserIdAndStateIn(@Param("userId") Integer userId, Pageable page, @Param("states") Collection<OrderStates> states);
 
+    @Query("select o from Order  o where o.customer.id = :customerId and o.state in :states")
+    Page<Order> findByCustomerIdAndStateIn(@Param("customerId") Integer customerId, Pageable page, @Param("states") Collection<OrderStates> states);
+
+
     List<Order> findByOfferUserId(Integer id);
     List<Order> findByCustomerId(Integer id);
 }

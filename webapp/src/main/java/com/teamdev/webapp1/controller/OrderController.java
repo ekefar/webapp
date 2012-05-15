@@ -141,21 +141,50 @@ public class OrderController {
     }
 
     @RequestMapping("/purchase/active/{id}")
-    public String viewActivePurchases(@PathVariable(value = "id") Integer cunstomerId,
+    public String viewActivePurchases(@PathVariable(value = "id") Integer customerId,
                                       Map<String, Object> model) {
-
-        List<Order> orders = orderRepository.findByCustomerId(cunstomerId);
-        model.put("orders", findOrdersWithState(orders, OrderStates.PROCESSING));
+        model.put("userId", customerId);
         return "/order/purchase/active";
     }
 
+    @RequestMapping(value = "/purchase/active/paging/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String activePurchasesJsonResponse(@PathVariable(value = "id") Integer userId,
+                                            @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                            @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                            @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                            @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                            @RequestParam(value = "qtype", required = false) String searchBy,
+                                            @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+
+        final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
+        final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
+        final Page<Order> orders = orderRepository.findByCustomerIdAndStateIn(userId, pageRequest, of(OrderStates.PROCESSING));
+        return Utils.pageToJson(orders);
+    }
+
     @RequestMapping("/purchase/past/{id}")
-    public String viewPastPurchases(@PathVariable(value = "id") Integer cunstomerId,
+    public String viewPastPurchases(@PathVariable(value = "id") Integer customerId,
                                     Map<String, Object> model) {
 
-        List<Order> orders = orderRepository.findByCustomerId(cunstomerId);
-        model.put("orders", findOrdersWithState(orders, OrderStates.COMPLETE, OrderStates.DENIED, OrderStates.CANCELED));
+        model.put("userId", customerId);
         return "/order/purchase/past";
+    }
+
+    @RequestMapping(value = "/purchase/past/paging/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String pastPurchasesJsonResponse(@PathVariable(value = "id") Integer userId,
+                                         @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                         @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                         @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                         @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                         @RequestParam(value = "qtype", required = false) String searchBy,
+                                         @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+
+        final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
+        final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
+        final Page<Order> orders = orderRepository.findByCustomerIdAndStateIn(userId, pageRequest, of(OrderStates.COMPLETE, OrderStates.DENIED, OrderStates.CANCELED));
+        return Utils.pageToJson(orders);
     }
 
     @RequestMapping(value = "/purchase/cancel/{id}", method = RequestMethod.POST)
@@ -163,6 +192,8 @@ public class OrderController {
     public Order cancelOrder(@PathVariable("id") Integer orderId) {
         return changeOrderState(orderId, OrderStates.CANCELED);
     }
+
+
 
     /**
      * Change order`s state to the new one.

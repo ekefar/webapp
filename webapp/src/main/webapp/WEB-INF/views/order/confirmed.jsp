@@ -42,8 +42,8 @@
                 {display:'Заказано', name:'amount', width:50, sortable:true, align:'left'},
                 {display:'Cумма', width:50, sortable:false, align:'left'},
                 {display:'Дата создания', name:'creationDate', width:100, sortable:true, align:'left'},
-                {display:'Статус', name:'state', width:50, sortable:true, align:'left'},
-                {display:'Действие', name:'state', width:210, sortable:true, align:'left'}
+                {display:'Статус', name:'state', width:70, sortable:true, align:'left'},
+                {display:'Действие', name:'state', width:170, sortable:true, align:'left'}
 
             ],
             searchitems:[
@@ -56,7 +56,7 @@
             useRp:true,
             rp:15,
             width:705,
-            height:520,
+            height:530,
             singleSelect:true
         });
 
@@ -67,7 +67,7 @@
                     var selectedRecordId = $(this).attr("name");
                     var url = "/order/delete/" + selectedRecordId;
                     $.post(url, function (result) {
-                        $("#row" + selectedRecordId).remove();
+                        $("#orders").flexReload();
                     }, 'json');
                 });
     </script>
