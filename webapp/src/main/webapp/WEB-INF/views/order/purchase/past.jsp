@@ -67,7 +67,7 @@
                     var selectedRecordId = $(this).attr("name");
                     var url = "/order/delete/" + selectedRecordId;
                     $.post(url, function (result) {
-                        $("#orders").flexReload();
+                        $("#row" + result.id).remove();
                     }, 'json');
                 });
     </script>

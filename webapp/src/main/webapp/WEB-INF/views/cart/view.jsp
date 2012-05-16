@@ -8,13 +8,13 @@
     <script type="text/javascript">
         var selectedRecordId;
 
-        function validateCart(){
+        function validateCart() {
             var canPurchaseAll = true;
-            $("#cart tr").each(function(){
+            $("#cart tr").each(function () {
                 var amount = parseInt($(this).find(".amount").text());
                 var available = parseInt($(this).find(".available").text());
                 var purchaseButton = $(this).find(".purchase");
-                if(amount>available){
+                if (amount > available) {
                     $(purchaseButton).attr("disabled", true).addClass("disabled").removeClass("button");
                     canPurchaseAll = false;
                 } else {
@@ -22,11 +22,11 @@
                 }
             });
 
-            var purchaseAllButton =  $("#purchase_all_btn");
+            var purchaseAllButton = $("#purchase_all_btn");
 
-            if(!canPurchaseAll){
+            if (!canPurchaseAll) {
                 $(purchaseAllButton).attr("disabled", true).addClass("disabled").removeClass("button");
-            }   else {
+            } else {
                 $(purchaseAllButton).attr("disabled", false).removeClass("disabled").addClass("button");
             }
         }
@@ -45,7 +45,7 @@
                         row.amount,
                         row.amount * row.offer.price,
                         "<button class='edit button' name='" + row.id + "'>Изменить</button>" +
-                                "<button class='remove button' name='" + row.id + "'>Удалить</button>"+
+                                "<button class='remove button' name='" + row.id + "'>Удалить</button>" +
                                 "<button class='purchase button' name='" + row.id + "'>Заказать</button>"]});
             });
 

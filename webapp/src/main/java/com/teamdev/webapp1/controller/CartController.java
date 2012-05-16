@@ -127,10 +127,10 @@ public class CartController {
 
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
     @ResponseBody
-    public int cartView(CartItem cartItem) {
+    public CartItem cartView(CartItem cartItem) {
 
         cartItemsRepository.delete(cartItem);
-        return HttpServletResponse.SC_OK;
+        return cartItem;
     }
 
     @RequestMapping(value = "/purchaseAll", method = RequestMethod.POST)
