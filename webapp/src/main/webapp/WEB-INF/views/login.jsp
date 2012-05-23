@@ -68,18 +68,14 @@
                     <label for="login">Логин:</label>
                     <input id="login" type='text' name='j_username' class="input">
                     <div class="clear"></div>
-                    <p id='name_error' class='error'>Введите логин</p>
                 </li>
                 <li class="clearfix">
                     <label for="password">Пароль:</label>
                     <input id="password" type='password' name='j_password' class="input"/>
                     <div class="clear"></div>
-                    <p id='email_error' class='error'>Введите пароль</p>
                 </li>
 
                 <li class="clearfix">
-                    <p id='mail_success' class='success'>Thank you. I'll get back to you as soon as possible.</p>
-                    <p id='mail_fail' class='error'>Sorry, an error has occurкed. Please try again later.</p>
                     <div id="button">
                         <input type='submit' id='send_message' class="button" value='Вход' />
                     </div>

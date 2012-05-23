@@ -80,7 +80,6 @@
 	.img_right							{float:right; margin:10px 0 10px 20px;}
 	.clear								{clear:both; display:block; overflow:hidden; visibility:hidden; width:0; height:0;}
 	.textright 							{text-align:right;}
-	.error,
 	.success							{display:none;}
     .input                              {float:left; padding:8px; border:1px solid #CCCCCC; margin-left:10px; background:#fcfcfc; -moz-border-radius:5px; -webkit-border-radius:5px;}
     .center                             {text-align: center;}
@@ -216,14 +215,15 @@
 
     /*any form*/
     .form                               {width: 400px; margin-left:auto; margin-right: auto;}
-     p.error							{margin-left:140px; margin-top:10px;}
+     p.status							{margin-left:300px; margin-top:10px;}
     .form ul li					        {margin:10px 0; list-style:none; }
     .form input.input                   {width:280px; float: right; }
-    .form label					        {line-height:35px; width:100px; text-align:right; float:left; margin-right:10px;}
+    .form label.label     			    {line-height:35px; width:100px; text-align:right; float:left; margin-right:10px;}
     .form textarea				        {float:left; padding:8px; border:1px solid #CCCCCC; margin-left:10px; background:#fcfcfc; -moz-border-radius:5px; -webkit-border-radius:5px;}
     .form textarea				        {width:500px;height:150px; resize: none;}
     .form input.button                  {float: right;}
     .form .profile                      {width: 800px; float: left;}
+    .error                              {color:red;}
 /* Comment form */
 
 	#comment_form ul					{float:left;}

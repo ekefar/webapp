@@ -88,7 +88,7 @@
                     var selectedRecordId = $(this).attr("name");
                     var url = "/order/confirm/" + selectedRecordId;
                     $.post(url, function (result) {
-                        $("#row" + result.id).remove();
+                        $("#orders").flexReload();
                     }, 'json');
                 });
 
