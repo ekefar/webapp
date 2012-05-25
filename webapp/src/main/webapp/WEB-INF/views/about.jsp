@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>Aurelius | About Us</title>
+    <title>Vegetary | About Us</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <!-- Stylesheets -->
@@ -30,7 +30,7 @@
 <div id="wrapper" class="container_12 clearfix">
 
     <!-- Text Logo -->
-    <h1 id="logo" class="grid_4">Aurelius</h1>
+    <h1 id="logo" class="grid_4">Vegetary</h1>
 
     <!-- Navigation Menu -->
     <ul id="navigation" class="grid_8">

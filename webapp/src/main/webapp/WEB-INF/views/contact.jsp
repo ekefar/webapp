@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Aurelius | Contact Us</title>
+    <title>Vegetary | Contact Us</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <!-- Stylesheets -->
@@ -30,7 +30,7 @@
 <div id="wrapper" class="container_12 clearfix">
 
     <!-- Text Logo -->
-    <h1 id="logo" class="grid_4">Aurelius</h1>
+    <h1 id="logo" class="grid_4">Vegetary</h1>
 
     <!-- Navigation Menu -->
     <ul id="navigation" class="grid_8">
@@ -95,7 +95,7 @@
         <div class="hr dotted clearfix">&nbsp;</div>
         <ul>
             <li>
-                <strong>Aurelius</strong><br />
+                <strong>Vegetary</strong><br />
                 Харьков, ул. Улица 1,<br />
                 Дом 1, 61000<br />
                <br /><br />
@@ -108,7 +108,7 @@
         <h4>Электронная почта</h4>
         <div class="hr dotted clearfix">&nbsp;</div>
         <ul>
-            <li><a href="mailto:ekefar@gmail.com">aurelius@aurelius.com</a></li>
+            <li><a href="mailto:ekefar@gmail.com">Vegetary@Vegetary.com</a></li>
         </ul>
 
     </div>

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Aurelius | A premium Business and Portfolio theme</title>
+    <title>Vegetary | A premium Business and Portfolio theme</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <!-- Stylesheets -->
@@ -37,7 +37,7 @@
 <div id="wrapper" class="container_12 clearfix">
 
     <!-- Text Logo -->
-    <h1 id="logo" class="grid_4">Aurelius</h1>
+    <h1 id="logo" class="grid_4">Vegetary</h1>
 
     <!-- Navigation Menu -->
     <ul id="navigation" class="grid_8">
@@ -71,7 +71,7 @@
     <div class="hr grid_12 clearfix">&nbsp;</div>
 
     <!-- Caption Line -->
-    <h2 class="grid_12 caption clearfix">Добро пожаловать на <span>Aurelius</span>. Здесь Вам доступен огромный каталог сельхозпродукции по лучшим ценам.
+    <h2 class="grid_12 caption clearfix">Добро пожаловать на <span>Vegetary</span>. Здесь Вам доступен огромный каталог сельхозпродукции по лучшим ценам.
         <u><a href="/login">Войдите</a></u> в систему и получите полный доступ ко всем возможностям!</h2>
 
     <div class="hr grid_12 clearfix quicknavhr">&nbsp;</div>

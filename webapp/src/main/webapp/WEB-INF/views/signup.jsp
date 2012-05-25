@@ -128,7 +128,7 @@
 <div id="wrapper" class="container_12 content">
 
     <!-- Text Logo -->
-    <h1 id="logo" class="grid_4">Aurelius</h1>
+    <h1 id="logo" class="grid_4">Vegetary</h1>
 
     <!-- Navigation Menu -->
     <ul id="navigation" class="grid_8">

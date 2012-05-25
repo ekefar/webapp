@@ -2,7 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Aurelius | Каталог предложений</title>
+    <title>Vegetary | Каталог предложений</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <link type="text/css" href="../resources/css/table_style.css" rel="stylesheet"/>
@@ -112,7 +112,7 @@
 <div id="wrapper" class="container_12 clearfix">
 
     <!-- Text Logo -->
-    <h1 id="logo" class="grid_4">Aurelius</h1>
+    <h1 id="logo" class="grid_4">Vegetary</h1>
 
     <!-- Navigation Menu -->
     <ul id="navigation" class="grid_8">

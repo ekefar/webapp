@@ -55,7 +55,7 @@
         <table>
             <tr>
                 <td>
-                    Name:
+                    Компания:
                 </td>
                 <td>
                     <input type="text" name="name" id="name" size="60"  class="input" value="${user.companyName}"/>
@@ -64,7 +64,7 @@
 
             <tr>
                 <td valign="top">
-                    Description:
+                    Описание:
                 </td>
                 <td>
                     <textarea rows="5" cols="50" type="text" name="description" class="input"
@@ -74,7 +74,7 @@
 
             <tr>
                 <td valign="top">
-                    Contact:
+                    Контактные данные:
                 </td>
                 <td>
                     <textarea rows="5" cols="50" type="text" name="contact" class="input"
