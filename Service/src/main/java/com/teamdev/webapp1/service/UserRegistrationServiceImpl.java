@@ -68,7 +68,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         message.append("Welcome, " + user.getLogin() + "!");
         message.append("\n\n");
         message.append("Your activation link: ");
-        message.append("http://localhost:8080/activation/");
+        message.append("http://109.87.109.51:8080/activation/");
         message.append(createUserActivationKey(user));
         mailSender.Send(user.getEmail(), "ekefar@gmail.com", "Registration success", message.toString());
     }
@@ -77,7 +77,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         StringBuilder message = new StringBuilder();
         message.append("Congratulations, " + user.getLogin() + "!");
         message.append("\n\n");
-        message.append("Your account have been successfully activated.");
+        message.append("Your account has been successfully activated.");
         mailSender.Send(user.getEmail(), "ekefar@gmail.com", "Registration success", message.toString());
     }
 

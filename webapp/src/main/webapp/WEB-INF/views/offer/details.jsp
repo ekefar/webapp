@@ -8,45 +8,45 @@
     <fieldset>
         <table>
             <tr>
-                <td>Product name:</td>
+                <td>Наименование:</td>
                 <td>
                     ${offer.product.name}
                 </td>
 
             </tr>
             <tr>
-                <td>Product category:</td>
+                <td>Категория:</td>
                 <td>
                     ${offer.product.category.name}
                 </td>
 
             </tr>
             <tr>
-                <td>Product unit:</td>
+                <td>Ед. измерения:</td>
                 <td>
                     ${offer.product.unit.name}
                 </td>
             </tr>
             <tr>
-                <td>Price:</td>
+                <td>Цена:</td>
                 <td>
                     ${offer.price}
                 </td>
             </tr>
             <tr>
-                <td>Amount:</td>
+                <td>Количество:</td>
                 <td>
                     ${offer.amount}
                 </td>
             </tr>
             <tr>
-                <td>Total:</td>
+                <td>Сумма:</td>
                 <td>
                     ${offer.price * offer.amount}
                 </td>
             </tr>
             <tr>
-                <td>Description:</td>
+                <td>Описание:</td>
                 <td>
                     ${offer.description}
                 </td>

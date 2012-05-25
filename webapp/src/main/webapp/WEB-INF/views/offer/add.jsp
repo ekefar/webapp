@@ -38,7 +38,7 @@
         <fieldset>
             <table>
                 <tr>
-                    <td>Category:</td>
+                    <td>Категория:</td>
                     <td>
                         <sf:select path="product.category.id" id="categories" items="${categoryList}" itemValue="id"
                                    itemLabel="name">
@@ -48,14 +48,14 @@
 
                 </tr>
                 <tr>
-                    <td>Product:</td>
+                    <td>Продукт:</td>
                     <td><sf:select path="product.id" id="products" itemValue="id" itemLabel="name">
                     </sf:select>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Price:
+                        Цена:
                     </td>
                     <td>
                         <sf:input path="price" size="10" />
@@ -63,7 +63,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Amount:
+                        Количество:
                     </td>
                     <td>
                         <sf:input path="amount" size="10"/>
@@ -71,7 +71,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Description:
+                        Описание:
                     </td>
                     <td>
                         <sf:textarea path="description" size="10"/>
@@ -80,7 +80,5 @@
             </table>
         </fieldset>
     </sf:form>
-
-
 </body>
 </html>

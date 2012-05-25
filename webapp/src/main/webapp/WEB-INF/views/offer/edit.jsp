@@ -20,7 +20,7 @@
         <table>
             <tr>
                 <td>
-                    Price:
+                    Цена:
                 </td>
                 <td>
                     <input name="user.id" value="${offer.user.id}" type="hidden">
@@ -31,7 +31,7 @@
             </tr>
             <tr>
                 <td>
-                    Amount:
+                    Количество:
                 </td>
                 <td>
                     <sf:input path="amount" size="10"/>
@@ -39,7 +39,7 @@
             </tr>
             <tr>
                 <td>
-                    Description:
+                    Описание:
                 </td>
                 <td>
                     <sf:textarea path="description" size="10"/>

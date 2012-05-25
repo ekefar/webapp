@@ -11,7 +11,7 @@
     <fieldset>
         <table>
             <tr>
-                <td>Available:</td>
+                <td>Доаступно:</td>
                 <td>
                     ${record.offer.amount}
 
@@ -23,20 +23,20 @@
 
             </tr>
             <tr>
-                <td>Price:</td>
+                <td>Цена:</td>
                 <td>
                     ${record.offer.price}
                 </td>
 
             </tr>
             <tr>
-                <td>Purchased:</td>
+                <td>Выбрано:</td>
                 <td>
                     ${record.amount}
                 </td>
             </tr>
             <tr>
-                <td>Change quantity:</td>
+                <td>Изменить количество:</td>
                 <td>
                     <input type="text" name="amount">
                 </td>

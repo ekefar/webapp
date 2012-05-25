@@ -1,30 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 <html>
 <head>
     <title></title>
 </head>
 <body>
-<sf:form method="POST" modelAttribute="product" action="${formSend}">
+<sf:form method="POST" modelAttribute="product">
     <fieldset>
         <table>
             <tr>
-                <td>Name:</td>
-                <td><sf:input path="name" size="10"/></td>
-            </tr>
-            <tr>
-                <td>Category:</td>
-                <td><sf:select path="category.id" items="${categories}" itemValue="id" itemLabel="name" >
+                <td>Категория:</td>
+                <td><sf:select path="category.id"  id="categories" items="${categories}" itemValue="id" itemLabel="name" >
                 </sf:select></td>
             </tr>
             <tr>
-                <td>Unit:</td>
+                <td>Единица измерения:</td>
                 <td><sf:select path="unit.id" items="${units}" itemValue="id" itemLabel="name">
                 </sf:select>
                 </td>
             </tr>
             <tr>
-                <td><input type="reset" value="Reset"/></td>
-                <td><input type="submit" value="Add"/></td>
+                <td>Наименование:</td>
+                <td><sf:input path="name" size="10"/></td>
             </tr>
         </table>
     </fieldset>

@@ -79,6 +79,27 @@
                     }
                 });
 
+        $("#productNew").dialog(
+                {
+                    autoOpen:false,
+                    modal:true,
+                    resizable:false,
+                    draggable:false,
+                    position:top,
+                    width:400,
+                    buttons:{
+                        "Cancel":function () {
+                            $(this).dialog("close");
+                        },
+                        "Add":function () {
+                            var postData = $("#productNew form").serialize();
+                            var url = "/product/add";
+                            $.post(url, postData);
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+
         $("#offerEdit").dialog(
                 {
                     autoOpen:false,
@@ -114,6 +135,16 @@
                     });
                 });
 
+        $("#add_product")
+                .unbind("click")
+                .click(
+                function () {
+                    var url = "/product/add/";
+                    var dialogDiv = $("#productNew");
+                    dialogDiv.load(url, function () {
+                        dialogDiv.dialog("open");
+                    });
+                });
 
         $("#offers .edit")
                 .die()
@@ -141,11 +172,14 @@
 <div>
     <table id="offers" style="display: none"></table>
     <button id="add_btn" type="button" class="button right">Создать предложение</button>
+    <button id="add_product" type="button" class="button right">Добавить товар</button>
+
 </div>
 
-<div id="offerNew" title="New offer"></div>
+<div id="offerNew" title="Новое предложение"></div>
 
-<div id="offerEdit" title="Edit Offer"></div>
+<div id="offerEdit" title="Редактирование предложения"></div>
+<div id="productNew" title="Создание товара"></div>
 <br>
 <br>
 <br>

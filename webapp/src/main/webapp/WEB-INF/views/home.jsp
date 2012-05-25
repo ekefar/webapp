@@ -55,29 +55,16 @@
     <div id="featured" class="clearfix grid_12">
         <ul>
             <li>
-                <a href="portfolio_single.html">
-                    <img src="images/600x300.gif" alt="" />
-                </a>
+               <img src="../resources/images/veg1.jpg" alt="" />
             </li>
             <li>
-                <a href="portfolio_single.html">
-                    <img src="../resources/images/600x300.gif" alt="" />
-                </a>
+                <img src="../resources/images/veg2.jpg" alt="" />
             </li>
             <li>
-                <a href="portfolio_single.html">
-                    <img src="images/600x300.gif" alt="" />
-                </a>
+                <img src="../resources/images/veg3.jpg" alt="" />
             </li>
             <li>
-                <a href="portfolio_single.html">
-                    <img src="images/600x300.gif" alt="" />
-                </a>
-            </li>
-            <li>
-                <a href="portfolio_single.html">
-                    <img src="images/600x300.gif" alt="" />
-                </a>
+                <img src="../resources/images/veg4.jpg" alt="" />
             </li>
         </ul>
     </div>

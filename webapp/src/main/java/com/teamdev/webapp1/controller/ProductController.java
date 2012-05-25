@@ -48,16 +48,15 @@ public class ProductController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String showAddPage(Map<String, Object> model) {
         model.put("product", new Product());
-        model.put("categoryList", categoriesRepository.findAll());
-        model.put("unitList", unitRepository.findAll());
-        return "addProduct";
+        model.put("categories", categoriesRepository.findAll());
+        model.put("units", unitRepository.findAll());
+        return "/product/form";
     }
 
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addProduct(Product product) {
+    public void addProduct(Product product) {
         productRepository.save(product);
-        return "redirect:/product/add";
     }
 
     @RequestMapping("/listCategories")
