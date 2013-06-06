@@ -149,7 +149,7 @@
     <!-- Column 1 / Content -->
 
     <div class="grid_12 center">
-        <form id="regForm" enctype="application/x-www-form-urlencoded" method="post" class="form">
+        <form action="/register" id="regForm" enctype="application/x-www-form-urlencoded" method="post" class="form">
             <ul>
                 <li class="clearfix">
                     <label for="login" class="label">Логин:</label>

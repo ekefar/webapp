@@ -19,6 +19,7 @@
     <script type="text/javascript" src="../resources/js/jquery.form.js" charset="utf-8"></script>
 
     <script type="text/javascript">
+
         $(document).ready(function () {
             $(":submit, :button").button();
         });
@@ -90,6 +91,15 @@
 <div class="footer ">
     <b>&copy; Copyright</b> Alexander Serebriyan
 </div>
+
+<script type="text/javascript">
+
+        var showError = ${showError};
+        if(showError){
+            alert("Неверный логин или пароль.");
+        }
+
+</script>
 </body>
 </html>
 

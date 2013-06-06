@@ -51,6 +51,12 @@
                     ${offer.description}
                 </td>
             </tr>
+            <tr>
+                <td>Продавец:</td>
+                <td>
+                    ${offer.user.login}
+                </td>
+            </tr>
         </table>
     </fieldset>
 

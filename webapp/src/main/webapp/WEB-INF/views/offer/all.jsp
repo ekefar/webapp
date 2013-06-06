@@ -15,6 +15,7 @@
                 rows.push({
                     id:row.id,
                     cell:[row.product.name,
+                            row.product.category.name,
                         row.price,
                         row.amount,
                         "<a name='" + row.id + "' class='details button'>Подробнее</a> " +
@@ -34,13 +35,15 @@
             preProcess:convertData,
             colModel:[
                 {display:'Товар', name:'product.name', width:200, sortable:true, align:'center'},
-                {display:'Цена', name:'price', width:200, sortable:true, align:'left'},
-                {display:'В наличии', name:'amount', width:200, sortable:true, align:'left'},
+                {display:'Категория', name:'product.category.name', width:200, sortable:true, align:'center'},
+                {display:'Цена', name:'price', width:100, sortable:true, align:'left'},
+                {display:'В наличии(кг)', name:'amount', width:100, sortable:true, align:'left'},
                 {display:'Действия', name:'action', width:300, sortable:true, align:'left'}
 
             ],
             searchitems:[
-                {display:'Товар', name:'product.name'}
+                {display:'Товар', name:'product'},
+                {display: 'Категория', name:'category'}
             ],
             sortname:"product.name",
             sortorder:"ASC",

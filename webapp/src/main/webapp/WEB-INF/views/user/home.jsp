@@ -20,6 +20,10 @@
     <script type="text/javascript" src="../../resources/js/jquery.form.js" charset="utf-8"></script>
     <script type="text/javascript" src="../../resources/js/flexigrid.pack.js"></script>
 
+    <script type="text/javascript" src="../../resources/js/highcharts.js"></script>
+    <script type="text/javascript" src="../../resources/js/highstock.js"></script>
+    <script type="text/javascript" src="../../resources/js/exporting.js"></script>
+
     <!--[if IE 6]>
     <script type="text/javascript" src="../../resources/js/DD_belatedPNG_0.0.8a-min.js"></script>
     <script type="text/javascript">
@@ -41,6 +45,7 @@
             $("#cart_btn").removeClass("current");
             $("#orders_btn").removeClass("current");
             $("#my_purchases_btn").removeClass("current");
+            $("#reports_btn").removeClass("current");
             $(element).addClass("current");
 
         }
@@ -78,6 +83,10 @@
                 makeCurrent($(this));
             });
 
+            $("#reports_btn").click(function () {
+                $("#content").load("/report/view/${user.id}");
+                makeCurrent($(this));
+            });
 
             profile_btn.click();
 
@@ -91,17 +100,18 @@
 
 <div id="wrapper" class="container_12 clearfix">
 
-    <!-- Text Logo -->
-    <h1 id="logo" class="grid_4">Vegetary</h1>
+  <%--  <!-- Text Logo -->
+    <h1 id="logo" class="grid_4">Vegetary</h1>--%>
 
     <!-- Navigation Menu -->
-    <ul id="navigation" class="grid_8">
+    <ul id="navigation" class="grid_12">
         <li><a href="<c:url value=" j_spring_security_logout"/>"><br>Выход</a></li>
         <li><a id="cart_btn" href="#cart"><span class="meta">Корзина товаров</span><br/>Корзина</a></li>
         <li><a id="profile_btn" href="#profile"><span class="meta">Мои  настройки</span><br/>Профиль</a></li>
-        <li><a id="my_offer_btn" href="#my_offers"><span class="meta">Мои предложения</span><br/>предложения</a></li>
+        <li><a id="reports_btn" href="#reports"><span class="meta">Отчеты продаж</span><br/>Отчеты</a></li>
+        <li><a id="orders_btn" href="#orders"><span class="meta">Мои продажи</span><br/>Продажи</a></li>
         <li><a id="my_purchases_btn" href="#my_purchases"><span class="meta">Мои покупки</span><br/>Покупки</a></li>
-        <li><a id="orders_btn" href="#orders"><span class="meta">Мои заказы</span><br/>Заказы</a></li>
+        <li><a id="my_offer_btn" href="#my_offers"><span class="meta">Мои предложения</span><br/>предложения</a></li>
         <li><a id="all_offer_btn" href="#all_offers"><span class="meta">Полный каталог</span><br/>Каталог</a></li>
     </ul>
 
@@ -109,13 +119,9 @@
     <!-- Column 1 / Content -->
 
     <div id="content" class="grid_11">
-
     </div>
 
     <div class="hr grid_12 clearfix">&nbsp;</div>
-
-
-
 </div>
 <!--end wrapper-->
 

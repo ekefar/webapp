@@ -20,7 +20,6 @@
     </security:http>
 
     <security:authentication-manager>
-
         <security:authentication-provider>
             <security:password-encoder hash="md5"/>
             <security:jdbc-user-service data-source-ref="dataSource"
@@ -31,9 +30,7 @@
 
                                         authorities-by-username-query="
 		      select u.login, r.NAME from users u, roles r
-		      where u.role_ID = r.ID and u.login =?  "
-
-                    />
+		      where u.role_ID = r.ID and u.login =?  "/>
         </security:authentication-provider>
     </security:authentication-manager>
 </beans>

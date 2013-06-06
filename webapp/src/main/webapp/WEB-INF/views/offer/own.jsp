@@ -35,7 +35,7 @@
             colModel:[
                 {display:'Товар', name:'product.name', width:200, sortable:true, align:'center'},
                 {display:'Цена', name:'price', width:200, sortable:true, align:'left'},
-                {display:'В наличии', name:'amount', width:200, sortable:true, align:'left'},
+                {display:'В наличии(кг)', name:'amount', width:200, sortable:true, align:'left'},
                 {display:'Действия', name:'action', width:300, sortable:true, align:'left'}
 
             ],

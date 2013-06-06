@@ -1,6 +1,5 @@
 package com.teamdev.webapp1.controller;
 
-import com.google.common.collect.ImmutableSet;
 import com.teamdev.webapp1.dao.CategoriesRepository;
 import com.teamdev.webapp1.dao.OfferRepository;
 import com.teamdev.webapp1.dao.ProductRepository;
@@ -23,7 +22,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static com.google.common.collect.ImmutableSet.*;
+import static com.google.common.collect.ImmutableSet.of;
 
 /**
  * Created by Alexander Serebriyan
@@ -107,7 +106,7 @@ public class OfferController {
 
     @RequestMapping(value = "/all/{id}", method = RequestMethod.GET)
     public String listAllOffers(@PathVariable("id") Integer userId,
-                            Map<String, Object> model) {
+                                Map<String, Object> model) {
         model.put("userId", userId);
         model.put("cartId", userRepository.findOne(userId).getCart().getId());
         return "/offer/all";
@@ -123,16 +122,23 @@ public class OfferController {
                                           @RequestParam(value = "qtype", required = false) String searchBy,
                                           @RequestParam(value = "query", required = false) String searchValue) throws IOException {
 
+        searchValue = "%" + searchValue + "%";
         final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
         final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
-        final Page<Offer> users = offerRepository.findNotBelongToUser(userId, pageRequest);
+        final Page<Offer> users;
+
+        if ("product".equals(searchBy)) {
+            users = offerRepository.findNotBelongToUserByProduct(userId, searchValue, pageRequest);
+        } else {
+            users = offerRepository.findNotBelongToUserByCategory(userId, searchValue, pageRequest);
+        }
         return Utils.pageToJson(users);
     }
 
 
     @RequestMapping(value = "/own/{id}", method = RequestMethod.GET)
     public String listOwnOffers(@PathVariable("id") Integer userId,
-                                 Map<String, Object> model) {
+                                Map<String, Object> model) {
         model.put("userId", userId);
         model.put("cartId", userRepository.findOne(userId).getCart().getId());
         model.put("offers", offerRepository.findByUserIdAndState(userId, OfferStates.ACTIVE));
@@ -154,8 +160,6 @@ public class OfferController {
         final Page<Offer> offers = offerRepository.findByUserIdAndStateIn(userId, of(OfferStates.ACTIVE), pageRequest);
         return Utils.pageToJson(offers);
     }
-
-
 
 
     @RequestMapping(value = "/deactivate", method = RequestMethod.POST)

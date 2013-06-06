@@ -46,4 +46,14 @@ public class Category {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Category && name.equals(((Category) obj).getName());
+    }
 }

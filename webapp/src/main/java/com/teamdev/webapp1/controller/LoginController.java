@@ -46,9 +46,9 @@ public class LoginController {
 
 
     @RequestMapping(value = "/loginfailed")
-    public String loginError() {
+    public String loginError(Map<String, Object> model) {
+        model.put("showError", true);
         return "login";
-
     }
 
     @RequestMapping(value = "/logout")

@@ -47,6 +47,10 @@ public class Product {
     public Product() {
     }
 
+    public Product(String name) {
+        this.name = name;
+    }
+
     public Product(String name, Unit unit, Category category) {
         this.name = name;
         this.unit = unit;
@@ -93,4 +97,13 @@ public class Product {
         this.category = category;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Product && this.getName().equals(((Product) obj).getName());
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
