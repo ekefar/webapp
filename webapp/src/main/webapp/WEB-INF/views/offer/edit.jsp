@@ -20,7 +20,7 @@
         <table>
             <tr>
                 <td>
-                    Цена:
+                    Цена(грн):
                 </td>
                 <td>
                     <input name="user.id" value="${offer.user.id}" type="hidden">

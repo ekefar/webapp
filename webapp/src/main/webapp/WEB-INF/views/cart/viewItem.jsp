@@ -23,7 +23,7 @@
 
             </tr>
             <tr>
-                <td>Цена:</td>
+                <td>Цена(грн):</td>
                 <td>
                     ${record.offer.price}
                 </td>

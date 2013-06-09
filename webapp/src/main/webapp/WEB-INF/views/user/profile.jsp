@@ -24,7 +24,12 @@
         $('#profile_submit')
                 .click(function () {
                     var url = "/settings/profile/" + $("#profile_settings").attr("name");
-                    $.post(url, $('#profile_form').serialize());
+                    $.ajax({
+                        url: url,
+                        data: $('#profile_form').serialize(),
+                        type: 'POST'
+                    });
+                    //$.post(url, $('#profile_form').serialize());
                 });
 
         $("#dateOfBirth").datepicker();
@@ -51,7 +56,7 @@
 <body>
 
 <div id="profile_settings" name="${user.id}">
-    <form id="profile_form">
+    <form id="profile_form" accept-charset="UTF-8">
         <table>
             <tr>
                 <td>

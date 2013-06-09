@@ -28,7 +28,7 @@
                 </td>
             </tr>
             <tr>
-                <td>Цена:</td>
+                <td>Цена(грн):</td>
                 <td>
                     ${offer.price}
                 </td>

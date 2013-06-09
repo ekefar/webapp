@@ -16,8 +16,8 @@
                     id:row.id,
                     cell:[row.product.name,
                             row.product.category.name,
-                        row.price,
-                        row.amount,
+                        addCommas(row.price.toFixed(2)),
+                        addCommas(row.amount),
                         "<a name='" + row.id + "' class='details button'>Подробнее</a> " +
                                 "<a name='" + row.id + "' class='cart button'>Добавить в корзину</a>"]});
             });
@@ -36,7 +36,7 @@
             colModel:[
                 {display:'Товар', name:'product.name', width:200, sortable:true, align:'center'},
                 {display:'Категория', name:'product.category.name', width:200, sortable:true, align:'center'},
-                {display:'Цена', name:'price', width:100, sortable:true, align:'left'},
+                {display:'Цена(грн)', name:'price', width:100, sortable:true, align:'left'},
                 {display:'В наличии(кг)', name:'amount', width:100, sortable:true, align:'left'},
                 {display:'Действия', name:'action', width:300, sortable:true, align:'left'}
 

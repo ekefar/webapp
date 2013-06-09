@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.Map;
 
 @Controller
@@ -43,7 +45,6 @@ public class UserSettingsController {
                                       @RequestParam(value = "name") String name,
                                       @RequestParam(value = "description") String description,
                                       @RequestParam(value = "contact") String contact) {
-
         final User user = userRepository.findOne(userId);
         user.setCompanyName(name);
         user.setCompanyDescription(description);

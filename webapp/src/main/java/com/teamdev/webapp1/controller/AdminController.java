@@ -78,6 +78,5 @@ public class AdminController {
                                   Map<String, Object> model) {
         model.put("user", userRepository.findOne(userId));
         return "/user/home";
-
     }
 }

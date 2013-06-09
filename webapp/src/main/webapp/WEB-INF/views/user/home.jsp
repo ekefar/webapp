@@ -38,6 +38,19 @@
 
     <script type="text/javascript">
 
+        function addCommas(nStr)
+        {
+            nStr += '';
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
+        }
+
         function makeCurrent(element) {
             $("#profile_btn").removeClass("current");
             $("#all_offer_btn").removeClass("current");
@@ -47,7 +60,6 @@
             $("#my_purchases_btn").removeClass("current");
             $("#reports_btn").removeClass("current");
             $(element).addClass("current");
-
         }
 
         $(document).ready(function () {

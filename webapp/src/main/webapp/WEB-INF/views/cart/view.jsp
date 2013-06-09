@@ -63,7 +63,7 @@
             preProcess:convertData,
             colModel:[
                 {display:'Товар', name:'offer.product.name', width:150, sortable:true, align:'center'},
-                {display:'Цена', name:'offer.price', width:50, sortable:true, align:'left'},
+                {display:'Цена(грн)', name:'offer.price', width:50, sortable:true, align:'left'},
                 {display:'Доступно', name:'offer.amount', width:70, sortable:true, align:'left', colClass:'available'},
                 {display:'Заказано', name:'amount', width:70, sortable:true, align:'left', colClass:'amount'},
                 {display:'Сумма', width:100, sortable:false, align:'left'},
