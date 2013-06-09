@@ -3,6 +3,7 @@ package com.teamdev.webapp1.controller;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.teamdev.webapp1.controller.response.TableResponse;
 import com.teamdev.webapp1.dao.UserRepository;
 import com.teamdev.webapp1.model.user.User;
 import com.teamdev.webapp1.service.Utils;
@@ -55,19 +56,19 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/users/edit", method = RequestMethod.POST)
     @ResponseBody
-    public String showAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                          @RequestParam(value = "rp", defaultValue = "4") Integer size,
-                          @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
-                          @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
-                          @RequestParam(value = "qtype", required = false) String searchBy,
-                          @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+    public TableResponse showAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                 @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                 @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                 @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                 @RequestParam(value = "qtype", required = false) String searchBy,
+                                 @RequestParam(value = "query", required = false) String searchValue) throws IOException {
 
         final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
         final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
 
         final Page<User> users = "".equals(searchValue) ? userRepository.findAll(pageRequest) : userRepository.searchByLogin("%" + searchValue + "%", pageRequest);
 
-        return Utils.pageToJson(users);
+        return new TableResponse(users);
     }
 
 

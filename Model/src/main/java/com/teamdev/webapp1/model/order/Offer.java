@@ -7,7 +7,6 @@ import org.codehaus.jackson.annotate.JsonAutoDetect;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 

@@ -1,5 +1,6 @@
 package com.teamdev.webapp1.controller;
 
+import com.teamdev.webapp1.controller.response.TableResponse;
 import com.teamdev.webapp1.dao.*;
 import com.teamdev.webapp1.model.order.Order;
 import com.teamdev.webapp1.model.order.OrderStates;
@@ -111,18 +112,18 @@ public class CartController {
 
     @RequestMapping(value = "/view/paging/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String cartJsonResponse(@PathVariable(value = "id") Integer userId,
-                                   @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                   @RequestParam(value = "rp", defaultValue = "4") Integer size,
-                                   @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
-                                   @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
-                                   @RequestParam(value = "qtype", required = false) String searchBy,
-                                   @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+    public TableResponse cartJsonResponse(@PathVariable(value = "id") Integer userId,
+                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                          @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                          @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                          @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                          @RequestParam(value = "qtype", required = false) String searchBy,
+                                          @RequestParam(value = "query", required = false) String searchValue) throws IOException {
 
         final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
         final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
         final Page<CartItem> cartItems = cartItemsRepository.findByCartId(userId, pageRequest);
-        return Utils.pageToJson(cartItems);
+        return new TableResponse(cartItems);
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.POST)

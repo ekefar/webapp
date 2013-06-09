@@ -1,13 +1,12 @@
 package com.teamdev.webapp1.controller;
 
-import com.google.common.collect.ImmutableSet;
+import com.teamdev.webapp1.controller.response.TableResponse;
 import com.teamdev.webapp1.dao.OfferRepository;
 import com.teamdev.webapp1.dao.OrderRepository;
 import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.order.OfferStates;
 import com.teamdev.webapp1.model.order.Order;
 import com.teamdev.webapp1.model.order.OrderStates;
-import com.teamdev.webapp1.service.Utils;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,7 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,18 +61,18 @@ public class OrderController {
 
     @RequestMapping(value = "/active/paging/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String activeOrdersJsonResponse(@PathVariable(value = "id") Integer userId,
-                                         @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                         @RequestParam(value = "rp", defaultValue = "4") Integer size,
-                                         @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
-                                         @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
-                                         @RequestParam(value = "qtype", required = false) String searchBy,
-                                         @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+    public TableResponse activeOrdersJsonResponse(@PathVariable(value = "id") Integer userId,
+                                                  @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                  @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                                  @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                                  @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                                  @RequestParam(value = "qtype", required = false) String searchBy,
+                                                  @RequestParam(value = "query", required = false) String searchValue) throws IOException {
 
         final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
         final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
         final Page<Order> orders = orderRepository.findByOfferUserIdAndStateIn(userId, pageRequest, of(OrderStates.PROCESSING));
-        return Utils.pageToJson(orders);
+        return new TableResponse(orders);
     }
 
     @RequestMapping("/confirmed/{id}")
@@ -87,18 +85,18 @@ public class OrderController {
 
     @RequestMapping(value = "/past/paging/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String pastOrdersJsonResponse(@PathVariable(value = "id") Integer userId,
-                                         @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                         @RequestParam(value = "rp", defaultValue = "4") Integer size,
-                                         @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
-                                         @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
-                                         @RequestParam(value = "qtype", required = false) String searchBy,
-                                         @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+    public TableResponse pastOrdersJsonResponse(@PathVariable(value = "id") Integer userId,
+                                                @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                                @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                                @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                                @RequestParam(value = "qtype", required = false) String searchBy,
+                                                @RequestParam(value = "query", required = false) String searchValue) throws IOException {
 
         final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
         final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
         final Page<Order> orders = orderRepository.findByOfferUserIdAndStateIn(userId, pageRequest, of(OrderStates.COMPLETE, OrderStates.DENIED));
-        return Utils.pageToJson(orders);
+        return new TableResponse(orders);
     }
 
     @RequestMapping(value = "/confirm/{id}", method = RequestMethod.POST)
@@ -148,18 +146,18 @@ public class OrderController {
 
     @RequestMapping(value = "/purchase/active/paging/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String activePurchasesJsonResponse(@PathVariable(value = "id") Integer userId,
-                                            @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                            @RequestParam(value = "rp", defaultValue = "4") Integer size,
-                                            @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
-                                            @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
-                                            @RequestParam(value = "qtype", required = false) String searchBy,
-                                            @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+    public TableResponse activePurchasesJsonResponse(@PathVariable(value = "id") Integer userId,
+                                                     @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                     @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                                     @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                                     @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                                     @RequestParam(value = "qtype", required = false) String searchBy,
+                                                     @RequestParam(value = "query", required = false) String searchValue) throws IOException {
 
         final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
         final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
         final Page<Order> orders = orderRepository.findByCustomerIdAndStateIn(userId, pageRequest, of(OrderStates.PROCESSING));
-        return Utils.pageToJson(orders);
+        return new TableResponse(orders);
     }
 
     @RequestMapping("/purchase/past/{id}")
@@ -172,18 +170,18 @@ public class OrderController {
 
     @RequestMapping(value = "/purchase/past/paging/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String pastPurchasesJsonResponse(@PathVariable(value = "id") Integer userId,
-                                         @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                         @RequestParam(value = "rp", defaultValue = "4") Integer size,
-                                         @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
-                                         @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
-                                         @RequestParam(value = "qtype", required = false) String searchBy,
-                                         @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+    public TableResponse pastPurchasesJsonResponse(@PathVariable(value = "id") Integer userId,
+                                                   @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                   @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                                   @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                                   @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                                   @RequestParam(value = "qtype", required = false) String searchBy,
+                                                   @RequestParam(value = "query", required = false) String searchValue) throws IOException {
 
         final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
         final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
         final Page<Order> orders = orderRepository.findByCustomerIdAndStateIn(userId, pageRequest, of(OrderStates.COMPLETE, OrderStates.DENIED, OrderStates.CANCELED));
-        return Utils.pageToJson(orders);
+        return new TableResponse(orders);
     }
 
     @RequestMapping(value = "/purchase/cancel/{id}", method = RequestMethod.POST)
@@ -191,7 +189,6 @@ public class OrderController {
     public Order cancelOrder(@PathVariable("id") Integer orderId) {
         return changeOrderState(orderId, OrderStates.CANCELED);
     }
-
 
 
     /**

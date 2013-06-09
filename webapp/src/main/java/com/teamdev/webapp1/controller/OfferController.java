@@ -1,5 +1,6 @@
 package com.teamdev.webapp1.controller;
 
+import com.teamdev.webapp1.controller.response.TableResponse;
 import com.teamdev.webapp1.dao.CategoriesRepository;
 import com.teamdev.webapp1.dao.OfferRepository;
 import com.teamdev.webapp1.dao.ProductRepository;
@@ -8,7 +9,8 @@ import com.teamdev.webapp1.model.order.Offer;
 import com.teamdev.webapp1.model.order.OfferStates;
 import com.teamdev.webapp1.model.product.Category;
 import com.teamdev.webapp1.model.product.Product;
-import com.teamdev.webapp1.service.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
@@ -31,6 +34,8 @@ import static com.google.common.collect.ImmutableSet.of;
 @Controller
 @RequestMapping("/offer")
 public class OfferController {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     private final CategoriesRepository categoriesRepository;
     private final ProductRepository productRepository;
@@ -91,17 +96,17 @@ public class OfferController {
 
     @RequestMapping(value = "/all/paging", method = RequestMethod.POST)
     @ResponseBody
-    public String catalogPagingResponse(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                        @RequestParam(value = "rp", defaultValue = "4") Integer size,
-                                        @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
-                                        @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
-                                        @RequestParam(value = "qtype", required = false) String searchBy,
-                                        @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+    public TableResponse catalogPagingResponse(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                               @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                               @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                               @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                               @RequestParam(value = "qtype", required = false) String searchBy,
+                                               @RequestParam(value = "query", required = false) String searchValue) throws IOException {
 
         final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
         final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
-        final Page<Offer> users = offerRepository.findAll(pageRequest);
-        return Utils.pageToJson(users);
+        final Page<Offer> offers = offerRepository.findAll(pageRequest);
+        return new TableResponse(offers);
     }
 
     @RequestMapping(value = "/all/{id}", method = RequestMethod.GET)
@@ -114,25 +119,27 @@ public class OfferController {
 
     @RequestMapping(value = "/all/paging/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String allOffersPagingResponse(@PathVariable("id") Integer userId,
-                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                          @RequestParam(value = "rp", defaultValue = "4") Integer size,
-                                          @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
-                                          @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
-                                          @RequestParam(value = "qtype", required = false) String searchBy,
-                                          @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+    public TableResponse allOffersPagingResponse(@PathVariable("id") Integer userId,
+                                                 @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                 @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                                 @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                                 @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                                 @RequestParam(value = "qtype", required = false) String searchBy,
+                                                 @RequestParam(value = "query", required = false) String searchValue,
+                                                 HttpServletResponse response) throws IOException {
 
         searchValue = "%" + searchValue + "%";
         final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
         final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
-        final Page<Offer> users;
+        final Page<Offer> offers;
 
         if ("product".equals(searchBy)) {
-            users = offerRepository.findNotBelongToUserByProduct(userId, searchValue, pageRequest);
+            offers = offerRepository.findNotBelongToUserByProduct(userId, searchValue, pageRequest);
         } else {
-            users = offerRepository.findNotBelongToUserByCategory(userId, searchValue, pageRequest);
+            offers = offerRepository.findNotBelongToUserByCategory(userId, searchValue, pageRequest);
         }
-        return Utils.pageToJson(users);
+
+        return new TableResponse(offers);
     }
 
 
@@ -147,18 +154,18 @@ public class OfferController {
 
     @RequestMapping(value = "/own/paging/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String ownOffersPagingResponse(@PathVariable("id") Integer userId,
-                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                          @RequestParam(value = "rp", defaultValue = "4") Integer size,
-                                          @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
-                                          @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
-                                          @RequestParam(value = "qtype", required = false) String searchBy,
-                                          @RequestParam(value = "query", required = false) String searchValue) throws IOException {
+    public TableResponse ownOffersPagingResponse(@PathVariable("id") Integer userId,
+                                                 @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                 @RequestParam(value = "rp", defaultValue = "4") Integer size,
+                                                 @RequestParam(value = "sortname", defaultValue = "login") String orderBy,
+                                                 @RequestParam(value = "sortorder", defaultValue = "ASC") String direction,
+                                                 @RequestParam(value = "qtype", required = false) String searchBy,
+                                                 @RequestParam(value = "query", required = false) String searchValue) throws IOException {
 
         final Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction.toUpperCase()), orderBy);
         final PageRequest pageRequest = new PageRequest(page - 1, size, new Sort(order));
         final Page<Offer> offers = offerRepository.findByUserIdAndStateIn(userId, of(OfferStates.ACTIVE), pageRequest);
-        return Utils.pageToJson(offers);
+        return new TableResponse(offers);
     }
 
 
