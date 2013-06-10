@@ -40,10 +40,10 @@
                 rows.push({
                     id:row.id,
                     cell:[row.offer.product.name,
-                        row.offer.price,
+                        addCommas(row.offer.price.toFixed(2)),
                         row.offer.amount,
                         row.amount,
-                        row.amount * row.offer.price,
+                        addCommas((row.amount * row.offer.price).toFixed(2)),
                         "<button class='edit button' name='" + row.id + "'>Изменить</button>" +
                                 "<button class='remove button' name='" + row.id + "'>Удалить</button>" +
                                 "<button class='purchase button' name='" + row.id + "'>Заказать</button>"]});
@@ -64,9 +64,9 @@
             colModel:[
                 {display:'Товар', name:'offer.product.name', width:150, sortable:true, align:'center'},
                 {display:'Цена(грн)', name:'offer.price', width:50, sortable:true, align:'left'},
-                {display:'Доступно', name:'offer.amount', width:70, sortable:true, align:'left', colClass:'available'},
-                {display:'Заказано', name:'amount', width:70, sortable:true, align:'left', colClass:'amount'},
-                {display:'Сумма', width:100, sortable:false, align:'left'},
+                {display:'Доступно(кг)', name:'offer.amount', width:70, sortable:true, align:'left', colClass:'available'},
+                {display:'Заказано(кг)', name:'amount', width:70, sortable:true, align:'left', colClass:'amount'},
+                {display:'Сумма(грн)', width:100, sortable:false, align:'left'},
                 {display:'Действие', name:'state', width:300, sortable:true, align:'left'}
 
             ],

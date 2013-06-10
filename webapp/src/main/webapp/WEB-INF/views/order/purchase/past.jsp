@@ -22,7 +22,7 @@
                         addCommas(row.amount),
                         addCommas((row.amount * row.offer.price).toFixed(2)),
                         formattedDate,
-                        row.state,
+                        statusFormatter(row.state),
                         "<a class='remove button' name='" + row.id + "'>Удалить</a>"]});
             });
 

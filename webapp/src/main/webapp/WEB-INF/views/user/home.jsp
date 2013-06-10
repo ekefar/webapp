@@ -51,6 +51,20 @@
             return x1 + x2;
         }
 
+        function statusFormatter(status) {
+            if(status==="PROCESSING") {
+                return "Обрабатывается";
+            }  else if (status==="CANCELED"){
+                return "Отменен";
+            }else if (status==="COMPLETE"){
+                return "Завершен";
+            }else if (status==="DENIED"){
+                return "Отказано";
+            }
+
+            return status;
+        }
+
         function makeCurrent(element) {
             $("#profile_btn").removeClass("current");
             $("#all_offer_btn").removeClass("current");

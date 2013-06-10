@@ -57,29 +57,29 @@
             <div class="hr dotted clearfix">&nbsp;</div>
             <ul>
                 <li class="clearfix">
-                    <label for="name">Name</label>
+                    <label for="name">Имя</label>
                     <input type='text' name='name' id='name' />
                     <div class="clear"></div>
                 </li>
                 <li class="clearfix">
-                    <label for="email">Email Address</label>
+                    <label for="email">Email</label>
                     <input type='text' name='email' id='email' />
                     <div class="clear"></div>
                 </li>
                 <li class="clearfix">
-                    <label for="subject">Subject</label>
+                    <label for="subject">Тема</label>
                     <input type='text' name='subject' id='subject' />
                     <div class="clear"></div>
                 </li>
                 <li class="clearfix">
-                    <label for="message">Message</label>
+                    <label for="message">Сообщение</label>
                     <textarea name='message' id='message' rows="30" cols="30"></textarea>
                     <div class="clear"></div>
                 </li>
                 <li class="clearfix">
 
                     <div id="button">
-                        <input type='submit' id='send_message' class="button" value='Submit' />
+                        <input type='submit' id='send_message' class="button" value='Отправить' />
                     </div>
                 </li>
             </ul>
